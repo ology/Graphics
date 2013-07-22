@@ -68,7 +68,6 @@ sub pic_output { # Render the analog clock
   my $self = shift;
   my $name = 'clock.png';
   # Tell the system that we are going to print in "binary mode."
-  binmode STDOUT;
   open F, '>'. $name or die "Can't open $name - $!\n";
   binmode F;
   print F $self->png;
