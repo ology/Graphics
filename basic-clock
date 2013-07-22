@@ -1,6 +1,7 @@
 #!/usr/bin/perl
 #
-# Gnerate a pseudo-analog clock image with Perl.
+# Generate a pseudo-analog clock image with Perl.
+# Usage: ./clock > clock.png
 # -- gene@cpan.org
 #
 use strict;
@@ -17,7 +18,7 @@ use constant HALF   => PI / 2;
 use constant DOUBLE => 2 * PI;
 
 # Set the maximum polar diameter and radius.
-my $max    = $ARGV[0] || 100;
+my $max    = shift || 100;
 my $radius = $max / 2;
 
 # XXX Why?
@@ -46,7 +47,7 @@ $clock->line( $radius, $radius, @$m, $blue );
 $clock->line( $radius, $radius, @$h, $black );
 
 # Render the clock.
-print $clock->png;  # Usage: ./clock > clock.png
+print $clock->png;
 #pic_output( $clock );
 
 sub time_point { # Return the current time as polar coordinates.
