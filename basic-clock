@@ -37,12 +37,15 @@ $clock->interlaced('true');
 # Add the circle to the clock.
 $clock->arc( $radius, $radius, $max, $max, 0, 360, $black );
 
+# Get polar coordinate of the current time.
 my( $s, $m, $h ) = time_point();
 
+# Draw the arms of the clock.
 $clock->line( $radius, $radius, @$s, $red );
 $clock->line( $radius, $radius, @$m, $blue );
 $clock->line( $radius, $radius, @$h, $black );
 
+# Render the clock.
 print $clock->png;  # Usage: ./clock > clock.png
 #pic_output( $clock );
 
