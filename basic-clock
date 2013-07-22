@@ -1,10 +1,13 @@
-#!/usr/bin/perl -w
+#!/usr/bin/perl
 use strict;
+use warnings;
+
 use GD;
 use Math::Trig;
 
-use constant PI => 2 * atan2(1,0);
-use constant HALF => PI / 2;
+# Define π based constants.
+use constant PI     => 2 * atan2(1,0);
+use constant HALF   => PI / 2;
 use constant DOUBLE => 2 * PI;
 
 my $max = $ARGV[0] || 100;
