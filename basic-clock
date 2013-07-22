@@ -1,8 +1,14 @@
 #!/usr/bin/perl
+#
+# Gnerate a pseudo-analog clock image with Perl.
+# -- gene@cpan.org
+#
 use strict;
 use warnings;
 
+# Import the GD graphics library.
 use GD;
+# Import the trigonometry library.
 use Math::Trig;
 
 # Define π based constants.
@@ -10,20 +16,25 @@ use constant PI     => 2 * atan2(1,0);
 use constant HALF   => PI / 2;
 use constant DOUBLE => 2 * PI;
 
-my $max = $ARGV[0] || 100;
+# Set the maximum polar diameter and radius.
+my $max    = $ARGV[0] || 100;
 my $radius = $max / 2;
 
+# XXX Why?
 #$max++ if $max % 2 == 0;
 
+# Instantiate our clock image.
 my $clock = GD::Image->new( $max, $max );
 
+# Set image properties.
 my $trans = $clock->colorAllocate(200,200,200);
 my $red   = $clock->colorAllocate(255,0,0);
 my $blue  = $clock->colorAllocate(0,0,255);
 my $black = $clock->colorAllocate(0,0,0);
+$clock->transparent($trans);
+$clock->interlaced('true');
 
-$clock->transparent( $trans );
-$clock->interlaced( 'true' );
+# Add the circle to the clock.
 $clock->arc( $radius, $radius, $max, $max, 0, 360, $black );
 
 my( $s, $m, $h ) = time_point();
@@ -35,27 +46,28 @@ $clock->line( $radius, $radius, @$h, $black );
 print $clock->png;  # Usage: ./clock > clock.png
 #pic_output( $clock );
 
-exit;
-
-sub time_point {
+sub time_point { # Return the current time as polar coordinates.
+  # Get the current local time.
   my( $s, $m, $h ) = (localtime)[0..2];
 #  printf "%02d:%02d:%02d\n", $h, $m, $s;
 
+  # Compute the analog time equivalents.
   $s = $s / 60 * DOUBLE - HALF;
   $m = $m / 60 * DOUBLE - HALF;
   $h = $h / 12 * DOUBLE - HALF;
 
+  # Replace the time values with polar coordinates.
   $_ = [$radius + $radius * cos $_, $radius + $radius * sin $_]
     for $s, $m, $h;
-
 #  print join( ', ', map { sprintf "[%.2f,%.2f]", @$_ } $s, $m, $h ), "\n";
 
   return $s, $m, $h;
 }
 
-sub pic_output {
+sub pic_output { # Render the analog clock
   my $self = shift;
   my $name = 'clock.png';
+  # Tell the system that we are going to print in "binary mode."
   binmode STDOUT;
   open F, '>'. $name or die "Can't open $name - $!\n";
   binmode F;
