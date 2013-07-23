@@ -18,14 +18,14 @@ use constant HALF   => PI / 2;
 use constant DOUBLE => 2 * PI;
 
 # Set the maximum polar diameter and radius.
-my $max    = shift || 100;
-my $radius = $max / 2;
+my $diameter = shift || 100;
+my $radius   = $diameter / 2;
 
 # XXX Why?
-#$max++ if $max % 2 == 0;
+#$diameter++ if $diameter % 2 == 0;
 
 # Instantiate our clock image.
-my $clock = GD::Image->new( $max, $max );
+my $clock = GD::Image->new( $diameter, $diameter );
 
 # Set image properties.
 my $trans = $clock->colorAllocate(200,200,200);
@@ -36,7 +36,7 @@ $clock->transparent($trans);
 $clock->interlaced('true');
 
 # Add the circle to the clock.
-$clock->arc( $radius, $radius, $max, $max, 0, 360, $black );
+$clock->arc( $radius, $radius, $diameter, $diameter, 0, 360, $black );
 
 # Get polar coordinate of the current time.
 my( $s, $m, $h ) = time_point();
