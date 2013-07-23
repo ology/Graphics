@@ -1,0 +1,26 @@
+#!/usr/bin/perl
+#
+# Show image file information.
+#
+use strict;
+use warnings;
+use Imager;
+
+Imager::init(log => "$0.log");
+
+my $name = $ARGV[0] || die "No source image provided\n";
+
+my $image = Imager->new();
+
+$image->open(file => $name) || die "Failed: $image->{ERRSTR}\n";
+
+my $colorcount = $image->getcolorcount(maxcolors => 512);
+
+printf "%s (%s) - X/Y: %d/%d, Channels: %d, Bits/Channel: %s, Virtual: %s, Colors: %d\n",
+    $name, $image->type,
+    $image->getwidth, $image->getheight,
+    $image->getchannels, $image->bits,
+    ($image->virtual ? 'Yes' : 'No'),
+    (defined($colorcount) ? $colorcount : '>512'),
+;
+
