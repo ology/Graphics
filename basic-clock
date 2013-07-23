@@ -47,8 +47,7 @@ $clock->line( $radius, $radius, @$m, $blue );
 $clock->line( $radius, $radius, @$h, $black );
 
 # Render the clock.
-print $clock->png;
-#output( $clock );
+output( $clock );
 
 sub time_point { # Return the current time as polar coordinates.
   # Get the current local time.
@@ -63,7 +62,7 @@ sub time_point { # Return the current time as polar coordinates.
   # Replace the time values with polar coordinates.
   $_ = [$radius + $radius * cos $_, $radius + $radius * sin $_]
     for $s, $m, $h;
-#  print join( ', ', map { sprintf "[%.2f,%.2f]", @$_ } $s, $m, $h ), "\n";
+  print join( ', ', map { sprintf "[%.2f,%.2f]", @$_ } $s, $m, $h ), "\n";
 
   return $s, $m, $h;
 }
