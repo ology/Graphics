@@ -48,7 +48,7 @@ $clock->line( $radius, $radius, @$h, $black );
 
 # Render the clock.
 print $clock->png;
-#pic_output( $clock );
+#output( $clock );
 
 sub time_point { # Return the current time as polar coordinates.
   # Get the current local time.
@@ -68,7 +68,7 @@ sub time_point { # Return the current time as polar coordinates.
   return $s, $m, $h;
 }
 
-sub pic_output { # Render the analog clock to a PNG file.
+sub output { # Render the analog clock to a PNG file.
   my $self = shift;
   my $name = "$0.png";
   # Print the image (in "binary mode").
