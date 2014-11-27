@@ -70,7 +70,7 @@ sub time2degrees
     # HH:MM:SS
     my( $h, $m, $s ) = split /:/, shift;
 
-    # Jitter by 60 seconds if no seconds are given
+    # Jitter within 59 seconds if no seconds are given
     $s = int(rand 6) . int(rand 10) unless $s;
 
     # Convert total seconds to degrees
