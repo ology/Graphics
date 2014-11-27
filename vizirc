@@ -4,11 +4,6 @@ use Modern::Perl '2012';
 use List::Util qw( maxstr minstr );
 use Parse::IRCLog;
 use GD::Graph::Polar;
-use Math::Trig;
-use constant PI     => 2 * atan2(1,0);
-use constant HALF   => PI / 2;
-use constant DOUBLE => 2 * PI;
-use constant FLARE  => 0.9 * PI; # arrowhead angle
 
 my $log = shift || 'irc.log';
 
