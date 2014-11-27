@@ -15,7 +15,7 @@ my $nicks;
 for my $event ( $irc->events )
 {
     next unless $event->{nick};
-    next if $event->{nick} eq 'GumbyPAN' || $event->{nick} eq 'shadowpaste';
+    next if $event->{nick} eq 'GumbyPAN' || $event->{nick} eq 'shadowpaste' || $event->{nick} eq 'perlbot';
     push @{ $nicks->{ $event->{nick} }{occurance} }, $event->{timestamp};
 }
 
@@ -24,7 +24,7 @@ for my $event ( $irc->events )
 {
     ( my $at = $event->{text} ) =~ s/^(\w+):\s.+$/$1/;
     push @{ $nicks->{ $event->{nick} }{at} }, $at
-        if exists $nicks->{$at};
+        if exists $nicks->{ $event->{nick} } && exists $nicks->{$at};
 }
 
 # Compute to coordinates
