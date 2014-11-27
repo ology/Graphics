@@ -1,0 +1,36 @@
+17:11:19 < rhollor> what that above does is read one line from 'my_input' and assign it to $mybinary
+17:11:51 < rhollor> but you should write it as $my_input instead
+17:12:43 < l00t_myself> rhollor: $mybinary is a binary i want to execute and as other said pipe input to
+17:13:14 < rhollor> okay then, I just didn't understand the problem. Sorry
+17:13:20 < l00t_myself> mauke: any chance to get a peek on it ?
+17:13:37 < mauke> it's at the office, sorry
+17:14:12 < l00t_myself> ok i probablly go back to my shell then
+17:14:13 < l00t_myself> lol
+17:14:24 < anno> isn't that what IPC::Open2 and IPC::Run handle?
+17:14:53 < mauke> not open2
+17:18:20 < shadowpaste> "mauke" at 217.168.150.38 pasted "sub pipe_process { my ($input," (26 lines) at http://fpaste.scsys.co.uk/447356
+17:18:35 < mauke> l00t_myself: ^ the approximate code, untested
+17:18:51 < mauke> and rather lacking in error handling
+17:19:09 < Grinnz_> yolo edition
+17:20:48 < l00t_myself> would be somthing like open my $myinput, '| mybinary'
+17:21:33 < mauke> my $output = pipe_process "my input", "mybinary";  # with your example
+17:21:39 < l00t_myself> http://aaroncrane.co.uk/talks/pipes_and_processes/paper.html
+17:21:40  * GumbyPAN CPAN Upload: Dancer-1.3133-TRIAL by YANICK http://metacpan.org/release/YANICK/Dancer-1.3133-TRIAL
+17:21:58 < l00t_myself> smewhere in the middle there is the how to pipe input,
+17:22:13 < Grinnz_> perldoc open also tells you how to do that, but better
+17:22:22 < Grinnz_> -f open, rather
+17:22:59 < Grinnz_> ah, he does include the proper form of open as well
+17:25:33 < l00t_myself> but basically it takes much more than the shell equivalent
+17:33:20 < anno> $grandpid
+17:34:01 < waressearcher2> can I ask about SDL-perl here ?
+17:41:43  * GumbyPAN CPAN Upload: CTM-0.181 by WEEBLE http://metacpan.org/release/WEEBLE/CTM-0.181
+17:51:46  * GumbyPAN CPAN Upload: PYX-GraphViz-0.01 by SKIM http://metacpan.org/release/SKIM/PYX-GraphViz-0.01
+17:55:21 < ology> waressearcher2: Ask away! Maybe someone will know!
+17:55:48 < waressearcher2> what are notable games written in SDL-perl ?
+17:56:15 < Grinnz_> then again, maybe not
+17:57:21 < go|dfish> waressearcher2: Frozen Bubble
+17:57:47 < ology> https://github.com/PerlGameDev/SDL_Manual is a possibility? Just googling...
+17:58:10 < ology> Notable. Oops. Tha's a loaded term :)
+18:16:49  * GumbyPAN CPAN Upload: Dancer2-Plugin-Ajax-0.200000 by XSAWYERX http://metacpan.org/release/XSAWYERX/Dancer2-Plugin-Ajax-0.200000
+18:21:50  * GumbyPAN CPAN Upload: Map-Tube-Delhi-0.06 by MANWAR http://metacpan.org/release/MANWAR/Map-Tube-Delhi-0.06
+18:40:11 < ReScO> ello
