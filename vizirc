@@ -22,6 +22,7 @@ for my $event ( $irc->events )
 # Capture directed conversation
 for my $event ( $irc->events )
 {
+    next unless $event->{nick};
     ( my $at = $event->{text} ) =~ s/^(\w+):\s.+$/$1/;
     push @{ $nicks->{ $event->{nick} }{at} }, $at
         if exists $nicks->{ $event->{nick} } && exists $nicks->{$at};
@@ -43,7 +44,7 @@ for my $nick ( keys %$nicks )
 my $g = GD::Graph::Polar->new(
     size => 480,
     radius => $maxr,
-    ticks => $maxr,
+    ticks => 20,
 );
 
 # Add datapoints, labels & edges
