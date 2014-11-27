@@ -14,6 +14,7 @@ my $nicks;
 # Capture the number of occurances
 for my $event ( $irc->events )
 {
+    next unless $event->{nick};
     next if $event->{nick} eq 'GumbyPAN' || $event->{nick} eq 'shadowpaste';
     push @{ $nicks->{ $event->{nick} }{occurance} }, $event->{timestamp};
 }
