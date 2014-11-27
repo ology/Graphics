@@ -75,7 +75,7 @@ sub time2degrees
 
     # Convert total seconds to degrees
     $s += $h * 60 * 60 + $m * 60;
-    my $degrees = $s / 240;
+    my $degrees = $s / 240; # By proportion: d/360=s/86400
 
     return $degrees;
 }
