@@ -1,0 +1,85 @@
+#!/usr/bin/env perl
+use Modern::Perl '2012';
+
+use List::Util qw( maxstr minstr );
+use Parse::IRCLog;
+use GD::Graph::Polar;
+use Math::Trig;
+use constant PI     => 2 * atan2(1,0);
+use constant HALF   => PI / 2;
+use constant DOUBLE => 2 * PI;
+use constant FLARE  => 0.9 * PI; # arrowhead angle
+
+my $log = shift || 'irc.log';
+
+my $irc = Parse::IRCLog->parse($log);
+
+my $nicks;
+
+# Capture the number of occurances
+for my $event ( $irc->events )
+{
+    next if $event->{nick} eq 'GumbyPAN' || $event->{nick} eq 'shadowpaste';
+    push @{ $nicks->{ $event->{nick} }{occurance} }, $event->{timestamp};
+}
+
+# Capture directed conversation
+for my $event ( $irc->events )
+{
+    ( my $at = $event->{text} ) =~ s/^(\w+):\s.+$/$1/;
+    push @{ $nicks->{ $event->{nick} }{at} }, $at
+        if exists $nicks->{$at};
+}
+
+# Compute to coordinates
+my ( $theta, $r, $maxr );
+for my $nick ( keys %$nicks )
+{
+    $r = @{ $nicks->{$nick}{occurance} };
+    $maxr = $r if !$maxr || $r > $maxr;
+    $theta = maxstr @{ $nicks->{$nick}{occurance} };
+    $theta = time2degrees($theta);
+    $nicks->{$nick}{coordinate} = [ $r, $theta ];
+}
+#use Data::Dumper::Concise;warn Dumper$nicks;
+#warn "Mt:[$min,$max], Mr:[1,$maxr]\n";
+
+my $g = GD::Graph::Polar->new(
+    size => 480,
+    radius => $maxr,
+    ticks => $maxr,
+);
+
+# Add datapoints, labels & edges
+for my $nick ( keys %$nicks )
+{
+    my $r = $maxr - $nicks->{$nick}{coordinate}[0] + 1;
+    my $t = $nicks->{$nick}{coordinate}[1];
+    $g->addPoint( $r, $t );
+    $g->addString( $r, $t, $nick );
+    for my $at ( @{ $nicks->{$nick}{at} } )
+    {
+#        warn "NA:$nick -> $at\n";
+        my $atr = $maxr - $nicks->{$at}{coordinate}[0] + 1;
+        $g->addLine(
+            $r, $t,
+            $atr, $nicks->{$at}{coordinate}[1] 
+        );
+    }
+}
+
+print $g->draw;
+
+sub time2degrees
+{
+    # HH:MM:SS
+    my( $h, $m, $s ) = split /:/, shift;
+
+    # Jitter if no seconds are given
+    $s = int(rand 10) . int(rand 10) unless $s;
+
+    $s += $h * 60 * 60 + $m * 60;
+    my $degrees = $s / 240;
+
+    return $degrees;
+}
