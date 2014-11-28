@@ -14,18 +14,20 @@ my $nicks;
 # Capture the number of occurances
 for my $event ( $irc->events )
 {
-    next unless $event->{nick};
-    next if $event->{nick} eq 'GumbyPAN' || $event->{nick} eq 'shadowpaste' || $event->{nick} eq 'perlbot';
-    push @{ $nicks->{ $event->{nick} }{occurance} }, $event->{timestamp};
+    my $nick = $event->{nick};
+    next unless $nick;
+    next if $nick eq 'GumbyPAN' || $nick eq 'shadowpaste' || $nick eq 'perlbot';
+    push @{ $nicks->{$nick}{occurance} }, $event->{timestamp};
 }
 
 # Capture directed conversation
 for my $event ( $irc->events )
 {
-    next unless $event->{nick};
+    my $nick = $event->{nick};
+    next unless $nick;
     ( my $at = $event->{text} ) =~ s/^(\w+):\s.+$/$1/;
-    push @{ $nicks->{ $event->{nick} }{at} }, $at
-        if exists $nicks->{ $event->{nick} } && exists $nicks->{$at};
+    push @{ $nicks->{$nick}{at} }, $at
+        if exists $nicks->{$nick} && exists $nicks->{$at};
 }
 
 # Compute to coordinates
