@@ -71,14 +71,11 @@ print $g->draw;
 sub time2degrees
 {
     # HH:MM:SS
-    my( $h, $m, $s ) = split /:/, shift;
+    my( $h, $m ) = split /:/, shift;
 
-    # Jitter within 59 seconds if no seconds are given
-    $s = int(rand 6) . int(rand 10) unless $s;
-
-    # Convert total seconds to degrees
-    $s += $h * 60 * 60 + $m * 60;
-    my $degrees = $s / 240; # By proportion: d/360=s/86400
+    # Convert minutes to degrees
+    $m += $h * 60 + $m;
+    my $degrees = $m * 360 / 1440; # By proportion: deg/360=min/1440 per day
 
     return $degrees;
 }
