@@ -34,7 +34,7 @@ for my $nick ( keys %$nicks )
 {
     $r = @{ $nicks->{$nick}{occurance} };
     $maxr = $r if !$maxr || $r > $maxr;
-    $theta = maxstr @{ $nicks->{$nick}{occurance} };
+    $theta = minstr @{ $nicks->{$nick}{occurance} };
     $theta = time2degrees($theta);
     $nicks->{$nick}{coordinate} = [ $r, $theta ];
 }
@@ -44,7 +44,7 @@ for my $nick ( keys %$nicks )
 my $g = GD::Graph::Polar->new(
     size => 480,
     radius => $maxr,
-    ticks => 20,
+    ticks => scalar( keys %$nicks ),
 );
 
 # Add datapoints, labels & edges
