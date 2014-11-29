@@ -29,7 +29,7 @@ for my $event ( $irc->events )
         if exists $nicks->{$nick} && exists $nicks->{$at};
 }
 
-# Compute to coordinates
+# Compute coordinates
 my ( $theta, $r, $maxr );
 for my $nick ( keys %$nicks )
 {
