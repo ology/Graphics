@@ -36,7 +36,7 @@ for my $nick ( keys %$nicks )
 {
     $r = @{ $nicks->{$nick}{occurance} };
     $maxr = $r if !$maxr || $r > $maxr;
-    $theta = maxstr @{ $nicks->{$nick}{occurance} };
+    $theta = $nicks->{$nick}{occurance}[-1];
     $theta = time2degrees($theta);
     $nicks->{$nick}{coordinate} = [ $r, $theta ];
 }
