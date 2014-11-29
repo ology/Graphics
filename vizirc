@@ -1,7 +1,6 @@
 #!/usr/bin/env perl
 use Modern::Perl '2012';
 
-use List::Util qw( maxstr minstr );
 use Parse::IRCLog;
 use GD::Graph::Polar;
 
