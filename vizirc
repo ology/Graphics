@@ -50,7 +50,7 @@ my $g = GD::Graph::Polar->new(
 # Add datapoints, labels & edges
 for my $nick ( keys %$nicks )
 {
-    my $r = $maxr - $nicks->{$nick}{coordinate}[0];
+    my $r = $maxr - $nicks->{$nick}{coordinate}[0] + 1;
     my $t = $nicks->{$nick}{coordinate}[1];
     $g->addPoint( $r, $t );
 #    $g->addString( $r, $t, $nick );
