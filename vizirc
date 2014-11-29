@@ -72,7 +72,7 @@ sub time2degrees
     my( $h, $m ) = split /:/, shift;
 
     # Convert minutes to degrees
-    $m += $h * 60 + $m;
+    $m += $h * 60;
     my $degrees = $m * 360 / 1440; # By proportion: deg/360=min/1440 per day
 
     return $degrees;
