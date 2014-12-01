@@ -15,7 +15,7 @@ for my $event ( $irc->events )
 {
     my $nick = $event->{nick};
     next unless $nick;
-    next if $nick eq 'GumbyPAN' || $nick eq 'shadowpaste' || $nick eq 'perlbot';
+    next if $nick eq 'GumbyPAN' || $nick eq 'shadowpaste' || $nick eq 'perlbot' || $nick eq 'Paper-bot';
     push @{ $nicks->{$nick}{occurance} }, $event->{timestamp};
 }
 
