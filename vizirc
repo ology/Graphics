@@ -52,13 +52,13 @@ for my $nick ( keys %$nicks )
 {
     my $r = $maxr - $nicks->{$nick}{coordinate}[0] + 1;
     my $t = $nicks->{$nick}{coordinate}[1];
-    add_datapoint( $r, $t, $nick )
+    add_datapoint( $r, $t, $nick, $nicks );
 
     for my $at ( @{ $nicks->{$nick}{at} } )
     {
         my $atr = $maxr - $nicks->{$at}{coordinate}[0] + 1;
         my $att = $nicks->{$at}{coordinate}[1];
-        add_datapoint( $atr, $att, $at ) unless $nicks->{$at}{drawn};
+        add_datapoint( $atr, $att, $at, $nicks ) unless $nicks->{$at}{drawn};
         # TODO Color line based on how many times the nick occurs
         $g->addLine( $r, $t, $atr, $att );
     }
@@ -68,7 +68,7 @@ print $g->draw;
 
 sub add_datapoint
 {
-    my ( $r, $t, $nick ) = @_;
+    my ( $r, $t, $nick, $nicks ) = @_;
     $g->addPoint( $r, $t );
     $g->addString( $r, $t, $nick );
     $nicks->{$nick}{drawn}++;
