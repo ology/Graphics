@@ -6,6 +6,7 @@ use GD::Graph::Polar;
 
 my $log = shift || 'irc.log';
 
+# TODO --only
 my @interesting = @ARGV;
 
 my $irc = Parse::IRCLog->parse($log);
