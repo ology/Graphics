@@ -15,6 +15,7 @@ for my $event ( $irc->events )
 {
     my $nick = $event->{nick};
     next unless $nick;
+    # TODO --ignore
     next if $nick eq 'GumbyPAN' || $nick eq 'shadowpaste' || $nick eq 'perlbot' || $nick eq 'Paper-bot';
     push @{ $nicks->{$nick}{occurance} }, $event->{timestamp};
 }
@@ -58,6 +59,7 @@ for my $nick ( keys %$nicks )
         my $atr = $maxr - $nicks->{$at}{coordinate}[0] + 1;
         my $att = $nicks->{$at}{coordinate}[1];
         add_datapoint( $atr, $att, $at ) unless $nicks->{$at}{drawn};
+        # TODO Color line based on how many times the nick occurs
         $g->addLine( $r, $t, $atr, $att );
     }
 }
