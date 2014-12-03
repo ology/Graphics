@@ -6,6 +6,8 @@ use GD::Graph::Polar;
 
 my $log = shift || 'irc.log';
 
+my @interesting = @ARGV;
+
 my $irc = Parse::IRCLog->parse($log);
 
 my $nicks;
@@ -48,7 +50,8 @@ my $g = GD::Graph::Polar->new(
 );
 
 # Add datapoints, labels & edges
-for my $nick ( keys %$nicks )
+@interesting = keys %$nicks unless @interesting;
+for my $nick ( @interesting )
 {
     my $r = $maxr - $nicks->{$nick}{coordinate}[0] + 1;
     my $t = $nicks->{$nick}{coordinate}[1];
