@@ -70,7 +70,7 @@ for my $nick ( @$show )
     {
         my $atr = $maxr - $nicks->{$at}{coordinate}[0] + 1;
         my $att = $nicks->{$at}{coordinate}[1];
-        add_datapoint( $atr, $att, $at, $nicks ) unless $nicks->{$at}{drawn};
+        add_datapoint( $atr, $att, $at, $nicks );
         # TODO Color line based on how many times the nick occurs
         $g->addLine( $r, $t, $atr, $att );
     }
@@ -83,6 +83,7 @@ sub usage { "perl $0 --log chat.log [--show Tarzan --show Jane] [--hide xBot --h
 sub add_datapoint
 {
     my ( $r, $t, $nick, $nicks ) = @_;
+    return if $nicks->{$nick}{drawn};
     $g->addPoint( $r, $t );
     $g->addString( $r, $t, $nick );
     $nicks->{$nick}{drawn}++;
@@ -99,3 +100,5 @@ sub time2degrees
 
     return $degrees;
 }
+__END__
+:!perl % --log perl.log --hide GumbyPAN > vizirc.png
