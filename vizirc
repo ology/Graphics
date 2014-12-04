@@ -17,11 +17,9 @@ GetOptions(
     'hide:s@' => \$hide,
 ) or say usage();
 
-# TODO Consolidate @interesting syntax below?
-my @interesting = @$show;
-
 my $irc = Parse::IRCLog->parse($log);
 
+# People seen
 my $nicks;
 
 # Capture the number of occurances
@@ -61,8 +59,8 @@ my $g = GD::Graph::Polar->new(
 );
 
 # Add datapoints, labels & edges
-@interesting = keys %$nicks unless @interesting;
-for my $nick ( @interesting )
+@$show = keys %$nicks unless @$show;
+for my $nick ( @$show )
 {
     my $r = $maxr - $nicks->{$nick}{coordinate}[0] + 1;
     my $t = $nicks->{$nick}{coordinate}[1];
