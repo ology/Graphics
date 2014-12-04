@@ -59,7 +59,7 @@ my $g = GD::Graph::Polar->new(
 );
 
 # Add datapoints, labels & edges
-@$show = keys %$nicks unless @$show;
+@$show = keys %$nicks unless $show && @$show;
 for my $nick ( @$show )
 {
     my $r = $maxr - $nicks->{$nick}{coordinate}[0] + 1;
