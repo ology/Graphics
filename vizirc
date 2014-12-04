@@ -3,11 +3,22 @@ use Modern::Perl '2012';
 
 use Parse::IRCLog;
 use GD::Graph::Polar;
+use Getopt::Long;
+use List::MoreUtils qw( any );
 
-my $log = shift || 'irc.log';
+die usage() unless @ARGV;
 
-# TODO --only
-my @interesting = @ARGV;
+my $log;  # Log file to parse
+my $show; # Nicks to show
+my $hide; # Nicks to hide
+GetOptions(
+    'log=s'   => \$log,
+    'show:s@' => \$show,
+    'hide:s@' => \$hide,
+) or say usage();
+
+# TODO Consolidate @interesting syntax below?
+my @interesting = @$show;
 
 my $irc = Parse::IRCLog->parse($log);
 
@@ -18,8 +29,7 @@ for my $event ( $irc->events )
 {
     my $nick = $event->{nick};
     next unless $nick;
-    # TODO --ignore
-    next if $nick eq 'GumbyPAN' || $nick eq 'shadowpaste' || $nick eq 'perlbot' || $nick eq 'Paper-bot';
+    next if any { $_ eq $nick } @$hide;
     push @{ $nicks->{$nick}{occurance} }, $event->{timestamp};
 }
 
@@ -69,6 +79,8 @@ for my $nick ( @interesting )
 }
 
 print $g->draw;
+
+sub usage { "perl $0 --log chat.log [--show Abc --show Def] [--hide uvw --hide xyz]" }
 
 sub add_datapoint
 {
