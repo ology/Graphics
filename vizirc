@@ -11,10 +11,12 @@ die usage() unless @ARGV;
 my $log;  # Log file to parse
 my $show; # Nicks to show
 my $hide; # Nicks to hide
+my $label = 0; # Show nick labels;
 GetOptions(
     'log=s'   => \$log,
     'show:s@' => \$show,
     'hide:s@' => \$hide,
+    'label'   => \$label,
 ) or say usage();
 
 my $irc = Parse::IRCLog->parse($log);
@@ -64,13 +66,13 @@ for my $nick ( @$show )
 {
     my $r = $maxr - $nicks->{$nick}{coordinate}[0] + 1;
     my $t = $nicks->{$nick}{coordinate}[1];
-    add_datapoint( $r, $t, $nick, $nicks );
+    add_datapoint( $r, $t, $nick, $nicks, $label );
 
     for my $at_nick ( @{ $nicks->{$nick}{at_nick} } )
     {
         my $atr = $maxr - $nicks->{$at_nick}{coordinate}[0] + 1;
         my $att = $nicks->{$at_nick}{coordinate}[1];
-        add_datapoint( $atr, $att, $at_nick, $nicks );
+        add_datapoint( $atr, $att, $at_nick, $nicks, $label );
         # TODO Color line based on how many times the nick occurs
         $g->addLine( $r, $t, $atr, $att );
     }
@@ -82,10 +84,10 @@ sub usage { "perl $0 --log chat.log [--show Tarzan --show Jane] [--hide xBot --h
 
 sub add_datapoint
 {
-    my ( $r, $t, $nick, $nicks ) = @_;
+    my ( $r, $t, $nick, $nicks, $label ) = @_;
     return if $nicks->{$nick}{drawn};
     $g->addPoint( $r, $t );
-    $g->addString( $r, $t, $nick );
+    $g->addString( $r, $t, $nick ) if $label;
     $nicks->{$nick}{drawn}++;
 }
 
