@@ -80,7 +80,9 @@ for my $nick ( @$show )
 
 print $g->draw;
 
-sub usage { "perl $0 --log chat.log [--show Tarzan --show Jane] [--hide xBot --hide yFool]" }
+sub usage {
+    "perl $0 --log chat.log [--label] [--show Tarzan --show Jane] [--hide xBot --hide yFool]"
+}
 
 sub add_datapoint
 {
