@@ -36,9 +36,9 @@ for my $event ( $irc->events )
 {
     my $nick = $event->{nick};
     next unless $nick;
-    ( my $at = $event->{text} ) =~ s/^(\w+):\s.+$/$1/;
-    push @{ $nicks->{$nick}{at} }, $at
-        if exists $nicks->{$nick} && exists $nicks->{$at};
+    ( my $at_nick = $event->{text} ) =~ s/^(\w+):\s.+$/$1/;
+    push @{ $nicks->{$nick}{at_nick} }, $at_nick
+        if exists $nicks->{$nick} && exists $nicks->{$at_nick};
 }
 
 # Compute coordinates
@@ -66,11 +66,11 @@ for my $nick ( @$show )
     my $t = $nicks->{$nick}{coordinate}[1];
     add_datapoint( $r, $t, $nick, $nicks );
 
-    for my $at ( @{ $nicks->{$nick}{at} } )
+    for my $at_nick ( @{ $nicks->{$nick}{at_nick} } )
     {
-        my $atr = $maxr - $nicks->{$at}{coordinate}[0] + 1;
-        my $att = $nicks->{$at}{coordinate}[1];
-        add_datapoint( $atr, $att, $at, $nicks );
+        my $atr = $maxr - $nicks->{$at_nick}{coordinate}[0] + 1;
+        my $att = $nicks->{$at_nick}{coordinate}[1];
+        add_datapoint( $atr, $att, $at_nick, $nicks );
         # TODO Color line based on how many times the nick occurs
         $g->addLine( $r, $t, $atr, $att );
     }
