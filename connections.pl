@@ -48,7 +48,7 @@ for my $r ( keys %$rs )
 #print $g->as_graphml;
 #print $g->as_svg;
 
-# Use Graphviz to display the graph
+# Use Graphviz to output the graph as SVG
 my ( $fh, $filename ) = tempfile();
 print $fh $g->as_graphviz;
 my @cmd = ( '/usr/local/bin/twopi', '-Tsvg', $filename );
