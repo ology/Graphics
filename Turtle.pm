@@ -1,4 +1,4 @@
-package Turtle;
+package Data::Turtle;
 
 use Moo;
 
@@ -10,7 +10,7 @@ Turtle - Basic Turtle Movement and State Operations
 
 =head1 SYNOPSIS
 
-  use Turtle;
+  use Data::Turtle;
   my $turtle = Turtle->new;
   $turtle->pen_up;
   $turtle->turn(45);
