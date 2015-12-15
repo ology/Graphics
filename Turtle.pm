@@ -23,9 +23,9 @@ has y => (
     lazy => 1,
     builder => \&_init_y,
 );
-has orient => (
+has heading => (
     is => 'rw',
-    builder => \&_init_orient,
+    builder => \&_init_heading,
 );
 has status => (
     is => 'rw',
@@ -50,7 +50,7 @@ sub _init_y {
     return $self->height / 2;
 }
 
-sub _init_orient {
+sub _init_heading {
     my $self = shift;
     return -90 % 360;
 }
@@ -59,7 +59,7 @@ sub home {
     my $self = shift;
     $self->x( $self->_init_x );
     $self->y( $self->_init_y );
-    $self->orient( $self->_init_orient );
+    $self->heading( $self->_init_heading );
 }
 
 sub raise {
@@ -75,7 +75,7 @@ sub lower {
 sub turn {
     my $self = shift;
     my $degrees = shift // 0;
-    $self->orient( ( $self->orient + $degrees ) % 360 );
+    $self->heading( ( $self->heading + $degrees ) % 360 );
 }
 
 sub right {
@@ -86,7 +86,7 @@ sub right {
 sub left {
     my $self = shift;
     my $degrees = shift // 0;
-    $self->orient( ( $self->orient - $degrees ) % 360 );
+    $self->heading( ( $self->heading - $degrees ) % 360 );
 }
 
 sub where {
@@ -99,7 +99,7 @@ sub get_state {
     return
         $self->x,
         $self->y,
-        $self->orient,
+        $self->heading,
         $self->status,
         $self->color,
         $self->line_width;
@@ -107,10 +107,10 @@ sub get_state {
 
 sub set_state {
     my $self = shift;
-    my ( $x, $y, $orient, $status, $color, $line_width ) = @_;
+    my ( $x, $y, $heading, $status, $color, $line_width ) = @_;
     $self->x($x);
     $self->y($y);
-    $self->orient($orient);
+    $self->heading($heading);
     $self->status($status);
     $self->color($color);
     $self->line_width($line_width);
@@ -120,8 +120,8 @@ sub forward {
     my $self = shift;
     my $step = shift // 1;
 
-    my $x = $step * cos( $self->orient * $K );
-    my $y = $step * sin( $self->orient * $K );
+    my $x = $step * cos( $self->heading * $K );
+    my $y = $step * sin( $self->heading * $K );
 
     my $xo = $self->x;
     my $yo = $self->y;
@@ -145,7 +145,7 @@ sub backward {
 
 sub mirror {
     my $self = shift;
-    $self->orient( $self->orient * -1 );
+    $self->heading( $self->heading * -1 );
 }
 
 1;
