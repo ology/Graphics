@@ -25,7 +25,7 @@ Turtle - Basic Turtle Movement and State Operations
   $turtle->mirror;
   $turtle->backward(10);
   my @state = $turtle->get_state;
-  $turtle->set_state( $x, $y, $heading, $status, $pen_color, $pen_size );
+  $turtle->set_state( $x, $y, $heading, $pen_status, $pen_color, $pen_size );
 
 =head1 DESCRIPTION
 
@@ -58,13 +58,13 @@ has heading => (
     builder => \&_init_heading,
 );
 
-=head2 status
+=head2 pen_status
 
 Is the pen is up or down?
 
 =cut
 
-has status => (
+has pen_status => (
     is => 'rw',
     default => sub { 1 }, # Pen down
 );
@@ -126,7 +126,7 @@ Raise the pen head to stop drawing.
 
 sub pen_up {
     my $self = shift;          
-    $self->status(0);
+    $self->pen_status(0);
 }
 
 =head2 pen_down()
@@ -139,7 +139,7 @@ Lower the pen head to begin drawing.
 
 sub pen_down {
     my $self = shift;          
-    $self->status(1);
+    $self->pen_status(1);
 }
 
 =head2 turn()
@@ -202,7 +202,7 @@ sub position {
 
 Return the following settings as a list:
 
- x, y, heading, status, pen_color, pen_size
+ x, y, heading, pen_status, pen_color, pen_size
 
 =cut
 
@@ -212,14 +212,14 @@ sub get_state {
         $self->x,
         $self->y,
         $self->heading,
-        $self->status,
+        $self->pen_status,
         $self->pen_color,
         $self->pen_size;
 }
 
 =head2 set_state()
 
-  $turtle->set_state( $x, $y, $heading, $status, $pen_color, $pen_size );
+  $turtle->set_state( $x, $y, $heading, $pen_status, $pen_color, $pen_size );
 
 Set the turtle state with the given parameters.
 
@@ -227,11 +227,11 @@ Set the turtle state with the given parameters.
 
 sub set_state {
     my $self = shift;
-    my ( $x, $y, $heading, $status, $pen_color, $pen_size ) = @_;
+    my ( $x, $y, $heading, $pen_status, $pen_color, $pen_size ) = @_;
     $self->x($x);
     $self->y($y);
     $self->heading($heading);
-    $self->status($status);
+    $self->pen_status($pen_status);
     $self->pen_color($pen_color);
     $self->pen_size($pen_size);
 }
@@ -257,7 +257,7 @@ sub forward {
     $self->x( $x + $xo );
     $self->y( $y + $yo );
 
-    if ( $self->status == 1 ) {
+    if ( $self->pen_status == 1 ) {
         return
             int($xo), int($yo),
             int($self->x), int($self->y),
@@ -310,7 +310,7 @@ sub goto {
     $self->x($x);
     $self->y($y);
 
-    if ( $self->status == 1 ) {
+    if ( $self->pen_status == 1 ) {
         return
             $xo, $yo,
             $self->x, $self->y,
