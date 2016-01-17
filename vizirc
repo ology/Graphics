@@ -18,7 +18,7 @@ GetOptions(
     'show:s@' => \$show,
     'hide:s@' => \$hide,
     'label'   => \$label,
-) or say usage();
+) or print usage(), "\n";
 
 my $irc = Parse::IRCLog->parse($log);
 
@@ -82,7 +82,7 @@ for my $nick ( @$show )
 print $g->draw;
 
 sub usage {
-    "perl $0 --log chat.log [--label] [--show Tarzan --show Jane] [--hide xBot --hide yFool]"
+    "perl $0 --log chat.log [--label] [--show Tarzan --show Jane] [--hide Bot --hide Fool]"
 }
 
 sub add_datapoint
