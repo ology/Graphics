@@ -1,0 +1,84 @@
+#!/usr/bin/env perl
+#
+# Restaurant location data taken from:
+# https://docs.mongodb.org/getting-started/shell/import-data/#procedure
+# Neighborhood lat/long:
+# https://raw.githubusercontent.com/mongodb/docs-assets/geospatial/neighborhoods.json
+#
+# mongo login:
+# mongod --auth
+# mongo -u gene -p --authenticationDatabase "admin"
+#
+# db.restaurants.update( {}, { $set : { "address.type" : "Point" } }, false, true );
+#
+use strict;
+use warnings;
+
+use MongoDB;
+use YAML;
+use Statistics::R;
+use Math::Geometry::Planar;
+use Algorithm::TravelingSalesman::BitonicTour;
+
+my $borough = shift || 'Manhattan';
+my $grade   = shift || 'A';
+my $score   = shift // 70;
+
+my $config = shift || 'creds.yaml';
+my $cfg = YAML::LoadFile($config);
+
+my $criteria = {
+    borough        => $borough,
+    'grades.grade' => $grade,
+    'grades.score' => { '$gt' => 0 + $score },
+#    cuisine        => qr/american/i,
+};
+ 
+my $client = MongoDB::MongoClient->new(
+    host     => $cfg->{mongo}{dbhost},
+    db_name  => $cfg->{mongo}{dbname},
+    username => $cfg->{mongo}{dbuser},
+    password => $cfg->{mongo}{dbpass},
+);
+
+my $collection = $client->ns('test.restaurants');
+my $docs       = $collection->find($criteria);
+
+my $tsp = Algorithm::TravelingSalesman::BitonicTour->new;
+
+my $i = 0;
+
+while ( my $doc = $docs->next) {
+    printf "%d. %s\n", ++$i, $doc->{name};
+    $tsp->add_point( @{ $doc->{address}{coordinates} } );
+}
+
+my ( $len, @coords ) = $tsp->solve;
+
+my $polygon = Math::Geometry::Planar->new;
+$polygon->points( [ @coords[ 1 .. $#coords ] ] );
+my $centroid = $polygon->centroid;
+
+# Produce a map with points and path
+my $R = Statistics::R->new();
+
+$R->run( 'library(ggmap)' );
+
+my $file = "$0.png";
+$R->run( "png('$file')" );
+
+$R->run( "centroid <- get_map( location = c(lon = $centroid->[0], lat = $centroid->[1]), zoom = 12 )" );
+
+$R->set( 'X', [ map { $_->[0] } @coords ] );
+$R->set( 'Y', [ map { $_->[1] } @coords ] );
+$R->run( 'df <- data.frame(X, Y)' );
+$R->run( "names(df) <- c('lon','lat')" );
+
+my $gg_cmd = 'ggmap( centroid, aes(lon, lat) )';
+$gg_cmd .= ' + geom_point( data = df, colour = "darkred" )';
+$gg_cmd .= ' + geom_path( data = df, color = "darkgray", size = 0.5 )';
+$R->run($gg_cmd);
+
+$R->run( 'dev.off()' );
+
+$R->stop();
