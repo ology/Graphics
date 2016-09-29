@@ -56,6 +56,8 @@ for my $event ( $irc->events )
     my $nick = $event->{nick};
     next unless $nick;
 
+    next if any { $_ eq $nick } @$hide;
+
     my ( $hours, $mins ) = split /:/, $event->{timestamp};
 
     my $ts = DateTime->new(
@@ -70,8 +72,6 @@ for my $event ( $irc->events )
 
     next if $begin && DateTime->compare( $ts, $begin_dt ) == -1;
     last if $end && DateTime->compare( $ts, $end_dt ) == 1;
-
-    next if any { $_ eq $nick } @$hide;
 
     push @{ $nicks->{$nick}{occurance} }, $event->{timestamp};
 }
