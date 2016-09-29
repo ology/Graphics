@@ -15,9 +15,9 @@ my $log;  # Log file to parse
 my $show; # Nicks to show
 my $hide; # Nicks to hide
 my $label = 0; # Show nick labels;
-my $start;
-my $begin;
-my $end;
+my $start; # Initial timestamp
+my $begin; # Beginning time to show
+my $end;   # Time to stop showing
 GetOptions(
     'log=s'   => \$log,
     'show:s@' => \$show,
