@@ -6,6 +6,8 @@ use Parse::IRCLog;
 use GD::Graph::Polar;
 use Getopt::Long;
 use List::MoreUtils qw( any );
+use DateTime;
+use DateTime::Format::DateParse;
 
 die usage() unless @ARGV;
 
@@ -13,24 +15,64 @@ my $log;  # Log file to parse
 my $show; # Nicks to show
 my $hide; # Nicks to hide
 my $label = 0; # Show nick labels;
+my $start;
+my $begin;
+my $end;
 GetOptions(
     'log=s'   => \$log,
     'show:s@' => \$show,
     'hide:s@' => \$hide,
     'label'   => \$label,
+    'start=s' => \$start,
+    'begin=s' => \$begin,
+    'end=s'   => \$end,
 ) or print usage(), "\n";
+
+my $start_dt = $start ? DateTime::Format::DateParse->parse_datetime($start) : DateTime->now;
+my $begin_dt = $begin ? DateTime::Format::DateParse->parse_datetime($begin) : $start_dt;
+my $end_dt   = $end ? DateTime::Format::DateParse->parse_datetime($end) : undef;
 
 my $irc = Parse::IRCLog->parse($log);
 
 # People seen
 my $nicks;
 
+# Date-time increment for timestamping
+my $counter_dt = DateTime->new(
+    year       => $start_dt->year,
+    month      => $start_dt->month,
+    day        => $start_dt->day,
+    hour       => 0,
+    minute     => 0,
+    second     => 0,
+    time_zone  => 'local',
+);
+
 # Capture the number of occurances
 for my $event ( $irc->events )
 {
+    $counter_dt->add( days => 1 ) if $event->{text} =~ /^--- Day changed/;
+
     my $nick = $event->{nick};
     next unless $nick;
+
+    my ( $hours, $mins ) = split /:/, $event->{timestamp};
+
+    my $ts = DateTime->new(
+        year       => $counter_dt->year,
+        month      => $counter_dt->month,
+        day        => $counter_dt->day,
+        hour       => $hours,
+        minute     => $mins,
+        second     => 0,
+        time_zone  => 'local',
+    );
+
+    next if $begin && DateTime->compare( $ts, $begin_dt ) == -1;
+    last if $end && DateTime->compare( $ts, $end_dt ) == 1;
+
     next if any { $_ eq $nick } @$hide;
+
     push @{ $nicks->{$nick}{occurance} }, $event->{timestamp};
 }
 
@@ -82,7 +124,20 @@ for my $nick ( @$show )
 print $g->draw;
 
 sub usage {
-    "perl $0 --log chat.log [--label] [--show Tarzan --show Jane] [--hide Bot --hide Fool]"
+"perl $0 --log chat.log
+         [--label]
+         [--show Tarzan --show Jane] [--hide Bot --hide Fool]
+         [--start '2000-01-01 00:00:00']
+         [--begin '2000-01-05 00:00:00'] [--end '2000-01-06 00:00:00']
+
+* start sets the initial timestamp
+* begin sets the timestamp from which to being recording
+* end sets the timestamp from which to stop recording
+
+If there are no start, begin or end points, the entire log is shown.
+If there is no start set, the current date is used.
+If there is no begin set, the start of the log is shown.
+If there is no end point set, the end of the log is shown."
 }
 
 sub add_datapoint
@@ -106,4 +161,4 @@ sub time2degrees
     return $degrees;
 }
 __END__
-:!perl % --log perl.log --hide GumbyPAN > vizirc.png
+:!perl % --log perl.log --start '2000-01-01 00:00:00' --end '2000-01-03 00:00:00' > vizirc.png
