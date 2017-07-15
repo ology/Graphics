@@ -21,7 +21,14 @@ my $grade   = shift || 'A';
 my $score   = shift // 70;
 
 my $config = shift || 'creds.yaml';
-my $cfg = YAML::LoadFile($config);
+my $cfg    = YAML::LoadFile($config);
+
+my $client = MongoDB::MongoClient->new(
+    host     => $cfg->{mongo}{dbhost},
+    db_name  => $cfg->{mongo}{dbname},
+    username => $cfg->{mongo}{dbuser},
+    password => $cfg->{mongo}{dbpass},
+);
 
 my $criteria = {
     borough        => $borough,
@@ -29,13 +36,6 @@ my $criteria = {
     'grades.score' => { '$gt' => 0 + $score },
 #    cuisine        => qr/american/i,
 };
- 
-my $client = MongoDB::MongoClient->new(
-    host     => $cfg->{mongo}{dbhost},
-    db_name  => $cfg->{mongo}{dbname},
-    username => $cfg->{mongo}{dbuser},
-    password => $cfg->{mongo}{dbpass},
-);
 
 my $collection = $client->ns('test.restaurants');
 my $docs       = $collection->find($criteria);
