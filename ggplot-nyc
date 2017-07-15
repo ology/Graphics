@@ -1,24 +1,20 @@
 #!/usr/bin/env perl
 #
-# Restaurant location data taken from:
-# https://docs.mongodb.org/getting-started/shell/import-data/#procedure
-# Neighborhood lat/long:
-# https://raw.githubusercontent.com/mongodb/docs-assets/geospatial/neighborhoods.json
+# Restaurant location data:
+# https://docs.mongodb.org/getting-started/shell/import-data/
 #
-# mongo login:
 # mongod --auth
 # mongo -u gene -p --authenticationDatabase "admin"
-#
-# db.restaurants.update( {}, { $set : { "address.type" : "Point" } }, false, true );
+# db.restaurants.findOne({},{_id:0}) # for instance
 #
 use strict;
 use warnings;
 
-use MongoDB;
-use YAML;
-use Statistics::R;
-use Math::Geometry::Planar;
 use Algorithm::TravelingSalesman::BitonicTour;
+use Math::Geometry::Planar;
+use MongoDB;
+use Statistics::R;
+use YAML;
 
 my $borough = shift || 'Manhattan';
 my $grade   = shift || 'A';
@@ -49,8 +45,9 @@ my $tsp = Algorithm::TravelingSalesman::BitonicTour->new;
 my $i = 0;
 
 while ( my $doc = $docs->next) {
-    printf "%d. %s\n", ++$i, $doc->{name};
-    $tsp->add_point( @{ $doc->{address}{coordinates} } );
+    my @point = @{ $doc->{address}{coord} };
+    printf "%d. %s [%s,%s]\n", ++$i, $doc->{name}, @point;
+    $tsp->add_point(@point);
 }
 
 my ( $len, @coords ) = $tsp->solve;
@@ -60,6 +57,7 @@ $polygon->points( [ @coords[ 1 .. $#coords ] ] );
 my $centroid = $polygon->centroid;
 
 # Produce a map with points and path
+print "Producing map...\n";
 my $R = Statistics::R->new();
 
 $R->run( 'library(ggmap)' );
@@ -82,3 +80,4 @@ $R->run($gg_cmd);
 $R->run( 'dev.off()' );
 
 $R->stop();
+print "Done.\n";
