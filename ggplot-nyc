@@ -10,11 +10,11 @@
 use strict;
 use warnings;
 
+use YAML;
+use MongoDB;
 use Algorithm::TravelingSalesman::BitonicTour;
 use Math::Geometry::Planar;
-use MongoDB;
 use Statistics::R;
-use YAML;
 
 my $borough = shift || 'Manhattan';
 my $grade   = shift || 'A';
@@ -65,12 +65,13 @@ $R->run( 'library(ggmap)' );
 my $file = "$0.png";
 $R->run( "png('$file')" );
 
-$R->run( "centroid <- get_map( location = c(lon = $centroid->[0], lat = $centroid->[1]), zoom = 12 )" );
-
 $R->set( 'X', [ map { $_->[0] } @coords ] );
 $R->set( 'Y', [ map { $_->[1] } @coords ] );
 $R->run( 'df <- data.frame(X, Y)' );
 $R->run( "names(df) <- c('lon','lat')" );
+
+$R->run( "center <- c($centroid->[0], $centroid->[1])" );
+$R->run( "centroid <- get_googlemap( center=center, scale=2, zoom=12 )" );
 
 my $gg_cmd = 'ggmap( centroid, aes(lon, lat) )';
 $gg_cmd .= ' + geom_point( data = df, colour = "darkred" )';
