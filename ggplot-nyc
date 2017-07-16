@@ -50,7 +50,7 @@ while ( my $doc = $docs->next) {
     $coord_name{ join ',', @point } = $doc->{name};
 }
 
-my ( $len, @coords ) = $tsp->solve;
+my ( undef, @coords ) = $tsp->solve;
 
 my $i = 0;  # Counter
 
