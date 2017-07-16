@@ -69,7 +69,7 @@ for my $coord (@coords) {
     my $point = join ',', $coord->[1], $coord->[0];  # Google maps wants lat/lon
 
     my $key = join ',', @$coord;
-    $coord_name{$key} =~ s/'/`/g;
+    $coord_name{$key} =~ s/'/`/g;  # Single quotes conflict with the marker
     $map->add_marker(
         point => $coord,
         html  => qq|<div id="content"><h3 id="firstHeading" class="firstHeading">$coord_name{$key}</h3><a href="https://www.google.com/maps/dir//$point">Directions to here</a></div>|,
