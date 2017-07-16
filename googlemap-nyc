@@ -65,9 +65,6 @@ my $map = HTML::GoogleMaps::V3->new(
 $map->zoom(12);
 $map->center($centroid);
 
-my $i = 0;  # Counter
-
-#print "Optimal path:\n";
 for my $coord (@coords) {
     my $key = join ',', @$coord;
     $coord_name{$key} =~ s/'/`/g;
@@ -75,7 +72,6 @@ for my $coord (@coords) {
         point => $coord,
         html  => qq|<div id="content"><h3 id="firstHeading" class="firstHeading">$coord_name{$key}</h3></div>|,
     );
-#    printf "\t%d. %s [%s]\n", ++$i, $coord_name{$key}, $key;
 }
 
 $map->add_polyline( points => \@coords );
