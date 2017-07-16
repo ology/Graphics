@@ -62,17 +62,24 @@ my $map = HTML::GoogleMaps::V3->new( height => 800, width => 800 );
 $map->zoom(12);
 $map->center($centroid);
 
+my $base  = 'https://www.google.com/maps/dir';
+my $multi = $base;  # Multiple point path accumulator
+
 for my $coord (@coords) {
     my $point = join ',', $coord->[1], $coord->[0];  # Google maps wants lat/lon
+
+    $multi .= "/$point";
 
     my $key = join ',', @$coord;
     $coord_name{$key} =~ s/'/`/g;  # Single quotes conflict with the marker
 
     $map->add_marker(
         point => $coord,
-        html  => qq|<div id="content"><h3 id="firstHeading" class="firstHeading">$coord_name{$key}</h3><a href="https://www.google.com/maps/dir/$point">Directions to here</a></div>|,
+        html  => qq|<div id="content"><h3 id="firstHeading" class="firstHeading">$coord_name{$key}</h3><a href="$base/$point">Directions to here</a></div>|,
     );
 }
+
+warn "Optimal path driving directions:\n$multi\n";
 
 $map->add_polyline( points => \@coords );
 
