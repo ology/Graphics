@@ -19,6 +19,7 @@ my $borough = shift || 'Manhattan';
 my $grade   = shift || 'A';
 my $score   = shift // 70;
 my $config  = shift || 'creds.yaml';
+my $db      = 'test.restaurants';
 
 my $cfg = YAML::LoadFile($config);
 
@@ -36,7 +37,7 @@ my $criteria = {
     'grades.score' => { '$gt' => 0 + $score },
 #    cuisine        => qr/american/i,
 };
-my $collection = $client->ns('test.restaurants');
+my $collection = $client->ns($db);
 my $docs       = $collection->find($criteria);
 
 my $tsp = Algorithm::TravelingSalesman::BitonicTour->new;
