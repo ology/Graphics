@@ -58,10 +58,7 @@ my $polygon = Math::Geometry::Planar->new;
 $polygon->points( [ @coords[ 1 .. $#coords ] ] );
 my $centroid = $polygon->centroid;
 
-my $map = HTML::GoogleMaps::V3->new(
-    height => 800,
-    width  => 800,
-);
+my $map = HTML::GoogleMaps::V3->new( height => 800, width => 800 );
 $map->zoom(12);
 $map->center($centroid);
 
@@ -70,6 +67,7 @@ for my $coord (@coords) {
 
     my $key = join ',', @$coord;
     $coord_name{$key} =~ s/'/`/g;  # Single quotes conflict with the marker
+
     $map->add_marker(
         point => $coord,
         html  => qq|<div id="content"><h3 id="firstHeading" class="firstHeading">$coord_name{$key}</h3><a href="https://www.google.com/maps/dir/$point">Directions to here</a></div>|,
