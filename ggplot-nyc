@@ -76,13 +76,11 @@ $R->run( "png('$file')" );
 
 $R->set( 'X', [ map { $_->[0] } @coords ] );
 $R->set( 'Y', [ map { $_->[1] } @coords ] );
-$R->run( 'df <- data.frame(X, Y)' );
-$R->run( "names(df) <- c('lon','lat')" );
+$R->run( 'df <- data.frame( X, Y )' );
+$R->run( "names(df) <- c( 'lon', 'lat' )" );
 
-$R->run( "center <- c($centroid->[0], $centroid->[1])" );
-$R->run( "centroid <- get_googlemap( center = center, zoom = 12 )" );
-
-my $gg_cmd = 'ggmap( centroid, aes(lon, lat) )';
+$R->run( "centroid <- get_googlemap( center = c( $centroid->[0], $centroid->[1] ), zoom = 12 )" );
+my $gg_cmd = 'ggmap( centroid, aes( lon, lat ) )';
 $gg_cmd .= ' + geom_point( data = df, colour = "darkred" )';
 $gg_cmd .= ' + geom_path( data = df, color = "darkgray", size = 0.5 )';
 $R->run($gg_cmd);
