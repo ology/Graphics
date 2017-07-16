@@ -5,7 +5,6 @@
 #
 # mongod --auth
 # mongo -u gene -p --authenticationDatabase "admin"
-# db.restaurants.findOne({},{_id:0}) # for instance
 #
 use strict;
 use warnings;
