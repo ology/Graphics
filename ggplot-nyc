@@ -55,8 +55,9 @@ my ( $len, @coords ) = $tsp->solve;
 my $i = 0;
 
 print "Optimal path:\n";
-for my $coord ( keys %coord_name ) {
-    printf "\t%d. %s [%s]\n", ++$i, $coord_name{$coord}, $coord;
+for my $coord (@coords) {
+    my $key = join ',', @$coord;
+    printf "\t%d. %s [%s]\n", ++$i, $coord_name{$key}, $key;
 }
 
 my $polygon = Math::Geometry::Planar->new;
