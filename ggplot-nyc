@@ -42,15 +42,22 @@ my $docs       = $collection->find($criteria);
 
 my $tsp = Algorithm::TravelingSalesman::BitonicTour->new;
 
-my $i = 0;
+my %coord_name;
 
 while ( my $doc = $docs->next) {
     my @point = @{ $doc->{address}{coord} };
-    printf "%d. %s [%s,%s]\n", ++$i, $doc->{name}, @point;
+    $coord_name{ join ',', @point } = $doc->{name};
     $tsp->add_point(@point);
 }
 
 my ( $len, @coords ) = $tsp->solve;
+
+my $i = 0;
+
+print "Optimal path:\n";
+for my $coord ( keys %coord_name ) {
+    printf "\t%d. %s [%s]\n", ++$i, $coord_name{$coord}, $coord;
+}
 
 my $polygon = Math::Geometry::Planar->new;
 $polygon->points( [ @coords[ 1 .. $#coords ] ] );
