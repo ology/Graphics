@@ -72,7 +72,7 @@ for my $coord (@coords) {
     $coord_name{$key} =~ s/'/`/g;  # Single quotes conflict with the marker
     $map->add_marker(
         point => $coord,
-        html  => qq|<div id="content"><h3 id="firstHeading" class="firstHeading">$coord_name{$key}</h3><a href="https://www.google.com/maps/dir//$point">Directions to here</a></div>|,
+        html  => qq|<div id="content"><h3 id="firstHeading" class="firstHeading">$coord_name{$key}</h3><a href="https://www.google.com/maps/dir/$point">Directions to here</a></div>|,
     );
 }
 
