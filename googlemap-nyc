@@ -87,7 +87,8 @@ for my $coord (@coords) {
 
 warn "\Driving directions:\n$multi\n";
 
-$map->add_polyline( points => \@coords );
+# Add a path for all but the last (redundant) coordinate.
+$map->add_polyline( points => [ @coords[ 0 .. $#coords - 1 ] ] );
 
 my ($head, $map_div) = $map->onload_render;
 print qq|<html><head><title>Test</title>$head</head>|;
