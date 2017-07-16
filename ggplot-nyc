@@ -19,9 +19,9 @@ use Statistics::R;
 my $borough = shift || 'Manhattan';
 my $grade   = shift || 'A';
 my $score   = shift // 70;
+my $config  = shift || 'creds.yaml';
 
-my $config = shift || 'creds.yaml';
-my $cfg    = YAML::LoadFile($config);
+my $cfg = YAML::LoadFile($config);
 
 my $client = MongoDB::MongoClient->new(
     host     => $cfg->{mongo}{dbhost},
