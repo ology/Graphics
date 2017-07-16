@@ -30,20 +30,21 @@ my $client = MongoDB::MongoClient->new(
     password => $cfg->{mongo}{dbpass},
 );
 
+# Select the relevant documents
 my $criteria = {
     borough        => $borough,
     'grades.grade' => $grade,
     'grades.score' => { '$gt' => 0 + $score },
 #    cuisine        => qr/american/i,
 };
-
 my $collection = $client->ns('test.restaurants');
 my $docs       = $collection->find($criteria);
 
 my $tsp = Algorithm::TravelingSalesman::BitonicTour->new;
 
-my %coord_name;
+my %coord_name;  # Index of coordinates to restaurant names
 
+# Add the points to the TSP object and coordinate index
 while ( my $doc = $docs->next) {
     my @point = @{ $doc->{address}{coord} };
     $coord_name{ join ',', @point } = $doc->{name};
@@ -52,7 +53,7 @@ while ( my $doc = $docs->next) {
 
 my ( $len, @coords ) = $tsp->solve;
 
-my $i = 0;
+my $i = 0;  # Counter
 
 print "Optimal path:\n";
 for my $coord (@coords) {
@@ -60,6 +61,7 @@ for my $coord (@coords) {
     printf "\t%d. %s [%s]\n", ++$i, $coord_name{$key}, $key;
 }
 
+# Find the path polygon centroid
 my $polygon = Math::Geometry::Planar->new;
 $polygon->points( [ @coords[ 1 .. $#coords ] ] );
 my $centroid = $polygon->centroid;
