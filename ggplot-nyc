@@ -47,8 +47,8 @@ my %coord_name;  # Index of coordinates to restaurant names
 # Add the points to the TSP object and coordinate index
 while ( my $doc = $docs->next) {
     my @point = @{ $doc->{address}{coord} };
-    $coord_name{ join ',', @point } = $doc->{name};
     $tsp->add_point(@point);
+    $coord_name{ join ',', @point } = $doc->{name};
 }
 
 my ( $len, @coords ) = $tsp->solve;
