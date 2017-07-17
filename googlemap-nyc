@@ -24,70 +24,20 @@ my $config  = shift || 'creds.yaml';
 my $db      = 'test.restaurants';
 my $base    = 'https://www.google.com/maps/dir';
 
-my $cfg = YAML::LoadFile($config);
-
-my $client = MongoDB::MongoClient->new(
-    host     => $cfg->{mongo}{dbhost},
-    db_name  => $cfg->{mongo}{dbname},
-    username => $cfg->{mongo}{dbuser},
-    password => $cfg->{mongo}{dbpass},
-);
-
-# Select the relevant documents
 my $criteria = {
     borough        => $borough,
     'grades.grade' => $grade,
     'grades.score' => { '$gt' => 0 + $score },
 #    cuisine        => qr/american/i,
 };
-my $collection = $client->ns($db);
-my $docs       = $collection->find($criteria);
 
-my $tsp = Algorithm::TravelingSalesman::BitonicTour->new;
+my $docs = fetch_docs( $config, $db, $criteria );
 
-my %coord_name;  # Index of coordinates to restaurant names
+my ( $coord_name, @coords ) = get_coords($docs);
 
-# Add the points to the TSP object and coordinate index
-while ( my $doc = $docs->next) {
-    my @point = @{ $doc->{address}{coord} };
-    $tsp->add_point(@point);
-    $coord_name{ join ',', @point } = $doc->{name};
-}
+my $centroid = get_centroid(@coords);
 
-my ( undef, @coords ) = $tsp->solve;
-
-# Find the path polygon centroid
-my $polygon = Math::Geometry::Planar->new;
-$polygon->points( [ @coords[ 1 .. $#coords ] ] );
-my $centroid = $polygon->centroid;
-
-my $map = HTML::GoogleMaps::V3->new( height => $size, width => $size );
-$map->zoom($zoom);
-$map->center($centroid);
-
-my $multi = $base;  # Multiple point path accumulator
-
-my $i = 0;
-
-warn "Optimal path:\n";
-
-for my $coord (@coords) {
-    my $point = join ',', $coord->[1], $coord->[0];  # Google maps wants lat/lon
-
-    $multi .= "/$point" unless $i == $#coords;
-
-    my $key = join ',', @$coord;
-    $coord_name{$key} =~ s/'/`/g;  # Single quotes conflict with the marker
-
-    $map->add_marker(
-        point => $coord,
-        html  => qq|<div id="content"><h3 id="firstHeading" class="firstHeading">$coord_name{$key}</h3><a href="$base/$point">Directions to here</a></div>|,
-    );
-
-    warn sprintf "\t%d. %s [%s]\n", ++$i, $coord_name{$key}, $key;
-}
-
-warn "Driving directions:\n$multi\n";
+my $map = build_map( $size, $zoom, $centroid, \@coords, $coord_name );
 
 # Add a path for all but the last (redundant) coordinate.
 $map->add_polyline( points => [ @coords[ 0 .. $#coords - 1 ] ] );
@@ -95,3 +45,84 @@ $map->add_polyline( points => [ @coords[ 0 .. $#coords - 1 ] ] );
 my ( $head, $map_div ) = $map->onload_render;
 print qq|<html><head><title>Test</title>$head</head>|;
 print qq|<body onload="html_googlemaps_initialize()">$map_div</body></html>|;
+
+sub fetch_docs {
+    my ( $config, $db, $criteria ) = @_;
+
+    my $cfg = YAML::LoadFile($config);
+
+    my $client = MongoDB::MongoClient->new(
+        host     => $cfg->{mongo}{dbhost},
+        db_name  => $cfg->{mongo}{dbname},
+        username => $cfg->{mongo}{dbuser},
+        password => $cfg->{mongo}{dbpass},
+    );
+
+    my $collection = $client->ns($db);
+    my $docs       = $collection->find($criteria);
+
+    return $docs;
+}
+
+sub get_coords {
+    my () = @_;
+
+    my $tsp = Algorithm::TravelingSalesman::BitonicTour->new;
+
+    my %coord_name;  # Index of coordinates to restaurant names
+
+    # Add the points to the TSP object and coordinate index
+    while ( my $doc = $docs->next) {
+        my @point = @{ $doc->{address}{coord} };
+        $tsp->add_point(@point);
+        $coord_name{ join ',', @point } = $doc->{name};
+    }
+
+    my ( undef, @coords ) = $tsp->solve;
+
+    return \%coord_name, @coords;
+}
+
+sub get_centroid {
+    my (@coords) = @_;
+
+    my $polygon = Math::Geometry::Planar->new;
+
+    $polygon->points( [ @coords[ 1 .. $#coords ] ] );
+
+    return $polygon->centroid;
+}
+
+sub build_map {
+    my ( $size, $zoom, $centroid, $coords, $coord_name ) = @_;
+
+    my $map = HTML::GoogleMaps::V3->new( height => $size, width => $size );
+    $map->zoom($zoom);
+    $map->center($centroid);
+
+    my $multi = $base;  # Multiple point path accumulator
+
+    my $i = 0;
+
+    warn "Optimal path:\n";
+
+    for my $coord (@$coords) {
+        my $point = join ',', $coord->[1], $coord->[0];  # Google maps wants lat/lon
+
+        $multi .= "/$point" unless $i == @$coords - 1;
+
+        my $key = join ',', @$coord;
+        $coord_name->{$key} =~ s/'/`/g;  # Single quotes conflict with the marker
+
+        $map->add_marker(
+            point => $coord,
+            html  => qq|<div id="content"><h3 id="firstHeading" class="firstHeading">$coord_name->{$key}</h3><a href="$base/$point">Directions to here</a></div>|,
+        );
+
+        warn sprintf "\t%d. %s [%s]\n", ++$i, $coord_name->{$key}, $key;
+    }
+
+    warn "Driving directions:\n$multi\n";
+
+    return $map;
+}
