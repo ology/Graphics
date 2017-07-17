@@ -17,9 +17,9 @@ use HTML::GoogleMaps::V3;
 
 my $borough = shift || 'Manhattan';  # Also: Queens, Brooklyn, Bronx, etc.
 my $grade   = shift || 'A';
-my $score   = shift // 70;
-my $zoom    = shift // 12;
-my $size    = shift // 800;
+my $score   = shift || 70;
+my $zoom    = shift || 12;
+my $size    = shift || 800;
 my $config  = shift || 'creds.yaml';
 my $db      = 'test.restaurants';
 my $base    = 'https://www.google.com/maps/dir';
