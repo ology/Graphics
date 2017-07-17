@@ -18,8 +18,11 @@ use HTML::GoogleMaps::V3;
 my $borough = shift || 'Manhattan';  # Also: Queens, Brooklyn, Bronx, etc.
 my $grade   = shift || 'A';
 my $score   = shift // 70;
+my $zoom    = shift // 12;
+my $size    = shift // 800;
 my $config  = shift || 'creds.yaml';
 my $db      = 'test.restaurants';
+my $base    = 'https://www.google.com/maps/dir';
 
 my $cfg = YAML::LoadFile($config);
 
@@ -58,11 +61,10 @@ my $polygon = Math::Geometry::Planar->new;
 $polygon->points( [ @coords[ 1 .. $#coords ] ] );
 my $centroid = $polygon->centroid;
 
-my $map = HTML::GoogleMaps::V3->new( height => 800, width => 800 );
-$map->zoom(12);
+my $map = HTML::GoogleMaps::V3->new( height => $size, width => $size );
+$map->zoom($zoom);
 $map->center($centroid);
 
-my $base  = 'https://www.google.com/maps/dir';
 my $multi = $base;  # Multiple point path accumulator
 
 my $i = 0;
@@ -85,11 +87,11 @@ for my $coord (@coords) {
     warn sprintf "\t%d. %s [%s]\n", ++$i, $coord_name{$key}, $key;
 }
 
-warn "\Driving directions:\n$multi\n";
+warn "Driving directions:\n$multi\n";
 
 # Add a path for all but the last (redundant) coordinate.
 $map->add_polyline( points => [ @coords[ 0 .. $#coords - 1 ] ] );
 
-my ($head, $map_div) = $map->onload_render;
+my ( $head, $map_div ) = $map->onload_render;
 print qq|<html><head><title>Test</title>$head</head>|;
 print qq|<body onload="html_googlemaps_initialize()">$map_div</body></html>|;
