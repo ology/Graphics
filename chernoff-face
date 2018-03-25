@@ -66,7 +66,7 @@ while ( my $row = $csv->getline($data) ) {
     $img->moveTo( $x1, $y1 );
     $img->ellipse( $eyess, $eyess );
 
-    # Nose = 0 to 36
+    # Nose
     my $poly = GD::Polygon->new;
     $bottom = 36;
     $top    = 0;
