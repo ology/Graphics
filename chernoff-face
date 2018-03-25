@@ -3,10 +3,24 @@ use strict;
 use warnings;
 
 use GD::Simple;
+use Text::CSV;
 
-my ( $min, $max, $headx, $mouthx, $eyesx, $eyess, $noses ) = @ARGV;
-$min    //= 0;
-$max    //= 100;
+my $file = shift || die "Usage: perl $0 /data/file.csv\n";
+
+my $csv = Text::CSV->new ( { binary => 1 } )
+    or die 'Cannot use CSV: ' . Text::CSV->error_diag();
+
+open my $data, "<:encoding(utf8)", $file
+    or die "Can't read $file: $!";
+
+my $i = 0;
+
+while ( my $row = $csv->getline($data) ) {
+$i++;
+
+my ( $min, $max ) = ( 0, 100 );
+
+my ( $headx, $mouthx, $eyesx, $eyess, $noses ) = @$row;
 $headx  //= 50;
 $mouthx //= 50;
 $eyesx  //= 50;
@@ -74,7 +88,12 @@ $x1 = ( $width - $width / 3 ) - $defaultx - $noses;
 $poly->addPt( $x1, $y1 );   # Right
 $img->polygon($poly);
 
-print $img->png;
+my $name = "$0-$i.png";
+open my $fh, '>', $name or die "Can't write to $name: $!\n" ;
+binmode $fh;
+print $fh $img->png;
+close $fh;
+}
 
 # https://stackoverflow.com/questions/5294955/how-to-scale-down-a-range-of-numbers-with-a-known-min-and-max-value
 sub scale_to {
