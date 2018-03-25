@@ -97,8 +97,7 @@ while ( my $row = $csv->getline($data) ) {
 # https://stackoverflow.com/questions/5294955/how-to-scale-down-a-range-of-numbers-with-a-known-min-and-max-value
 sub scale_to {
     my ( $x, $min, $max, $top, $bottom ) = @_;
-    my $scale_to = ( ( $bottom - $top ) * ( $x - $min ) / ( $max - $min ) ) + $top;
-    return $scale_to;
+    return ( ( $bottom - $top ) * ( $x - $min ) / ( $max - $min ) ) + $top;
 }
 
 __END__
