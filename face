@@ -47,13 +47,14 @@ $img->ellipse( $eyess, $eyess );
 # Nose = 0 to 36
 my $poly = GD::Polygon->new;
 $img->fgcolor('black');
+my $defaultx = 30;
 $x1 = $width / 2;
 $y1 = $height / 3;
 $poly->addPt( $x1, $y1 );   # Top
-$x1 = ( $width / 3 ) + 30 + 1 + $noses;
+$x1 = ( $width / 3 ) + $defaultx + 1 + $noses;
 $y1 = $height / 2;
 $poly->addPt( $x1, $y1 );   # Left
-$x1 = ( $width - $width / 3 ) - 30 - $noses;
+$x1 = ( $width - $width / 3 ) - $defaultx - $noses;
 $y1 = $height / 2;
 $poly->addPt( $x1, $y1 );   # Right
 $img->polygon($poly);
