@@ -3,17 +3,33 @@ use strict;
 use warnings;
 
 use GD::Simple;
+use List::Util qw( min max );
 use Text::CSV;
 
 my $file = shift || die "Usage: perl $0 /data/file.csv\n";
-my $min  = shift || 0;
-my $max  = shift || 100;
 
 my $csv = Text::CSV->new( { binary => 1 } )
     or die "Can't use CSV: ", Text::CSV->error_diag();
 
 open my $data, '<:encoding(utf8)', $file
     or die "Can't read $file: $!";
+
+my %minmax;
+while ( my $row = $csv->getline($data) ) {
+    my $i = 0;
+    for my $item ( @$row ) {
+        $i++;
+        push @{ $minmax{$i} }, $item;
+    }
+}
+for my $key ( keys %minmax ) {
+    $minmax{$key} = {
+        min => min( @{ $minmax{$key} } ),
+        max => max( @{ $minmax{$key} } ),
+    };
+}
+
+seek $data, 0, 0;
 
 my $i = 0;
 
@@ -33,7 +49,7 @@ while ( my $row = $csv->getline($data) ) {
     # Head
     my $bottom = 250;
     my $top    = 30;
-    $headx = scale_to( $headx, $min, $max, $bottom, $top );
+    $headx = scale_to( $headx, $minmax{1}{min}, $minmax{1}{max}, $bottom, $top );
     $img->fgcolor('black');
     $img->moveTo( $width / 2, $height / 2 );
     $img->ellipse( $headx, 200 );
@@ -41,7 +57,7 @@ while ( my $row = $csv->getline($data) ) {
     # Mouth
     $bottom = 40;
     $top    = -60;
-    $mouthx = scale_to( $mouthx, $min, $max, $bottom, $top );
+    $mouthx = scale_to( $mouthx, $minmax{2}{min}, $minmax{2}{max}, $bottom, $top );
     $img->fgcolor('darkred');
     my $x1 = ( $width - $width / 3 ) + 1 + $mouthx;
     my $x2 = ( $width / 3 ) - $mouthx;
@@ -52,10 +68,10 @@ while ( my $row = $csv->getline($data) ) {
     # Eyes
     $bottom = 5;
     $top    = 55;
-    $eyesx = scale_to( $eyesx, $min, $max, $bottom, $top );
+    $eyesx = scale_to( $eyesx, $minmax{3}{min}, $minmax{3}{max}, $bottom, $top );
     $bottom = 50;
     $top    = 5;
-    $eyess = scale_to( $eyess, $min, $max, $bottom, $top );
+    $eyess = scale_to( $eyess, $minmax{4}{min}, $minmax{4}{max}, $bottom, $top );
     $img->fgcolor('darkblue');
     $x1 = ( $width / 3 ) + 1 + $eyesx;
     $y1 = $height / 3;
@@ -70,7 +86,7 @@ while ( my $row = $csv->getline($data) ) {
     my $poly = GD::Polygon->new;
     $bottom = 0;
     $top    = 36;
-    $noses = scale_to( $noses, $min, $max, $bottom, $top );
+    $noses = scale_to( $noses, $minmax{5}{min}, $minmax{5}{max}, $bottom, $top );
     $img->fgcolor('black');
     my $defaultx = 30;
     $x1 = $width / 2;
@@ -93,6 +109,9 @@ while ( my $row = $csv->getline($data) ) {
     print $fh $img->png;
     close $fh;
 }
+
+$csv->eof or $csv->error_diag();
+close $data;
 
 # https://stackoverflow.com/questions/5294955/how-to-scale-down-a-range-of-numbers-with-a-known-min-and-max-value
 sub scale_to {
