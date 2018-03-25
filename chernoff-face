@@ -21,11 +21,6 @@ while ( my $row = $csv->getline($data) ) {
     $i++;
 
     my ( $headx, $mouthx, $eyesx, $eyess, $noses ) = @$row;
-    $headx  //= 50;
-    $mouthx //= 50;
-    $eyesx  //= 50;
-    $eyess  //= 50;
-    $noses  //= 50;
 
     # Canvas
     my $width  = 400;
