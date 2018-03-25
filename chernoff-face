@@ -44,6 +44,7 @@ my $i = 0;
 while ( my $row = $csv->getline($data) ) {
     $i++;
 
+    # Read the first 5 dimensions
     my ( $headx, $mouthx, $eyesx, $eyess, $noses ) = @$row;
 
     # Canvas
