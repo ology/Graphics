@@ -101,3 +101,10 @@ sub scale_to {
     my $scale_to = ( ( $bottom - $top ) * ( $x - $min ) / ( $max - $min ) ) + $top;
     return $scale_to;
 }
+
+__END__
+# Create random data in R:
+
+R> df <- data.frame( a = as.integer( trunc( runif( 10, min=0, max=100 ) ) ), b = as.integer( trunc( runif( 10, min=0, max=100 ) ) ), c = as.integer( trunc( runif( 10, min=0, max=100 ) ) ), d = as.integer( trunc( runif( 10, min=0, max=100 ) ) ), e = as.integer( trunc( runif( 10, min=0, max=100 ) ) ) )
+
+R> write.table(df, '~/sandbox/Graphics/data.csv', quote = F, sep = ",", row.names = F, col.names = F)
