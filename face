@@ -3,12 +3,13 @@ use strict;
 use warnings;
 
 use GD::Simple;
+use List::Util qw( min max );
  
 my $width  = 400;
 my $height = 250;
 
 my ( $headx, $mouthx, $eyesx, $eyess, $noses ) = @ARGV;
-$headx  //= 200;
+$headx  //= 50;
 $mouthx //= -20;
 $eyesx  //= 30;
 $eyess  //= 10;
@@ -21,11 +22,13 @@ $img->bgcolor(undef);
 $img->rectangle( 0, 0, $width - 1, $height - 1 );
 
 # Head = 30 to 250
+$headx = scale_to( $headx, 0, 100, 30, 250 );
 $img->fgcolor('black');
 $img->moveTo( $width / 2, $height / 2 );
 $img->ellipse( $headx, 200 );
 
 # Mouth = -60 to 40
+$mouthx = scale_to( $mouthx, 0, 100, -60, 40 );
 $img->fgcolor('darkred');
 my $x1 = ( $width - $width / 3 ) + 1 + $mouthx;
 my $x2 = ( $width / 3 ) - $mouthx;
@@ -34,6 +37,8 @@ $img->moveTo( $x1, $y1 );
 $img->lineTo( $x2, $y1 );
 
 # Eyes = x: 5 to 55, s: 5 to 50
+$eyesx = scale_to( $eyesx, 0, 100, 5, 55 );
+$eyess = scale_to( $eyess, 0, 100, 5, 50 );
 $img->fgcolor('darkblue');
 $x1 = ( $width / 3 ) + 1 + $eyesx;
 $y1 = $height / 3;
@@ -46,6 +51,7 @@ $img->ellipse( $eyess, $eyess );
 
 # Nose = 0 to 36
 my $poly = GD::Polygon->new;
+$noses = scale_to( $noses, 0, 100, 0, 36 );
 $img->fgcolor('black');
 my $defaultx = 30;
 $x1 = $width / 2;
@@ -59,3 +65,11 @@ $poly->addPt( $x1, $y1 );   # Right
 $img->polygon($poly);
 
 print $img->png;
+
+# https://stackoverflow.com/questions/5294955/how-to-scale-down-a-range-of-numbers-with-a-known-min-and-max-value
+
+sub scale_to {
+    my ( $x, $min, $max, $top, $bottom ) = @_;
+    my $scale_to = ( ( $bottom - $top ) * ( $x - $min ) / ( $max - $min ) ) + $top;
+    return $scale_to;
+}
