@@ -31,16 +31,16 @@ while ( my $row = $csv->getline($data) ) {
     $img->rectangle( 0, 0, $width - 1, $height - 1 );
 
     # Head
-    my $bottom = 30;
-    my $top    = 250;
+    my $bottom = 250;
+    my $top    = 30;
     $headx = scale_to( $headx, $min, $max, $bottom, $top );
     $img->fgcolor('black');
     $img->moveTo( $width / 2, $height / 2 );
     $img->ellipse( $headx, 200 );
 
     # Mouth
-    $bottom = -60;
-    $top    = 40;
+    $bottom = 40;
+    $top    = -60;
     $mouthx = scale_to( $mouthx, $min, $max, $bottom, $top );
     $img->fgcolor('darkred');
     my $x1 = ( $width - $width / 3 ) + 1 + $mouthx;
@@ -50,11 +50,11 @@ while ( my $row = $csv->getline($data) ) {
     $img->lineTo( $x2, $y1 );
 
     # Eyes
-    $bottom = 55;
-    $top    = 5;
-    $eyesx = scale_to( $eyesx, $min, $max, $bottom, $top );
     $bottom = 5;
-    $top    = 50;
+    $top    = 55;
+    $eyesx = scale_to( $eyesx, $min, $max, $bottom, $top );
+    $bottom = 50;
+    $top    = 5;
     $eyess = scale_to( $eyess, $min, $max, $bottom, $top );
     $img->fgcolor('darkblue');
     $x1 = ( $width / 3 ) + 1 + $eyesx;
@@ -68,8 +68,8 @@ while ( my $row = $csv->getline($data) ) {
 
     # Nose
     my $poly = GD::Polygon->new;
-    $bottom = 36;
-    $top    = 0;
+    $bottom = 0;
+    $top    = 36;
     $noses = scale_to( $noses, $min, $max, $bottom, $top );
     $img->fgcolor('black');
     my $defaultx = 30;
@@ -96,7 +96,7 @@ while ( my $row = $csv->getline($data) ) {
 
 # https://stackoverflow.com/questions/5294955/how-to-scale-down-a-range-of-numbers-with-a-known-min-and-max-value
 sub scale_to {
-    my ( $x, $min, $max, $top, $bottom ) = @_;
+    my ( $x, $min, $max, $bottom, $top ) = @_;
     return ( ( $bottom - $top ) * ( $x - $min ) / ( $max - $min ) ) + $top;
 }
 
