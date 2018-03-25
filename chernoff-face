@@ -19,20 +19,20 @@ my $csv = Text::CSV->new( { binary => 1 } )
 
 # Get the number of data rows and the min/max of the columns
 my $nrow = 0;
-my %minmax;
+my %bounds;
 while ( my $row = $csv->getline($data) ) {
     $nrow++;
 
     my $i = 0;
     for my $item ( @$row ) {
         $i++;
-        push @{ $minmax{$i} }, $item;
+        push @{ $bounds{$i} }, $item;
     }
 }
-for my $key ( keys %minmax ) {
-    $minmax{$key} = {
-        min => min( @{ $minmax{$key} } ),
-        max => max( @{ $minmax{$key} } ),
+for my $key ( keys %bounds ) {
+    $bounds{$key} = {
+        min => min( @{ $bounds{$key} } ),
+        max => max( @{ $bounds{$key} } ),
     };
 }
 
@@ -57,7 +57,7 @@ while ( my $row = $csv->getline($data) ) {
     # Head
     my $bottom = 250;
     my $top    = 30;
-    $headx = scale_to( $headx, $minmax{1}{min}, $minmax{1}{max}, $bottom, $top );
+    $headx = scale_to( $headx, $bounds{1}{min}, $bounds{1}{max}, $bottom, $top );
     $img->fgcolor('black');
     $img->moveTo( $width / 2, $height / 2 );
     $img->ellipse( $headx, $height - $height / 5 );
@@ -65,7 +65,7 @@ while ( my $row = $csv->getline($data) ) {
     # Mouth
     $bottom = 40;
     $top    = -60;
-    $mouthx = scale_to( $mouthx, $minmax{2}{min}, $minmax{2}{max}, $bottom, $top );
+    $mouthx = scale_to( $mouthx, $bounds{2}{min}, $bounds{2}{max}, $bottom, $top );
     $img->fgcolor('darkred');
     my $x1 = ( $width - $width / 3 ) + 1 + $mouthx;
     my $x2 = ( $width / 3 ) - $mouthx;
@@ -76,10 +76,10 @@ while ( my $row = $csv->getline($data) ) {
     # Eyes
     $bottom = 5;
     $top    = 55;
-    $eyesx = scale_to( $eyesx, $minmax{3}{min}, $minmax{3}{max}, $bottom, $top );
+    $eyesx = scale_to( $eyesx, $bounds{3}{min}, $bounds{3}{max}, $bottom, $top );
     $bottom = 50;
     $top    = 5;
-    $eyess = scale_to( $eyess, $minmax{4}{min}, $minmax{4}{max}, $bottom, $top );
+    $eyess = scale_to( $eyess, $bounds{4}{min}, $bounds{4}{max}, $bottom, $top );
     $img->fgcolor('darkblue');
     $x1 = ( $width / 3 ) + 1 + $eyesx;
     $y1 = $height / 3;
@@ -94,7 +94,7 @@ while ( my $row = $csv->getline($data) ) {
     my $poly = GD::Polygon->new;
     $bottom = 0;
     $top    = 36;
-    $noses = scale_to( $noses, $minmax{5}{min}, $minmax{5}{max}, $bottom, $top );
+    $noses = scale_to( $noses, $bounds{5}{min}, $bounds{5}{max}, $bottom, $top );
     $img->fgcolor('black');
     my $defaultx = 30;
     $x1 = $width / 2;
