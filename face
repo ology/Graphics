@@ -55,7 +55,6 @@ $x1 = ( $width / 3 ) + $defaultx + 1 + $noses;
 $y1 = $height / 2;
 $poly->addPt( $x1, $y1 );   # Left
 $x1 = ( $width - $width / 3 ) - $defaultx - $noses;
-$y1 = $height / 2;
 $poly->addPt( $x1, $y1 );   # Right
 $img->polygon($poly);
 
