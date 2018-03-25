@@ -3,9 +3,6 @@ use strict;
 use warnings;
 
 use GD::Simple;
- 
-my $width  = 400;
-my $height = 250;
 
 my ( $min, $max, $headx, $mouthx, $eyesx, $eyess, $noses ) = @ARGV;
 $min    //= 0;
@@ -17,6 +14,8 @@ $eyess  //= 50;
 $noses  //= 50;
 
 # Canvas
+my $width  = 400;
+my $height = 250;
 my $img = GD::Simple->new( $width, $height );
 $img->penSize( 1, 1 );
 $img->bgcolor(undef);
