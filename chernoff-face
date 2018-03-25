@@ -3,7 +3,6 @@ use strict;
 use warnings;
 
 use GD::Simple;
-use List::Util qw( min max );
  
 my $width  = 400;
 my $height = 250;
