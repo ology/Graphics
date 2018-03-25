@@ -10,10 +10,10 @@ my $height = 250;
 
 my ( $headx, $mouthx, $eyesx, $eyess, $noses ) = @ARGV;
 $headx  //= 50;
-$mouthx //= -20;
-$eyesx  //= 30;
-$eyess  //= 10;
-$noses  //= 0;
+$mouthx //= 50;
+$eyesx  //= 50;
+$eyess  //= 50;
+$noses  //= 50;
 
 # Canvas
 my $img = GD::Simple->new( $width, $height );
@@ -37,7 +37,7 @@ $img->moveTo( $x1, $y1 );
 $img->lineTo( $x2, $y1 );
 
 # Eyes = x: 5 to 55, s: 5 to 50
-$eyesx = scale_to( $eyesx, 0, 100, 5, 55 );
+$eyesx = scale_to( $eyesx, 0, 100, 55, 5 );
 $eyess = scale_to( $eyess, 0, 100, 5, 50 );
 $img->fgcolor('darkblue');
 $x1 = ( $width / 3 ) + 1 + $eyesx;
@@ -51,7 +51,7 @@ $img->ellipse( $eyess, $eyess );
 
 # Nose = 0 to 36
 my $poly = GD::Polygon->new;
-$noses = scale_to( $noses, 0, 100, 0, 36 );
+$noses = scale_to( $noses, 0, 100, 36, 0 );
 $img->fgcolor('black');
 my $defaultx = 30;
 $x1 = $width / 2;
