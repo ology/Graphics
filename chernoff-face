@@ -103,8 +103,8 @@ while ( my $row = $csv->getline($data) ) {
     $img->polygon($poly);
 
     # Data
-    $img->moveTo( $width / 3 + 20, $height - 10 );
-    $img->string( join ', ', @$row );
+    $img->moveTo( 20, $height - 10 );
+    $img->string( join ', ', map { sprintf '%.3f', $_ } @$row );
 
     my $name = sprintf '%s-%0*d.png', $0, length($nrow), $i;
     open my $fh, '>', $name or die "Can't write to $name: $!\n" ;
