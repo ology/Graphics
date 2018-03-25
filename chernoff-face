@@ -124,14 +124,11 @@ sub scale_to {
 
 __END__
 # Create random data in R:
-
-R> min <- 0
-R> max <- 100
-R> n   <- 10
-R> df  <- data.frame( a = as.integer(trunc(runif( n, min=min, max=max ))), b = as.integer(trunc(runif( n, min=min, max=max ))), c = as.integer(trunc(runif( n, min=min, max=max ))), d = as.integer(trunc(runif( n, min=min, max=max ))), e = as.integer(trunc(runif( n, min=min, max=max ))) )
-
-R> write.table(df, 'data.csv', quote = F, sep = ",", row.names = F, col.names = F)
+min <- 0
+max <- 100
+n   <- 10
+df  <- data.frame( a = as.integer(trunc(runif( n, min=min, max=max ))), b = as.integer(trunc(runif( n, min=min, max=max ))), c = as.integer(trunc(runif( n, min=min, max=max ))), d = as.integer(trunc(runif( n, min=min, max=max ))), e = as.integer(trunc(runif( n, min=min, max=max ))) )
+write.table(df, 'data.csv', quote = F, sep = ",", row.names = F, col.names = F)
 
 # Create animated gif with imagemagick:
-
 convert -delay 100 -size 400x250 chernoff-face-*.png chernoff-face.gif
