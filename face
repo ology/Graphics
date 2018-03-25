@@ -20,7 +20,7 @@ $img->penSize( 1, 1 );
 $img->bgcolor(undef);
 $img->rectangle( 0, 0, $width - 1, $height - 1 );
 
-# Head = 25 to 250
+# Head = 30 to 250
 $img->fgcolor('black');
 $img->moveTo( $width / 2, $height / 2 );
 $img->ellipse( $headx, 200 );
