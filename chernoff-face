@@ -9,7 +9,7 @@ my $file = shift || die "Usage: perl $0 /data/file.csv\n";
 my $min  = shift || 0;
 my $max  = shift || 100;
 
-my $csv = Text::CSV->new ( { binary => 1 } )
+my $csv = Text::CSV->new( { binary => 1 } )
     or die "Can't use CSV: ", Text::CSV->error_diag();
 
 open my $data, '<:encoding(utf8)', $file
