@@ -88,7 +88,7 @@ while ( my $row = $csv->getline($data) ) {
     $poly->addPt( $x1, $y1 );   # Right
     $img->polygon($poly);
 
-    my $name = "$0-$i.png";
+    my $name = sprintf '%s-%02d.png', $0, $i;
     open my $fh, '>', $name or die "Can't write to $name: $!\n" ;
     binmode $fh;
     print $fh $img->png;
@@ -108,3 +108,7 @@ __END__
 R> df <- data.frame( a = as.integer( trunc( runif( 10, min=0, max=100 ) ) ), b = as.integer( trunc( runif( 10, min=0, max=100 ) ) ), c = as.integer( trunc( runif( 10, min=0, max=100 ) ) ), d = as.integer( trunc( runif( 10, min=0, max=100 ) ) ), e = as.integer( trunc( runif( 10, min=0, max=100 ) ) ) )
 
 R> write.table(df, '~/sandbox/Graphics/data.csv', quote = F, sep = ",", row.names = F, col.names = F)
+
+# Create animated gif with imagemagick:
+
+convert -delay 100 -size 400x250 chernoff-face-*.png chernoff-face.gif
