@@ -23,14 +23,18 @@ $img->penSize( 1, 1 );
 $img->bgcolor(undef);
 $img->rectangle( 0, 0, $width - 1, $height - 1 );
 
-# Head = 30 to 250
-$headx = scale_to( $headx, $min, $max, 30, 250 );
+# Head
+my $bottom = 30;
+my $top    = 250;
+$headx = scale_to( $headx, $min, $max, $bottom, $top );
 $img->fgcolor('black');
 $img->moveTo( $width / 2, $height / 2 );
 $img->ellipse( $headx, 200 );
 
-# Mouth = -60 to 40
-$mouthx = scale_to( $mouthx, $min, $max, -60, 40 );
+# Mouth
+$bottom = -60;
+$top    = 40;
+$mouthx = scale_to( $mouthx, $min, $max, $bottom, $top );
 $img->fgcolor('darkred');
 my $x1 = ( $width - $width / 3 ) + 1 + $mouthx;
 my $x2 = ( $width / 3 ) - $mouthx;
@@ -38,9 +42,13 @@ my $y1 = $height - $height / 3;
 $img->moveTo( $x1, $y1 );
 $img->lineTo( $x2, $y1 );
 
-# Eyes = x: 5 to 55, s: 5 to 50
-$eyesx = scale_to( $eyesx, $min, $max, 55, 5 );
-$eyess = scale_to( $eyess, $min, $max, 5, 50 );
+# Eyes
+$bottom = 55;
+$top    = 5;
+$eyesx = scale_to( $eyesx, $min, $max, $bottom, $top );
+$bottom = 5;
+$top    = 50;
+$eyess = scale_to( $eyess, $min, $max, $bottom, $top );
 $img->fgcolor('darkblue');
 $x1 = ( $width / 3 ) + 1 + $eyesx;
 $y1 = $height / 3;
@@ -53,7 +61,9 @@ $img->ellipse( $eyess, $eyess );
 
 # Nose = 0 to 36
 my $poly = GD::Polygon->new;
-$noses = scale_to( $noses, $min, $max, 36, 0 );
+$bottom = 36;
+$top    = 0;
+$noses = scale_to( $noses, $min, $max, $bottom, $top );
 $img->fgcolor('black');
 my $defaultx = 30;
 $x1 = $width / 2;
