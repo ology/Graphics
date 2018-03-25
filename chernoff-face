@@ -14,8 +14,8 @@ my $csv = Text::CSV->new( { binary => 1 } )
 open my $data, '<:encoding(utf8)', $file
     or die "Can't read $file: $!";
 
-my %minmax;
 my $nrow = 0;
+my %minmax;
 while ( my $row = $csv->getline($data) ) {
     $nrow++;
 
