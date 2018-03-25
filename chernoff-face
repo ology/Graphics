@@ -103,7 +103,10 @@ sub scale_to {
 __END__
 # Create random data in R:
 
-R> df <- data.frame( a = as.integer( trunc( runif( 10, min=0, max=100 ) ) ), b = as.integer( trunc( runif( 10, min=0, max=100 ) ) ), c = as.integer( trunc( runif( 10, min=0, max=100 ) ) ), d = as.integer( trunc( runif( 10, min=0, max=100 ) ) ), e = as.integer( trunc( runif( 10, min=0, max=100 ) ) ) )
+R> min <- 0
+R> max <- 100
+R> n   <- 10
+R> df  <- data.frame( a = as.integer(trunc(runif( n, min=min, max=max ))), b = as.integer(trunc(runif( n, min=min, max=max ))), c = as.integer(trunc(runif( n, min=min, max=max ))), d = as.integer(trunc(runif( n, min=min, max=max ))), e = as.integer(trunc(runif( n, min=min, max=max ))) )
 
 R> write.table(df, 'data.csv', quote = F, sep = ",", row.names = F, col.names = F)
 
