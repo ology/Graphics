@@ -9,13 +9,13 @@ use Text::CSV;
 # Get the data file from the command-line
 my $file = shift || die "Usage: perl $0 /data/file.csv\n";
 
-# Instantiate a CSV object
-my $csv = Text::CSV->new( { binary => 1 } )
-    or die "Can't use CSV: ", Text::CSV->error_diag();
-
 # Open the data file for reading
 open my $data, '<:encoding(utf8)', $file
     or die "Can't read $file: $!";
+
+# Instantiate a CSV object
+my $csv = Text::CSV->new( { binary => 1 } )
+    or die "Can't use CSV: ", Text::CSV->error_diag();
 
 # Get the number of data rows and the min/max of the columns
 my $nrow = 0;
