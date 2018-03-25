@@ -15,7 +15,10 @@ open my $data, '<:encoding(utf8)', $file
     or die "Can't read $file: $!";
 
 my %minmax;
+my $nrow = 0;
 while ( my $row = $csv->getline($data) ) {
+    $nrow++;
+
     my $i = 0;
     for my $item ( @$row ) {
         $i++;
@@ -103,7 +106,7 @@ while ( my $row = $csv->getline($data) ) {
     $img->moveTo( $width / 3 + 20, $height - 10 );
     $img->string( join ', ', @$row );
 
-    my $name = sprintf '%s-%02d.png', $0, $i;
+    my $name = sprintf '%s-%0*d.png', $0, length($nrow), $i;
     open my $fh, '>', $name or die "Can't write to $name: $!\n" ;
     binmode $fh;
     print $fh $img->png;
