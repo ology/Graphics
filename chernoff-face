@@ -131,10 +131,8 @@ sub scale_to {
 
 __END__
 # Create random data in R:
-min <- 0
-max <- 100
-n   <- 10
-df  <- data.frame( a = as.integer(trunc(runif( n, min=min, max=max ))), b = as.integer(trunc(runif( n, min=min, max=max ))), c = as.integer(trunc(runif( n, min=min, max=max ))), d = as.integer(trunc(runif( n, min=min, max=max ))), e = as.integer(trunc(runif( n, min=min, max=max ))) )
+randn <- function (n=10, mini=0, maxi=100) { as.integer(trunc(runif( n, min=mini, max=maxi ))) }
+df <- data.frame( a = randn(), b = randn(), c = randn(), d = randn(), e = randn() )
 write.table(df, 'data.csv', quote = F, sep = ",", row.names = F, col.names = F)
 
 # Create animated gif with imagemagick:
