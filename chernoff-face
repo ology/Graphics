@@ -16,83 +16,83 @@ open my $data, "<:encoding(utf8)", $file
 my $i = 0;
 
 while ( my $row = $csv->getline($data) ) {
-$i++;
+    $i++;
 
-my ( $min, $max ) = ( 0, 100 );
+    my ( $min, $max ) = ( 0, 100 );
 
-my ( $headx, $mouthx, $eyesx, $eyess, $noses ) = @$row;
-$headx  //= 50;
-$mouthx //= 50;
-$eyesx  //= 50;
-$eyess  //= 50;
-$noses  //= 50;
+    my ( $headx, $mouthx, $eyesx, $eyess, $noses ) = @$row;
+    $headx  //= 50;
+    $mouthx //= 50;
+    $eyesx  //= 50;
+    $eyess  //= 50;
+    $noses  //= 50;
 
-# Canvas
-my $width  = 400;
-my $height = 250;
-my $img = GD::Simple->new( $width, $height );
-$img->penSize( 1, 1 );
-$img->bgcolor(undef);
-$img->rectangle( 0, 0, $width - 1, $height - 1 );
+    # Canvas
+    my $width  = 400;
+    my $height = 250;
+    my $img = GD::Simple->new( $width, $height );
+    $img->penSize( 1, 1 );
+    $img->bgcolor(undef);
+    $img->rectangle( 0, 0, $width - 1, $height - 1 );
 
-# Head
-my $bottom = 30;
-my $top    = 250;
-$headx = scale_to( $headx, $min, $max, $bottom, $top );
-$img->fgcolor('black');
-$img->moveTo( $width / 2, $height / 2 );
-$img->ellipse( $headx, 200 );
+    # Head
+    my $bottom = 30;
+    my $top    = 250;
+    $headx = scale_to( $headx, $min, $max, $bottom, $top );
+    $img->fgcolor('black');
+    $img->moveTo( $width / 2, $height / 2 );
+    $img->ellipse( $headx, 200 );
 
-# Mouth
-$bottom = -60;
-$top    = 40;
-$mouthx = scale_to( $mouthx, $min, $max, $bottom, $top );
-$img->fgcolor('darkred');
-my $x1 = ( $width - $width / 3 ) + 1 + $mouthx;
-my $x2 = ( $width / 3 ) - $mouthx;
-my $y1 = $height - $height / 3;
-$img->moveTo( $x1, $y1 );
-$img->lineTo( $x2, $y1 );
+    # Mouth
+    $bottom = -60;
+    $top    = 40;
+    $mouthx = scale_to( $mouthx, $min, $max, $bottom, $top );
+    $img->fgcolor('darkred');
+    my $x1 = ( $width - $width / 3 ) + 1 + $mouthx;
+    my $x2 = ( $width / 3 ) - $mouthx;
+    my $y1 = $height - $height / 3;
+    $img->moveTo( $x1, $y1 );
+    $img->lineTo( $x2, $y1 );
 
-# Eyes
-$bottom = 55;
-$top    = 5;
-$eyesx = scale_to( $eyesx, $min, $max, $bottom, $top );
-$bottom = 5;
-$top    = 50;
-$eyess = scale_to( $eyess, $min, $max, $bottom, $top );
-$img->fgcolor('darkblue');
-$x1 = ( $width / 3 ) + 1 + $eyesx;
-$y1 = $height / 3;
-$img->moveTo( $x1, $y1 );
-$img->ellipse( $eyess, $eyess );
-$x1 = ( $width - $width / 3 ) - $eyesx;
-$y1 = $height / 3;
-$img->moveTo( $x1, $y1 );
-$img->ellipse( $eyess, $eyess );
+    # Eyes
+    $bottom = 55;
+    $top    = 5;
+    $eyesx = scale_to( $eyesx, $min, $max, $bottom, $top );
+    $bottom = 5;
+    $top    = 50;
+    $eyess = scale_to( $eyess, $min, $max, $bottom, $top );
+    $img->fgcolor('darkblue');
+    $x1 = ( $width / 3 ) + 1 + $eyesx;
+    $y1 = $height / 3;
+    $img->moveTo( $x1, $y1 );
+    $img->ellipse( $eyess, $eyess );
+    $x1 = ( $width - $width / 3 ) - $eyesx;
+    $y1 = $height / 3;
+    $img->moveTo( $x1, $y1 );
+    $img->ellipse( $eyess, $eyess );
 
-# Nose = 0 to 36
-my $poly = GD::Polygon->new;
-$bottom = 36;
-$top    = 0;
-$noses = scale_to( $noses, $min, $max, $bottom, $top );
-$img->fgcolor('black');
-my $defaultx = 30;
-$x1 = $width / 2;
-$y1 = $height / 3;
-$poly->addPt( $x1, $y1 );   # Top
-$x1 = ( $width / 3 ) + $defaultx + 1 + $noses;
-$y1 = $height / 2;
-$poly->addPt( $x1, $y1 );   # Left
-$x1 = ( $width - $width / 3 ) - $defaultx - $noses;
-$poly->addPt( $x1, $y1 );   # Right
-$img->polygon($poly);
+    # Nose = 0 to 36
+    my $poly = GD::Polygon->new;
+    $bottom = 36;
+    $top    = 0;
+    $noses = scale_to( $noses, $min, $max, $bottom, $top );
+    $img->fgcolor('black');
+    my $defaultx = 30;
+    $x1 = $width / 2;
+    $y1 = $height / 3;
+    $poly->addPt( $x1, $y1 );   # Top
+    $x1 = ( $width / 3 ) + $defaultx + 1 + $noses;
+    $y1 = $height / 2;
+    $poly->addPt( $x1, $y1 );   # Left
+    $x1 = ( $width - $width / 3 ) - $defaultx - $noses;
+    $poly->addPt( $x1, $y1 );   # Right
+    $img->polygon($poly);
 
-my $name = "$0-$i.png";
-open my $fh, '>', $name or die "Can't write to $name: $!\n" ;
-binmode $fh;
-print $fh $img->png;
-close $fh;
+    my $name = "$0-$i.png";
+    open my $fh, '>', $name or die "Can't write to $name: $!\n" ;
+    binmode $fh;
+    print $fh $img->png;
+    close $fh;
 }
 
 # https://stackoverflow.com/questions/5294955/how-to-scale-down-a-range-of-numbers-with-a-known-min-and-max-value
