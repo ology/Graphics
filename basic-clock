@@ -16,9 +16,6 @@ use constant DOUBLE => 2 * PI;
 my $diameter = shift || 100;
 my $radius   = $diameter / 2;
 
-# XXX Why?
-#$diameter++ if $diameter % 2 == 0;
-
 my $clock = GD::Image->new( $diameter, $diameter );
 
 # Set image properties.
