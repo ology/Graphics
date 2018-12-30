@@ -9,7 +9,7 @@
 use strict;
 use warnings;
 
-use YAML;
+use YAML::XS 'LoadFile';
 use MongoDB;
 use Algorithm::TravelingSalesman::BitonicTour;
 use Math::Geometry::Planar;
