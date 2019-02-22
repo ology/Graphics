@@ -39,6 +39,7 @@ for my $col ( keys %bounds ) {
 # Reset the data file to read in again
 seek $data, 0, 0;
 
+# XXX This block is horribly brittle.  The image size cannot be easily adjusted at all.
 # Render a data row into a Chernoff face
 my $i = 0;
 while ( my $row = $csv->getline($data) ) {
