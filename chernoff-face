@@ -23,16 +23,16 @@ my %bounds;
 while ( my $row = $csv->getline($data) ) {
     $nrow++;
 
-    my $i = 0;
+    my $col = 0;
     for my $item ( @$row ) {
-        $i++;
-        push @{ $bounds{$i} }, $item;
+        $col++;
+        push @{ $bounds{$col} }, $item;
     }
 }
-for my $key ( keys %bounds ) {
-    $bounds{$key} = {
-        min => min( @{ $bounds{$key} } ),
-        max => max( @{ $bounds{$key} } ),
+for my $col ( keys %bounds ) {
+    $bounds{$col} = {
+        min => min( @{ $bounds{$col} } ),
+        max => max( @{ $bounds{$col} } ),
     };
 }
 
