@@ -47,6 +47,7 @@ while ( my $row = $csv->getline($data) ) {
 
     # Read the first 5 dimensions
     my ( $headx, $mouthx, $eyesx, $eyess, $noses ) = @$row;
+    my ( $bottom, $top );
 
     # Canvas
     my $width  = 400;
@@ -57,8 +58,8 @@ while ( my $row = $csv->getline($data) ) {
     $img->rectangle( 0, 0, $width - 1, $height - 1 );
 
     # Head
-    my $bottom = 250;
-    my $top    = 30;
+    $bottom = 250;
+    $top    = 30;
     $headx = scale_to( $headx, $bounds{1}{min}, $bounds{1}{max}, $bottom, $top );
     $img->fgcolor('black');
     $img->moveTo( $width / 2, $height / 2 );
