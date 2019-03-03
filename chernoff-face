@@ -7,7 +7,12 @@ use List::Util qw( min max );
 use Text::CSV;
 
 # Get the data file from the command-line
-my $file = shift || die "Usage: perl $0 /data/file.csv\n";
+my ( $file, $path ) = @ARGV;
+
+die "Usage: perl $0 /data/file.csv [/image/path]\n"
+    unless $file && -e $file;
+
+$path ||= $ENV{HOME} . '/tmp';
 
 # Open the data file for reading
 open my $data, '<:encoding(utf8)', $file
@@ -115,7 +120,7 @@ while ( my $row = $csv->getline($data) ) {
     $img->string( join ', ', map { sprintf '%.3f', $_ } @$row );
 
     # Write-out the image file
-    my $name = sprintf '%s-%0*d.png', $0, length($nrow), $i;
+    my $name = sprintf '%s/%s-%0*d.png', $path, $0, length($nrow), $i;
     open my $fh, '>', $name or die "Can't write to $name: $!\n" ;
     binmode $fh;
     print $fh $img->png;
