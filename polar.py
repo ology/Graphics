@@ -18,8 +18,12 @@ ax.scatter(theta, radii)
 
 # Make a dataframe
 df = pd.DataFrame({"theta": theta, "radii": radii})
+
+# Plot a random sample of items
 #samp = df.sample(n)
+#print(samp)
 #plt.plot(samp.theta, samp.radii, 'k-')
+#plt.show()
 
 # Make a random network of index nodes column
 net = []
