@@ -17,7 +17,7 @@ ax = plt.subplot(111, projection='polar')
 ax.scatter(theta, radii)
 
 # Make a dataframe
-df = pd.DataFrame({"theta": theta, "radii": radii})
+df = pd.DataFrame({'theta': theta, 'radii': radii})
 
 # Plot a random sample of items
 #samp = df.sample(n)
