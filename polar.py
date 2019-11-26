@@ -47,30 +47,17 @@ for i in range(len(df)):
     for j in df.loc[i, 'net'].split():
         #print(i, j)
 
-        x = []
-        y = []
-
         x0 = df.loc[i, 'theta']
         y0 = df.loc[i, 'radii']
-
-        x.append(x0)
-        y.append(y0)
 
         j = int(j)
         x1 = df.loc[j, 'theta']
         y1 = df.loc[j, 'radii']
 
-        x.append(x1)
-        y.append(y1)
-
-        # Toggle 1=dashed lines, 0=green arrows
-        if 0:
-            plt.plot(x, y, 'b:')
-        else:
-            ax.annotate('',
-                xy=(x0, y0), xycoords='data',
-                xytext=(x1, y1), textcoords='data',
-                arrowprops=dict(arrowstyle='->', connectionstyle='arc3', color='green'),
-                )
+        ax.annotate('',
+            xy=(x0, y0), xycoords='data',
+            xytext=(x1, y1), textcoords='data',
+            arrowprops=dict(arrowstyle='->', connectionstyle='arc3', color='green'),
+            )
 
 plt.show()
