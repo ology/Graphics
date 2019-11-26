@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 
-# Generate a pseudo-analog clock image with Perl.
+# Generate a pseudo-analog clock image
 # Usage: perl basic-clock > clock.png
 
 use GD;
