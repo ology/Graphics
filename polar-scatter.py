@@ -44,11 +44,11 @@ print(df)
 
 # Plot lines between the nodes based on the net column
 for i in range(len(df)):
+    x0 = df.loc[i, 'theta']
+    y0 = df.loc[i, 'radii']
+
     for j in df.loc[i, 'net'].split():
         #print(i, j)
-
-        x0 = df.loc[i, 'theta']
-        y0 = df.loc[i, 'radii']
 
         j = int(j)
         x1 = df.loc[j, 'theta']
