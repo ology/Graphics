@@ -53,7 +53,6 @@ for i in range(len(df)):
         y.append(y0)
 
         j = int(j)
-
         x1 = df.loc[j, 'theta']
         y1 = df.loc[j, 'radii']
 
