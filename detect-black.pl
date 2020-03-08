@@ -8,11 +8,11 @@ use warnings;
 use Imager;
 use Statistics::Frequency;
 
-my ($x, $y) = (50, 50);
-
 my $fontfile = '/Library/Fonts/Arial.ttf';
 my $font = Imager::Font->new(file => $fontfile)
     or die "Cannot load $fontfile: ", Imager->errstr;
+
+my ($x, $y) = (50, 50);
 
 my %letters;
 
