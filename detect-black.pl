@@ -61,3 +61,10 @@ my %prop = $freq->proportional_frequencies;
 for my $key (sort { $prop{$a} <=> $prop{$b} } keys %prop) {
     print "$key => $prop{$key}\n";
 }
+
+__END__
+R> data <- read.csv('/Users/gene/tmp/data.txt', header=F)
+R> alpha = c('I','J','Y','L','T','V','F','C','X','U','A','S','Z','O','P','K','G','H','Q','W','D','E','R','N','B','M')
+R> l <- seq(1, length(alpha), 1)
+R> plot(data$V1, type='l', main='Ink Used For Each Letter', xlab='Sorted Letters', ylab='Ink Used', xaxt="n",)
+R> for(i in l) axis(1, at=i, labels=alpha[i], cex.axis = 1)
