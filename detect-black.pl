@@ -13,7 +13,6 @@ my $font = Imager::Font->new(file => $fontfile)
 
 my %letters;
 
-# Inspect each letter
 for my $letter ('A' .. 'Z') {
     # Create a new, white canvas
     my $img = Imager->new(xsize => $x, ysize => $y);
