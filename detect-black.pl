@@ -61,7 +61,7 @@ for my $key (sort { $prop{$a} <=> $prop{$b} } keys %prop) {
 
 __END__
 # Commands used to create the graph:
-$ perl detect-black.pl > /Users/gene/tmp/data.txt
-R> data <- read.csv('/Users/gene/tmp/data.txt', header=F)
+$ perl detect-black.pl > ~/tmp/data.txt
+R> data <- read.csv('~/tmp/data.txt', header=F)
 R> plot(data$V2, type='l', main='Ink Used For Each Letter', xlab='Sorted Letters', ylab='Ink Used', xaxt="n")
 R> for(i in 1:26) axis(1, at=i, labels=data$V1[i])
