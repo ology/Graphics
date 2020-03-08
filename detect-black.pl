@@ -13,11 +13,14 @@ my $font = Imager::Font->new(file => $fontfile)
 
 my %letters;
 
+# Inspect each letter
 for my $letter ('A' .. 'Z') {
+    # Create a new, white canvas
     my $img = Imager->new(xsize => $x, ysize => $y);
 
     $img->box(xmin => 0, ymin => 0, xmax => $x - 1, ymax => $y - 1, filled => 1, color => 'white');
 
+    # Add our letter
     $img->string(
         font  => $font,
         text  => $letter,
@@ -28,15 +31,18 @@ for my $letter ('A' .. 'Z') {
         aa    => 1,
     );
 
+    # Save the image as a file
     my $file = $letter . '.png';
 
     $img->write(file => $file)
         or die "Cannot write $file: ", $img->errstr;
 
+    # Open the new file
     $img = Imager->new;
     $img->read(file => $file)
         or die $img->errstr;
 
+    # Detect the black pixels
     for my $i (0 .. $x - 1) {
         for my $j (0 .. $y - 1) {
             my $color = $img->getpixel(x => $i, y => $j);
@@ -44,6 +50,9 @@ for my $letter ('A' .. 'Z') {
             $letters{$letter}++ if $red == 0 && $green == 0 && $blue == 0;
         }
     }
+
+    # Remove the image file
+    unlink $file;
 }
 
 my $freq = Statistics::Frequency->new;
@@ -51,8 +60,4 @@ $freq->add_data(\%letters);
 my %prop = $freq->proportional_frequencies;
 for my $key (sort { $prop{$a} <=> $prop{$b} } keys %prop) {
     print "$key => $prop{$key}\n";
-}
-
-for my $letter ('A' .. 'Z') {
-    unlink $letter . '.png';
 }
