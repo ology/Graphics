@@ -1,4 +1,7 @@
 #!/usr/bin/env perl
+
+# Write-up: http://techn.ology.net/how-much-ink-is-used-for-each-letter/
+
 use strict;
 use warnings;
 
