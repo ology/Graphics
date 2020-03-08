@@ -42,7 +42,7 @@ for my $letter ('A' .. 'Z') {
         aa    => 1,
     );
 
-    # Detect the black pixels
+    # Detect black pixels
     for my $i (0 .. $x - 1) {
         for my $j (0 .. $y - 1) {
             my $color = $img->getpixel(x => $i, y => $j);
