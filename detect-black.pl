@@ -59,7 +59,7 @@ my $freq = Statistics::Frequency->new;
 $freq->add_data(\%letters);
 my %prop = $freq->proportional_frequencies;
 for my $key (sort { $prop{$a} <=> $prop{$b} } keys %prop) {
-    print "$key => $prop{$key}\n";
+    print "$key, $prop{$key}\n";
 }
 
 __END__
