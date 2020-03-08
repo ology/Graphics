@@ -12,6 +12,7 @@ my $file = '/Library/Fonts/Arial.ttf';
 my $font = Imager::Font->new(file => $file)
     or die "Cannot load $file: ", Imager->errstr;
 
+# Image dimensions
 my ($x, $y) = (50, 50);
 
 my %letters;
