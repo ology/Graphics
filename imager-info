@@ -9,9 +9,9 @@ use Imager;
 
 Imager::init(log => "$0.log");
 
-my $name = $ARGV[0] || die "No source image provided\n";
+my $name = shift || die "No source image provided\n";
 
-my $image = Imager->new();
+my $image = Imager->new;
 
 $image->open(file => $name) || die "Failed: $image->{ERRSTR}\n";
 
