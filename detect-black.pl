@@ -46,7 +46,9 @@ for my $letter ('A' .. 'Z') {
     for my $i (0 .. $x - 1) {
         for my $j (0 .. $y - 1) {
             my $color = $img->getpixel(x => $i, y => $j);
+
             my ($red, $green, $blue) = $color->rgba;
+
             $letters{$letter}++
                 if $red == 0 && $green == 0 && $blue == 0;
         }
