@@ -64,5 +64,4 @@ __END__
 $ perl detect-black.pl > /Users/gene/tmp/data.txt
 R> data <- read.csv('/Users/gene/tmp/data.txt', header=F)
 R> plot(data$V2, type='l', main='Ink Used For Each Letter', xlab='Sorted Letters', ylab='Ink Used', xaxt="n")
-R> l <- seq(1, 26, 1)
-R> for(i in l) axis(1, at=i, labels=data$V1[i], cex.axis = 1)
+R> for(i in 1:26) axis(1, at=i, labels=data$V1[i], cex.axis = 1)
