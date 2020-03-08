@@ -7,7 +7,7 @@ use warnings;
 
 use Imager;
 
-Imager::init(log => "$0.log");
+#Imager::init(log => "$0.log");
 
 my $name = shift || die "No source image provided\n";
 
