@@ -7,7 +7,7 @@ use Statistics::Frequency;
 
 my ($x, $y) = (50, 50);
 
-my $fontfile = '/opt/X11/share/fonts/TTF/VeraMono.ttf';
+my $fontfile = '/Library/Fonts/Arial.ttf';
 my $font = Imager::Font->new(file => $fontfile)
     or die "Cannot load $fontfile: ", Imager->errstr;
 
@@ -18,15 +18,14 @@ for my $letter ('A' .. 'Z') {
 
     $img->box(xmin => 0, ymin => 0, xmax => $x - 1, ymax => $y - 1, filled => 1, color => 'white');
 
-    $font->align(
-        string => $letter,
-        size   => 50,
-        color  => 'black',
-        x      => $img->getwidth / 2,
-        y      => $img->getheight / 2,
-        halign => 'center',
-        valign => 'center',
-        image  => $img,
+    $img->string(
+        font  => $font,
+        text  => $letter,
+        x     => 10,
+        y     => 42,
+        size  => 50,
+        color => 'black',
+        aa    => 1,
     );
 
     my $file = $letter . '.png';
