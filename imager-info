@@ -1,9 +1,10 @@
-#!/usr/bin/perl
-#
+#!/usr/bin/env perl
+
 # Show image file information.
-#
+
 use strict;
 use warnings;
+
 use Imager;
 
 Imager::init(log => "$0.log");
@@ -23,4 +24,3 @@ printf "%s (%s) - X/Y: %d/%d, Channels: %d, Bits/Channel: %s, Virtual: %s, Color
     ($image->virtual ? 'Yes' : 'No'),
     (defined($colorcount) ? $colorcount : '>512'),
 ;
-
