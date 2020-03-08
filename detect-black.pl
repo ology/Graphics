@@ -18,7 +18,14 @@ for my $letter ('A' .. 'Z') {
     # Create a new, white canvas
     my $img = Imager->new(xsize => $x, ysize => $y);
 
-    $img->box(xmin => 0, ymin => 0, xmax => $x - 1, ymax => $y - 1, filled => 1, color => 'white');
+    $img->box(
+        xmin   => 0,
+        ymin   => 0,
+        xmax   => $x - 1,
+        ymax   => $y - 1,
+        filled => 1,
+        color  => 'white',
+    );
 
     # Add our letter
     $img->string(
