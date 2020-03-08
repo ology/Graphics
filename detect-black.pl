@@ -3,6 +3,7 @@ use strict;
 use warnings;
 
 use Imager;
+use Statistics::Frequency;
 
 my ($x, $y) = (50, 50);
 
@@ -45,4 +46,10 @@ for my $letter ('A' .. 'Z') {
         }
     }
 }
-use Data::Dumper;warn(__PACKAGE__,' ',__LINE__," MARK: ",Dumper\%letters);
+
+my $freq = Statistics::Frequency->new;
+$freq->add_data(\%letters);
+my %prop = $freq->proportional_frequencies;
+for my $key (sort { $prop{$a} <=> $prop{$b} } keys %prop) {
+    print "$key => $prop{$key}\n";
+}
