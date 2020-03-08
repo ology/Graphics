@@ -64,5 +64,5 @@ __END__
 # Commands used to create the graph:
 $ perl detect-black.pl > ~/tmp/data.csv
 R> data <- read.csv('~/tmp/data.csv', header=F)
-R> plot(data$V2, type='l', main='Ink Used For Each Letter', xlab='Sorted Letters', ylab='Ink Used', xaxt="n")
+R> plot(data$V2, type='l', main='Ink Used For Each Letter', xlab='Sorted Letters', ylab='Relative Amount of Ink Used', xaxt="n")
 R> for(i in 1:26) axis(1, at=i, labels=data$V1[i])
