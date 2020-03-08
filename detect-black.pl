@@ -19,7 +19,7 @@ my ($x, $y) = (50, 50);
 my %letters;
 
 for my $letter ('A' .. 'Z') {
-    # Create a new, white canvas
+    # Create a blank, white canvas
     my $img = Imager->new(xsize => $x, ysize => $y);
 
     $img->box(
