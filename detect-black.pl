@@ -31,17 +31,6 @@ for my $letter ('A' .. 'Z') {
         aa    => 1,
     );
 
-    # Save the image as a file
-    my $file = $letter . '.png';
-
-    $img->write(file => $file)
-        or die "Cannot write $file: ", $img->errstr;
-
-    # Open the new file
-    $img = Imager->new;
-    $img->read(file => $file)
-        or die $img->errstr;
-
     # Detect the black pixels
     for my $i (0 .. $x - 1) {
         for my $j (0 .. $y - 1) {
@@ -50,9 +39,6 @@ for my $letter ('A' .. 'Z') {
             $letters{$letter}++ if $red == 0 && $green == 0 && $blue == 0;
         }
     }
-
-    # Remove the image file
-    unlink $file;
 }
 
 my $freq = Statistics::Frequency->new;
