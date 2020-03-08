@@ -8,7 +8,7 @@ use warnings;
 use Imager;
 use Statistics::Frequency;
 
-my $file = '/Library/Fonts/Arial.ttf';
+my $file = shift || '/Library/Fonts/Arial.ttf';
 my $font = Imager::Font->new(file => $file)
     or die "Cannot load $file: ", Imager->errstr;
 
