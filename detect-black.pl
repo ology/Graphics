@@ -30,7 +30,7 @@ for my $letter ('A' .. 'Z') {
         color  => 'white',
     );
 
-    # Add our letter
+    # Add the letter
     $img->string(
         font  => $font,
         text  => $letter,
