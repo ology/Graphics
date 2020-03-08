@@ -52,3 +52,7 @@ my %prop = $freq->proportional_frequencies;
 for my $key (sort { $prop{$a} <=> $prop{$b} } keys %prop) {
     print "$key => $prop{$key}\n";
 }
+
+for my $letter ('A' .. 'Z') {
+    unlink $letter . '.png';
+}
