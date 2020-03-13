@@ -55,6 +55,13 @@ for my $letter ('A' .. 'Z') {
     }
 }
 
+# Number of black pixels seen
+#for my $key (sort { $letters{$a} <=> $letters{$b} } keys %letters) {
+#    print "$key, $letters{$key}\n";
+#}
+#print "\n";
+
+# Proportional frequencies
 my $freq = Statistics::Frequency->new;
 $freq->add_data(\%letters);
 my %prop = $freq->proportional_frequencies;
