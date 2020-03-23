@@ -5,7 +5,7 @@ use warnings;
 use Parse::IRCLog;
 use GD::Graph::Polar;
 use Getopt::Long;
-use List::MoreUtils qw( any );
+use List::Util 'any';
 use DateTime;
 use DateTime::Format::DateParse;
 
@@ -98,9 +98,9 @@ for my $nick ( keys %$nicks )
 }
 
 my $g = GD::Graph::Polar->new(
-    size => 600,
+    size   => 600,
     radius => $maxr,
-    ticks => 20,
+    ticks  => 20,
 );
 
 # Add datapoints, labels & edges
