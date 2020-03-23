@@ -11,13 +11,13 @@ use DateTime::Format::DateParse;
 
 die usage() unless @ARGV;
 
-my $log;  # Log file to parse
-my $show; # Nicks to show
-my $hide; # Nicks to hide
+my $log;       # Log file to parse
+my $show;      # Nicks to show
+my $hide;      # Nicks to hide
 my $label = 0; # Show nick labels;
-my $start; # Initial timestamp
-my $begin; # Beginning time to show
-my $end;   # Time to stop showing
+my $start;     # Initial timestamp
+my $begin;     # Beginning time to show
+my $end;       # Time to stop showing
 GetOptions(
     'log=s'   => \$log,
     'show:s@' => \$show,
