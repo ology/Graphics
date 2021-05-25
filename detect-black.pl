@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 
-# Write-up: http://techn.ology.net/how-much-ink-is-used-for-each-letter/
+# Write-up: https://ology.github.io/2020/03/07/how-much-ink-is-used-for-each-letter/
 
 use strict;
 use warnings;
