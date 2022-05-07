@@ -42,7 +42,7 @@ $clock->line( $radius, $radius, @$h, $black );  # hour hand
 print $clock->svg;
 
 sub time_point {
-    my( $s, $m, $h ) = (localtime)[0..2];
+    my( $s, $m, $h ) = ( localtime )[ 0 .. 2 ];
     warn sprintf "%02d:%02d:%02d\n", $h, $m, $s;
 
     # Compute the analog time equivalents.
