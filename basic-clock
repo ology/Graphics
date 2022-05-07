@@ -24,9 +24,9 @@ my $clock = GD::SVG::Image->new( $diameter, $diameter );
 
 # Set image properties.
 my $trans = $clock->colorAllocate( 200, 200, 200 ); # background
-my $red   = $clock->colorAllocate( 255, 0,   0   ); # second hand
-my $blue  = $clock->colorAllocate( 0,   0,   255 ); # minute hand
-my $black = $clock->colorAllocate( 0,   0,   0   ); # hour hand
+my $red   = $clock->colorAllocate( 255,   0,   0 ); # second hand
+my $blue  = $clock->colorAllocate(   0,   0, 255 ); # minute hand
+my $black = $clock->colorAllocate(   0,   0,   0 ); # hour hand
 $clock->transparent($trans);
 $clock->interlaced('true');
 
