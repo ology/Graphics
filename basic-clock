@@ -13,9 +13,12 @@ use constant PI     => 2 * atan2(1,0);
 use constant HALF   => PI / 2;
 use constant DOUBLE => 2 * PI;
 
+# All arguments optional.
+my ( $diameter, $hours, $minutes, $seconds ) = @ARGV;
+
 # Set the maximum polar diameter and radius.
-my $diameter = shift || 200;
-my $radius   = $diameter / 2;
+$diameter ||= 200;
+my $radius = $diameter / 2;
 
 my $clock = GD::SVG::Image->new( $diameter, $diameter );
 
@@ -31,7 +34,7 @@ $clock->interlaced('true');
 $clock->arc( $radius, $radius, $diameter, $diameter, 0, 360, $black );
 
 # Get polar coordinate of the current time.
-my( $s, $m, $h ) = time_point();
+my ( $s, $m, $h ) = time_point( $seconds, $minutes, $hours );
 
 # Draw the arms of the clock.
 $clock->line( $radius, $radius, @$s, $red );    # second hand
@@ -42,7 +45,12 @@ $clock->line( $radius, $radius, @$h, $black );  # hour hand
 print $clock->svg;
 
 sub time_point {
-    my( $s, $m, $h ) = ( localtime )[ 0 .. 2 ];
+    my ( $s, $m, $h ) = @_;
+
+    # Use the current time if not given.
+    ( $s, $m, $h ) = ( localtime )[ 0 .. 2 ]
+        unless $s && $m && $h;
+
     warn sprintf "%02d:%02d:%02d\n", $h, $m, $s;
 
     # Compute the analog time equivalents.
@@ -55,6 +63,7 @@ sub time_point {
         $radius + $radius * cos $_,
         $radius + $radius * sin $_
     ] for $s, $m, $h;
+
     warn join( ', ', map { sprintf "[%.2f,%.2f]", @$_ } $s, $m, $h ), "\n";
 
     return $s, $m, $h;
