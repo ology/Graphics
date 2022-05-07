@@ -56,6 +56,7 @@ sub time_point {
     # Compute the analog time equivalents.
     $s = $s / 60 * DOUBLE - HALF;
     $m = $m / 60 * DOUBLE - HALF;
+    # TODO Add 1/60th of the distance to the next hour mark
     $h = $h / 12 * DOUBLE - HALF;
 
     # Replace the time values with polar coordinates.
