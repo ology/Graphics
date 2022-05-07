@@ -33,7 +33,7 @@ $clock->interlaced('true');
 # Add the circle to the clock.
 $clock->arc( $radius, $radius, $diameter, $diameter, 0, 360, $black );
 
-# Get polar coordinate of the current time.
+# Get polar coordinate of the given or current time.
 my ( $s, $m, $h ) = time_point( $seconds, $minutes, $hours );
 
 # Draw the arms of the clock.
