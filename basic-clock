@@ -35,13 +35,13 @@ $clock->interlaced('true');
 $clock->arc( $radius, $radius, $diameter, $diameter, 0, 360, $black );
 
 # Indicate the hours
-#for my $hour (1 .. 12) {
-#    my ( $s, $m, $h ) = time_point( 0, 0, $hour );
-#    $clock->arc( @$h, 6, 6, 0, 360, $black );
-#}
+for my $hour (1 .. 12) {
+    my ( $s, $m, $h ) = time_point( 0, 0, $hour );
+    $clock->arc( @$h, 6, 6, 0, 360, $black );
+}
 
 # Get polar coordinate of the given or current time.
-my ( $s, $m, $h ) = time_point( $seconds, $minutes, $hours );
+my ( $s, $m, $h ) = time_point( $seconds, $minutes, $hours, 1 );
 
 # Draw the arms of the clock.
 $clock->line( $radius, $radius, @$s, $red );    # second hand
@@ -52,7 +52,7 @@ $clock->line( $radius, $radius, @$h, $black );  # hour hand
 print $clock->svg;
 
 sub time_point {
-    my ( $s, $m, $h ) = @_;
+    my ( $s, $m, $h, $flag ) = @_;
 
     # Use the current time if not given.
     ( $s, $m, $h ) = ( localtime )[ 0 .. 2 ]
@@ -65,7 +65,7 @@ sub time_point {
     $m = $m / 60 * DOUBLE - HALF;
     # TODO Add 1/60th of the distance to the next hour mark for each minute
     $h = $h / 12 * DOUBLE - HALF;
-#    $h += $m * FRACT if $m > 0;
+    $h += $m * FRACT if $flag && $m > 0;
 
     # Replace the time values with polar coordinates.
     $_ = [
