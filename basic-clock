@@ -14,7 +14,7 @@ use constant HALF   => PI / 2;
 use constant DOUBLE => 2 * PI;
 
 # Set the maximum polar diameter and radius.
-my $diameter = shift || 100;
+my $diameter = shift || 200;
 my $radius   = $diameter / 2;
 
 my $clock = GD::SVG::Image->new( $diameter, $diameter );
