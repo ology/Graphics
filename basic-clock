@@ -2,10 +2,11 @@
 use strict;
 use warnings;
 
-# Generate a pseudo-analog clock image
-# Usage: perl basic-clock > clock.png
+# Generate a pseudo-analog clock
+# Usage: perl basic-clock > clock.svg
+# Hands: black=hour, blue=minute, red=second
 
-use GD;
+use GD::SVG;
 use Math::Trig;
 
 use constant PI     => 2 * atan2(1,0);
@@ -16,7 +17,7 @@ use constant DOUBLE => 2 * PI;
 my $diameter = shift || 100;
 my $radius   = $diameter / 2;
 
-my $clock = GD::Image->new( $diameter, $diameter );
+my $clock = GD::SVG::Image->new( $diameter, $diameter );
 
 # Set image properties.
 my $trans = $clock->colorAllocate(200,200,200);
@@ -38,7 +39,7 @@ $clock->line( $radius, $radius, @$m, $blue );
 $clock->line( $radius, $radius, @$h, $black );
 
 # Render the clock.
-print $clock->png;
+print $clock->svg;
 
 sub time_point {
     my( $s, $m, $h ) = (localtime)[0..2];
