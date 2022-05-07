@@ -12,6 +12,7 @@ use Math::Trig;
 use constant PI     => 2 * atan2(1,0);
 use constant HALF   => PI / 2;
 use constant DOUBLE => 2 * PI;
+use constant FRACT  => 5 / 60;
 
 # All arguments optional.
 my ( $diameter, $hours, $minutes, $seconds ) = @ARGV;
@@ -33,6 +34,12 @@ $clock->interlaced('true');
 # Add the circle to the clock.
 $clock->arc( $radius, $radius, $diameter, $diameter, 0, 360, $black );
 
+# Indicate the hours
+#for my $hour (1 .. 12) {
+#    my ( $s, $m, $h ) = time_point( 0, 0, $hour );
+#    $clock->arc( @$h, 6, 6, 0, 360, $black );
+#}
+
 # Get polar coordinate of the given or current time.
 my ( $s, $m, $h ) = time_point( $seconds, $minutes, $hours );
 
@@ -49,7 +56,7 @@ sub time_point {
 
     # Use the current time if not given.
     ( $s, $m, $h ) = ( localtime )[ 0 .. 2 ]
-        unless $s && $m && $h;
+        unless defined $s && defined $m && defined $h;
 
     warn sprintf "%02d:%02d:%02d\n", $h, $m, $s;
 
@@ -58,6 +65,7 @@ sub time_point {
     $m = $m / 60 * DOUBLE - HALF;
     # TODO Add 1/60th of the distance to the next hour mark for each minute
     $h = $h / 12 * DOUBLE - HALF;
+#    $h += $m * FRACT if $m > 0;
 
     # Replace the time values with polar coordinates.
     $_ = [
