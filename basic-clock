@@ -51,8 +51,10 @@ sub time_point {
     $h = $h / 12 * DOUBLE - HALF;
 
     # Replace the time values with polar coordinates.
-    $_ = [$radius + $radius * cos $_, $radius + $radius * sin $_]
-        for $s, $m, $h;
+    $_ = [
+        $radius + $radius * cos $_,
+        $radius + $radius * sin $_
+    ] for $s, $m, $h;
     warn join( ', ', map { sprintf "[%.2f,%.2f]", @$_ } $s, $m, $h ), "\n";
 
     return $s, $m, $h;
