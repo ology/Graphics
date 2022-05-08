@@ -12,7 +12,7 @@ use Math::Trig;
 use constant PI     => 2 * atan2(1,0);
 use constant HALF   => PI / 2;
 use constant DOUBLE => 2 * PI;
-use constant FRACT  => 5 / 60;
+use constant FRACT  => 2 * PI / 12 / 60;
 
 # All arguments optional.
 my ( $diameter, $hours, $minutes, $seconds ) = @ARGV;
@@ -65,7 +65,7 @@ sub time_point {
     $m = $m / 60 * DOUBLE - HALF;
     # TODO Add 1/60th of the distance to the next hour mark for each minute
     $h = $h / 12 * DOUBLE - HALF;
-    $h += $m * FRACT if $flag && $m > 0;
+    $h += $m * FRACT if $flag;
 
     # Replace the time values with polar coordinates.
     $_ = [
