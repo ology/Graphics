@@ -13,7 +13,7 @@ my $A    = shift || 1;
 my $B    = shift || 1.5;
 my $max  = shift || 20;
 my $size = shift || 400;
-my $incr = shift || 0.03;
+my $incr = shift || 0.05;
 my $fill = shift || 'white';
 my $line = shift || 'black';
 
