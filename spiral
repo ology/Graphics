@@ -18,14 +18,12 @@ my $fill = shift || 'white';
 my $line = shift || 'black';
 
 my $title = 'Spiral';
-my $desc  = 'Show a spiral';
 
 my $svg = SVG->new(
     width  => $size,
     height => $size,
 );
 $svg->title()->cdata($title);
-$svg->desc(id => 'document-desc')->cdata($desc);
 
 my $style = $svg->group(
     id    => 'style-group',
