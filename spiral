@@ -9,20 +9,20 @@ use SVG qw(title);
 #my $spiral = Math::Spiral->new;
 #    my ($x, $y) = $spiral->Next;
 
-my $A        = shift || 1;
-my $B        = shift || 1.5;
-my $max      = shift || 20;
-my $diameter = shift || 400;
-my $incr     = shift || 0.03;
-my $fill     = shift || 'white';
-my $line     = shift || 'black';
+my $A    = shift || 1;
+my $B    = shift || 1.5;
+my $max  = shift || 20;
+my $size = shift || 400;
+my $incr = shift || 0.03;
+my $fill = shift || 'white';
+my $line = shift || 'black';
 
 my $title = 'Spiral';
 my $desc  = 'Show a spiral';
 
 my $svg = SVG->new(
-    width  => $diameter,
-    height => $diameter,
+    width  => $size,
+    height => $size,
 );
 $svg->title()->cdata($title);
 $svg->desc(id => 'document-desc')->cdata($desc);
@@ -41,8 +41,8 @@ for (my $theta = 0; $theta < $max * pi; $theta += $incr) {
     my $rho = $A + $B * $theta; # Archimedean
 #    my $rho = $A * exp($theta * cot($B)); # Logarithmic
 
-    my $x = $diameter / 2 + $rho * cos($theta / pi);
-    my $y = $diameter / 2 + $rho * sin($theta / pi);
+    my $x = $size / 2 + $rho * cos($theta / pi);
+    my $y = $size / 2 + $rho * sin($theta / pi);
 
     my $id = $x . '_' . $y . '-point';
 
