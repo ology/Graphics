@@ -14,8 +14,8 @@ my $B    = shift // 1.5;
 my $max  = shift || 20;
 my $size = shift || 400;
 my $incr = shift || 0.05;
-my $fill = shift || 'white';
 my $line = shift || 'black';
+my $fill = shift || 'white';
 
 my $svg = SVG->new(
     width  => $size,
