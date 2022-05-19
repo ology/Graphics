@@ -38,11 +38,11 @@ my $style = $svg->group(
 my %seen;
 
 for (my $theta = 0; $theta < $max * pi; $theta += $incr) {
-    my $r = $A + $B * $theta; # Archimedean
+    my $rho = $A + $B * $theta; # Archimedean
 #    my $r = $A * exp($theta * cot($B)); # Logarithmic
 
-    my $x = $diameter / 2 + $r * cos($theta / pi);
-    my $y = $diameter / 2 + $r * sin($theta / pi);
+    my $x = $diameter / 2 + $rho * cos($theta / pi);
+    my $y = $diameter / 2 + $rho * sin($theta / pi);
 
     my $id = $x . '_' . $y . '-point';
 
