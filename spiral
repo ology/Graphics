@@ -17,13 +17,11 @@ my $incr = shift || 0.05;
 my $fill = shift || 'white';
 my $line = shift || 'black';
 
-my $title = 'Spiral';
-
 my $svg = SVG->new(
     width  => $size,
     height => $size,
 );
-$svg->title()->cdata($title);
+$svg->title()->cdata('Spiral');
 
 my $style = $svg->group(
     id    => 'style-group',
