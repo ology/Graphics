@@ -5,10 +5,6 @@ use warnings;
 use Math::Trig qw(pi cot);
 use SVG qw(title);
 
-#use Math::Spiral;
-#my $spiral = Math::Spiral->new;
-#    my ($x, $y) = $spiral->Next;
-
 my $A    = shift // 1;
 my $B    = shift // 1.5;
 my $max  = shift || 20;
