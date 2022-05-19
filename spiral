@@ -39,7 +39,7 @@ my %seen;
 
 for (my $theta = 0; $theta < $max * pi; $theta += $incr) {
     my $rho = $A + $B * $theta; # Archimedean
-#    my $r = $A * exp($theta * cot($B)); # Logarithmic
+#    my $rho = $A * exp($theta * cot($B)); # Logarithmic
 
     my $x = $diameter / 2 + $rho * cos($theta / pi);
     my $y = $diameter / 2 + $rho * sin($theta / pi);
