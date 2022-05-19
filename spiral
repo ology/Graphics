@@ -9,8 +9,8 @@ use SVG qw(title);
 #my $spiral = Math::Spiral->new;
 #    my ($x, $y) = $spiral->Next;
 
-my $A    = shift || 1;
-my $B    = shift || 1.5;
+my $A    = shift // 1;
+my $B    = shift // 1.5;
 my $max  = shift || 20;
 my $size = shift || 400;
 my $incr = shift || 0.05;
