@@ -1,0 +1,57 @@
+#!/usr/bin/env perl
+use strict;
+use warnings;
+
+use Math::Trig qw(pi cot cylindrical_to_cartesian);
+use SVG qw(title);
+
+#use Math::Spiral;
+#my $spiral = Math::Spiral->new;
+#    my ($x, $y) = $spiral->Next;
+
+my $A        = shift || 1;
+my $B        = shift || 1.5;
+my $max      = shift || 20;
+my $diameter = shift || 400;
+my $incr     = shift || 0.03;
+my $fill     = shift || 'white';
+my $line     = shift || 'black';
+
+my $title = 'Spiral';
+my $desc  = 'Show a spiral';
+
+my $svg = SVG->new(
+    width  => $diameter,
+    height => $diameter,
+);
+$svg->title()->cdata($title);
+$svg->desc(id => 'document-desc')->cdata($desc);
+
+my $style = $svg->group(
+    id    => 'style-group',
+    style => {
+        stroke => $line,
+        fill   => $fill,
+    },
+);
+
+my %seen;
+
+for (my $theta = 0; $theta < $max * pi; $theta += $incr) {
+    my $r = $A + $B * $theta; # Archimedean
+#    my $r = $A * exp($theta * cot($B)); # Logarithmic
+
+    my $x = $diameter / 2 + $r * cos($theta / pi);
+    my $y = $diameter / 2 + $r * sin($theta / pi);
+
+    my $id = $x . '_' . $y . '-point';
+
+    $style->circle(
+        id => $id,
+        cx => $x,
+        cy => $y,
+        r  => 1,
+    );
+}
+
+print $svg->xmlify;
