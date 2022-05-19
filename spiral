@@ -31,8 +31,6 @@ my $style = $svg->group(
     },
 );
 
-my %seen;
-
 for (my $theta = 0; $theta < $max * pi; $theta += $incr) {
     my $rho = $A + $B * $theta; # Archimedean
 #    my $rho = $A * exp($theta * cot($B)); # Logarithmic
