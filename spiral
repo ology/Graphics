@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 
-use Math::Trig qw(pi cot cylindrical_to_cartesian);
+use Math::Trig qw(pi cot);
 use SVG qw(title);
 
 #use Math::Spiral;
