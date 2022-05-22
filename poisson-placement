@@ -6,7 +6,8 @@ use lib qw(/home/gene/repos/CORION/random-poissondisc/lib);
 use Random::PoissonDisc ();
 use SVG qw(title);
 
-my $size = shift || 500;
+my $items = shift || 500;
+my $size  = shift || 500;
 
 my $fill   = 'white';
 my $border = 'black';
@@ -25,10 +26,14 @@ my $style = $svg->group(
     },
 );
 
+# Inversely proportional to the number of points needed
+my $delta = 10;
+# 2400->8, 1900->9, 1500->10
+
 my $points = Random::PoissonDisc->points(
     dimensions => [$size, $size],
-    r          => 8, # Inversely proportional to the number of points needed
-    avoid_edge => 8,
+    r          => $delta,
+    avoid_edge => $delta,
 );
 
 my $i = 0;
