@@ -6,7 +6,7 @@ use Random::PoissonDisc ();
 use SVG qw(title);
 
 my $size = shift || 500;
-my $max  = shift || 20;
+my $max  = shift || 500;
 
 my $fill   = 'white';
 my $border = 'black';
