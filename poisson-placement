@@ -7,7 +7,7 @@ use SVG qw(title);
 
 use constant DIST => 12; # Minimum distance between points
 use constant EDGE => 8;  # Avoid the edge by this many pixels
-use constant NODE => 3;
+use constant NODE => 3;  # Radius of a node point
 
 my $items = shift || 500;
 my $size  = shift || 500;
