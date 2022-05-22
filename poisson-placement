@@ -26,14 +26,14 @@ my $style = $svg->group(
     },
 );
 
-# Inversely proportional to the number of points needed
-my $delta = 10;
-# 2400->8, 1900->9, 1500->10
+# TODO Inversely proportional to the number of items?
+my $delta = 9;
 
 my $points = Random::PoissonDisc->points(
     dimensions => [$size, $size],
     r          => $delta,
-    avoid_edge => $delta,
+    avoid_edge => 8,
+    center     => 1,
 );
 
 my $i = 0;
@@ -51,6 +51,8 @@ for my $point ($points->@*) {
         r  => 3,
         id => $i . '-point'
     );
+
+    last if $i > $items;
 }
 warn __PACKAGE__,' L',__LINE__,' ',,"$i\n";
 
