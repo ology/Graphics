@@ -2,7 +2,6 @@
 use strict;
 use warnings;
 
-use lib qw(/home/gene/repos/CORION/random-poissondisc/lib);
 use Random::PoissonDisc ();
 use SVG qw(title);
 
