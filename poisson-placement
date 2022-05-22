@@ -26,8 +26,8 @@ my $style = $svg->group(
     },
 );
 
-# TODO Inversely proportional to the number of items?
-my $delta = 9;
+# TODO Make delta inversely proportional to the number of items.
+my $delta = 12;
 
 my $points = Random::PoissonDisc->points(
     dimensions => [$size, $size],
