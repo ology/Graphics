@@ -8,6 +8,7 @@ use SVG qw(title);
 use constant NODE => 10;        # Radius of a node point
 use constant DIST => 20 + NODE; # Minimum distance between points
 use constant EDGE => 5 + NODE;  # Avoid the edge by this many pixels
+use constant SIZE => NODE * 30;  # Dimension of the plot
 
 my $items = shift || 500;
 my $size  = shift || 500;
@@ -54,5 +55,6 @@ for my $point ($points->@*) {
 
     last if $i > $items;
 }
+warn "i = $i\n";
 
 print $svg->xmlify;
