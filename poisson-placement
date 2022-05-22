@@ -9,7 +9,7 @@ use constant NODE => 7; # Radius of a node point
 use constant DIST => 15 + NODE; # Minimum distance between points
 use constant EDGE => 5 + NODE; # Avoid the edge by this many pixels
 
-my $items = shift || 500;
+my $items = shift || 100;
 my $size  = shift || 500;
 
 my $fill   = 'white';
