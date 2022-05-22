@@ -5,9 +5,9 @@ use warnings;
 use Random::PoissonDisc ();
 use SVG qw(title);
 
-use constant DIST => 12; # Minimum distance between points
-use constant EDGE => 8;  # Avoid the edge by this many pixels
-use constant NODE => 3;  # Radius of a node point
+use constant NODE => 10;        # Radius of a node point
+use constant DIST => 20 + NODE; # Minimum distance between points
+use constant EDGE => 5 + NODE;  # Avoid the edge by this many pixels
 
 my $items = shift || 500;
 my $size  = shift || 500;
