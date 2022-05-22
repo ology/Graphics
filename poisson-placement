@@ -28,7 +28,7 @@ my $style = $svg->group(
 my $points = Random::PoissonDisc->points(
     dimensions => [$size, $size],
     r          => 8, # Inversely proportional to the number of points needed
-    avoid_edge => 10,
+    avoid_edge => 8,
 );
 
 my $i = 0;
@@ -47,5 +47,6 @@ for my $point ($points->@*) {
         id => $i . '-point'
     );
 }
+warn __PACKAGE__,' L',__LINE__,' ',,"$i\n";
 
 print $svg->xmlify;
