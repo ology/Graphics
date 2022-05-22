@@ -45,8 +45,6 @@ my $i = 0;
 for my $point ($points->@*) {
     $i++;
 
-    last if $i > $max;
-
     $style->anchor(
         id     => $i . '-anchor',
         -href  => 'https://ology.github.io/',
@@ -57,6 +55,8 @@ for my $point ($points->@*) {
         r  => 3,
         id => $i . '-point'
     );
+
+    last if $i > $max;
 }
 
 print $svg->xmlify;
