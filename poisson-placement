@@ -6,6 +6,9 @@ use lib qw(/home/gene/repos/CORION/random-poissondisc/lib);
 use Random::PoissonDisc ();
 use SVG qw(title);
 
+use constant DIST => 12; # Minimum distance between points
+use constant EDGE => 8;  # Avoid the edge by this many pixels
+
 my $items = shift || 500;
 my $size  = shift || 500;
 
@@ -26,13 +29,10 @@ my $style = $svg->group(
     },
 );
 
-# TODO Make delta inversely proportional to the number of items.
-my $delta = 12;
-
 my $points = Random::PoissonDisc->points(
     dimensions => [$size, $size],
-    r          => $delta,
-    avoid_edge => 8,
+    r          => DIST,
+    avoid_edge => EDGE,
     center     => 1,
 );
 
@@ -54,6 +54,5 @@ for my $point ($points->@*) {
 
     last if $i > $items;
 }
-warn __PACKAGE__,' L',__LINE__,' ',,"$i\n";
 
 print $svg->xmlify;
