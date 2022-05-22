@@ -9,7 +9,7 @@ use constant NODE => 7; # Radius of a node point
 use constant DIST => 15 + NODE; # Minimum distance between points
 use constant EDGE => 5 + NODE; # Avoid the edge by this many pixels
 
-my $items = shift || 100;
+my $items = shift || 1;
 my $size  = shift || 500;
 
 my $fill   = 'white';
@@ -52,7 +52,7 @@ for my $point ($points->@*) {
         id => $i . '-point'
     );
 
-    last if $i > $items;
+    last if $i >= $items;
 }
 warn "i = $i\n";
 
