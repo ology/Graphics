@@ -1,0 +1,62 @@
+#!/usr/bin/env perl
+use strict;
+use warnings;
+
+use Random::PoissonDisc ();
+use SVG qw(title);
+
+my $size = shift || 500;
+my $max  = shift || 20;
+
+my $fill   = 'white';
+my $border = 'black';
+
+my $svg = SVG->new(
+    width  => $size,
+    height => $size,
+);
+$svg->title()->cdata('Poisson Distribution');
+
+my $style = $svg->group(
+    id    => 'style-group',
+    style => {
+        stroke => $border,
+        fill   => $fill,
+    },
+);
+
+$style->rectangle(
+    x      => 0,
+    y      => 0,
+    width  => $size,
+    height => $size,
+    rx     => 0,
+    ry     => 0,
+    id     => 'frame',
+);
+
+my $points = Random::PoissonDisc->points(
+    dimensions => [$size, $size],
+    r          => 20,
+);
+
+my $i = 0;
+
+for my $point ($points->@*) {
+    $i++;
+
+    last if $i > $max;
+
+    $style->anchor(
+        id     => $i . '-anchor',
+        -href  => 'https://ology.github.io/',
+        target => '_blank'
+    )->circle(
+        cx => $point->[0],
+        cy => $point->[1],
+        r  => 3,
+        id => $i . '-point'
+    );
+}
+
+print $svg->xmlify;
