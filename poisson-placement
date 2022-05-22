@@ -7,7 +7,6 @@ use Random::PoissonDisc ();
 use SVG qw(title);
 
 my $size = shift || 500;
-my $max  = shift || 500;
 
 my $fill   = 'white';
 my $border = 'black';
@@ -28,7 +27,7 @@ my $style = $svg->group(
 
 my $points = Random::PoissonDisc->points(
     dimensions => [$size, $size],
-    r          => 20,
+    r          => 8, # Inversely proportional to the number of points needed
     avoid_edge => 10,
 );
 
@@ -47,8 +46,6 @@ for my $point ($points->@*) {
         r  => 3,
         id => $i . '-point'
     );
-
-    last if $i > $max;
 }
 
 print $svg->xmlify;
