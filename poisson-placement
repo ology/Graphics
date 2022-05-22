@@ -2,6 +2,7 @@
 use strict;
 use warnings;
 
+use lib qw(/home/gene/repos/CORION/random-poissondisc/lib);
 use Random::PoissonDisc ();
 use SVG qw(title);
 
@@ -28,6 +29,7 @@ my $style = $svg->group(
 my $points = Random::PoissonDisc->points(
     dimensions => [$size, $size],
     r          => 20,
+    avoid_edge => 10,
 );
 
 my $i = 0;
