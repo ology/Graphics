@@ -25,16 +25,6 @@ my $style = $svg->group(
     },
 );
 
-$style->rectangle(
-    x      => 0,
-    y      => 0,
-    width  => $size,
-    height => $size,
-    rx     => 0,
-    ry     => 0,
-    id     => 'frame',
-);
-
 my $points = Random::PoissonDisc->points(
     dimensions => [$size, $size],
     r          => 20,
