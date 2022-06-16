@@ -77,8 +77,16 @@ sub time_point {
     my %t = ( s => $s, m => $m, h => $h );
 
     for my $i (qw( s m h )) {
+        my $r = $radius;
+
         # Handle differring hand lengths
-        my $r = $flag && $i eq 'h' ? $radius / 2 : $radius;
+        if ($flag) {
+            $r = $i eq 'h' ? $radius / 2
+               : $i eq 'm' ? $radius / 1.2
+               : $i eq 's' ? $radius / 1.1
+               : $radius;
+        }
+
         # Replace the time value with a rectangular coordinate
         $t{$i} = [
             $radius + $r * cos $t{$i},
