@@ -35,7 +35,7 @@ $clock->arc( $radius, $radius, $diameter, $diameter, 0, 360, $black );
 
 # Indicate the hours
 for my $hour (1 .. 12) {
-    my ( $s, $m, $h ) = time_point( $radius, 0, 0, $hour );
+    my ( undef, undef, $h ) = time_point( $radius, 0, 0, $hour );
     $clock->arc( @$h, 6, 6, 0, 360, $black );
 }
 
