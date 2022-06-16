@@ -42,7 +42,7 @@ for my $hour (1 .. 12) {
 # Get polar coordinate of the given or current time
 my ( $s, $m, $h ) = time_point( $radius, $seconds, $minutes, $hours, 1 );
 
-# Draw the arms of the clock
+# Draw the hands of the clock
 $clock->setThickness(8);
 $clock->line( $radius, $radius, @$h, $grey );   # hour hand
 $clock->setThickness(4);
