@@ -29,7 +29,6 @@ my $blue  = $clock->colorAllocate(   0,   0, 255 ); # minute hand
 my $grey  = $clock->colorAllocate( 127, 127, 127 ); # hour hand
 my $black = $clock->colorAllocate(   0,   0,   0 ); # perimeter
 $clock->transparent($trans);
-$clock->interlaced('true');
 
 # Add the circle to the clock
 $clock->arc( $radius, $radius, $diameter, $diameter, 0, 360, $black );
