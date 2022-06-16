@@ -70,7 +70,7 @@ sub time_point {
     # Add 1/2 degree to the hour mark for each minute
     $h += $min * FRACT if $flag;
 
-    # Replace the time values with polar coordinates.
+    # Replace the time values with rectangular coordinates.
     $_ = [
         $radius + $radius * cos $_,
         $radius + $radius * sin $_
