@@ -27,7 +27,8 @@ my $clock = GD::SVG::Image->new( $diameter, $diameter );
 my $trans = $clock->colorAllocate( 200, 200, 200 ); # background
 my $red   = $clock->colorAllocate( 255,   0,   0 ); # second hand
 my $blue  = $clock->colorAllocate(   0,   0, 255 ); # minute hand
-my $black = $clock->colorAllocate(   0,   0,   0 ); # hour hand
+my $grey  = $clock->colorAllocate( 127, 127, 127 ); # hour hand
+my $black = $clock->colorAllocate(   0,   0,   0 ); # perimeter
 $clock->transparent($trans);
 $clock->interlaced('true');
 
@@ -45,8 +46,10 @@ my ( $s, $m, $h ) = time_point( $seconds, $minutes, $hours, 1 );
 
 # Draw the arms of the clock.
 $clock->line( $radius, $radius, @$s, $red );    # second hand
+$clock->setThickness(4);
 $clock->line( $radius, $radius, @$m, $blue );   # minute hand
-$clock->line( $radius, $radius, @$h, $black );  # hour hand
+$clock->setThickness(8);
+$clock->line( $radius, $radius, @$h, $grey );  # hour hand
 
 # Render the clock.
 print $clock->svg;
