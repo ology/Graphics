@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 
-# Generate a simple analog clock in SVG
+# Generate a simple analog clock
 # Usage: perl basic-clock > clock.svg
 
 use GD::SVG;
