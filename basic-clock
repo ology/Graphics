@@ -2,7 +2,7 @@
 use strict;
 use warnings;
 
-# Generate a pseudo-analog clock
+# Generate an SVG analog clock
 # Usage: perl basic-clock > clock.svg
 
 use GD::SVG;
@@ -13,16 +13,16 @@ use constant HALF   => pip2;
 use constant DOUBLE => pi2;
 use constant FRACT  => pi2 / 12 / 60;
 
-# All arguments optional.
+# All arguments optional
 my ( $diameter, $hours, $minutes, $seconds ) = @ARGV;
 
-# Set the maximum polar diameter and radius.
+# Set the maximum polar diameter and radius
 $diameter ||= 200;
 my $radius = $diameter / 2;
 
 my $clock = GD::SVG::Image->new( $diameter, $diameter );
 
-# Set image properties.
+# Set image properties
 my $trans = $clock->colorAllocate( 200, 200, 200 ); # background
 my $red   = $clock->colorAllocate( 255,   0,   0 ); # second hand
 my $blue  = $clock->colorAllocate(   0,   0, 255 ); # minute hand
@@ -31,7 +31,7 @@ my $black = $clock->colorAllocate(   0,   0,   0 ); # perimeter
 $clock->transparent($trans);
 $clock->interlaced('true');
 
-# Add the circle to the clock.
+# Add the circle to the clock
 $clock->arc( $radius, $radius, $diameter, $diameter, 0, 360, $black );
 
 # Indicate the hours
@@ -40,10 +40,10 @@ for my $hour (1 .. 12) {
     $clock->arc( @$h, 6, 6, 0, 360, $black );
 }
 
-# Get polar coordinate of the given or current time.
+# Get polar coordinate of the given or current time
 my ( $s, $m, $h ) = time_point( $radius, $seconds, $minutes, $hours, 1 );
 
-# Draw the arms of the clock.
+# Draw the arms of the clock
 $clock->setThickness(8);
 $clock->line( $radius, $radius, @$h, $grey );   # hour hand
 $clock->setThickness(4);
@@ -51,7 +51,7 @@ $clock->line( $radius, $radius, @$m, $blue );   # minute hand
 $clock->setThickness(1);
 $clock->line( $radius, $radius, @$s, $red );    # second hand
 
-# Render the clock.
+# Render the clock
 print $clock->svg;
 
 sub time_point {
@@ -65,7 +65,7 @@ sub time_point {
 
     my $min = $m; # remember the number of minutes
 
-    # Compute the analog time equivalents.
+    # Compute the analog time equivalents
     $s = $s / 60 * DOUBLE - HALF;
     $m = $m / 60 * DOUBLE - HALF;
     $h = $h / 12 * DOUBLE - HALF;
