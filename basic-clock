@@ -45,11 +45,12 @@ for my $hour (1 .. 12) {
 my ( $s, $m, $h ) = time_point( $seconds, $minutes, $hours, 1 );
 
 # Draw the arms of the clock.
-$clock->line( $radius, $radius, @$s, $red );    # second hand
+$clock->setThickness(8);
+$clock->line( $radius, $radius, @$h, $grey );   # hour hand
 $clock->setThickness(4);
 $clock->line( $radius, $radius, @$m, $blue );   # minute hand
-$clock->setThickness(8);
-$clock->line( $radius, $radius, @$h, $grey );  # hour hand
+$clock->setThickness(1);
+$clock->line( $radius, $radius, @$s, $red );    # second hand
 
 # Render the clock.
 print $clock->svg;
