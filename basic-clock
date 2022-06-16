@@ -12,7 +12,7 @@ use Math::Trig qw(:pi);
 use constant PI     => pi;
 use constant HALF   => pip2;
 use constant DOUBLE => pi2;
-use constant FRACT  => 2 * PI / 12 / 60;
+use constant FRACT  => pi2 / 12 / 60;
 
 # All arguments optional.
 my ( $diameter, $hours, $minutes, $seconds ) = @ARGV;
