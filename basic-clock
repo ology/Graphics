@@ -59,6 +59,9 @@ print $clock->svg;
 sub time_point {
     my ( $radius, $s, $m, $h, $flag ) = @_;
 
+    # Getting a flag means we are plotting the hands of the clock
+    # Without, we are just rendering the perimeter hour markings
+
     # Use the current time if not given.
     ( $s, $m, $h ) = ( localtime )[ 0 .. 2 ]
         unless defined $s && defined $m && defined $h;
