@@ -39,7 +39,7 @@ for my $hour (1 .. 12) {
     $clock->arc( @$h, 6, 6, 0, 360, $black );
 }
 
-# Get polar coordinate of the given or current time
+# Get coordinate of the given or current time
 my ( $s, $m, $h ) = time_point( $radius, $seconds, $minutes, $hours, 1 );
 
 # Draw the hands of the clock
