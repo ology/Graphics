@@ -60,9 +60,9 @@ sub time_point {
 
     warn sprintf "%02d:%02d:%02d\n", $h, $m, $s;
 
-    # Compute the analog time equivalents.
     # Add 1/2 degree to the hour mark for each minute
     $h += $m * FRACT if $flag;
+    # Compute the analog time equivalents.
     $h = $h / 12 * DOUBLE - HALF;
     $m = $m / 60 * DOUBLE - HALF;
     $s = $s / 60 * DOUBLE - HALF;
