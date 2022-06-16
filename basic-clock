@@ -63,9 +63,9 @@ sub time_point {
     my $min = $m; # remember the number of minutes
 
     # Compute the analog time equivalents.
-    $h = $h / 12 * DOUBLE - HALF;
-    $m = $m / 60 * DOUBLE - HALF;
     $s = $s / 60 * DOUBLE - HALF;
+    $m = $m / 60 * DOUBLE - HALF;
+    $h = $h / 12 * DOUBLE - HALF;
 
     # Add 1/2 degree to the hour mark for each minute
     $h += $min * FRACT if $flag;
