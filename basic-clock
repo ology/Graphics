@@ -74,9 +74,9 @@ sub time_point {
     $h += $min * FRACT if $flag;
 
     # Save the triple so we can handle each bit separately
-    my %t = (s => $s, m => $m, h => $h);
+    my %t = ( s => $s, m => $m, h => $h );
 
-    for my $i (qw(s m h)) {
+    for my $i (qw( s m h )) {
         # Handle differring hand lengths
         my $r = $flag && $i eq 'h' ? $radius / 2 : $radius;
         # Replace the time value with a rectangular coordinate
