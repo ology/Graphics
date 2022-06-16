@@ -8,7 +8,6 @@ use warnings;
 use GD::SVG;
 use Math::Trig qw(:pi);
 
-use constant PI     => pi;
 use constant HALF   => pip2;
 use constant DOUBLE => pi2;
 use constant FRACT  => pi2 / 12 / 60;
