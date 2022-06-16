@@ -64,7 +64,7 @@ sub time_point {
     $s = $s / 60 * DOUBLE - HALF;
     $m = $m / 60 * DOUBLE - HALF;
     $h = $h / 12 * DOUBLE - HALF;
-    # Add 1/2 degree to the next hour mark for each minute
+    # Add 1/2 degree to the hour mark for each minute
     $h += $m * FRACT if $flag;
 
     # Replace the time values with polar coordinates.
