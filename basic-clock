@@ -48,7 +48,7 @@ $clock->setThickness(8);
 $clock->line( $radius, $radius, @$h, $grey );   # hour hand
 $clock->setThickness(4);
 $clock->line( $radius, $radius, @$m, $blue );   # minute hand
-$clock->setThickness(1);
+$clock->setThickness(2);
 $clock->line( $radius, $radius, @$s, $red );    # second hand
 
 # Render the clock
