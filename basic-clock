@@ -16,6 +16,8 @@ use constant FRACT  => pi2 / 12 / 60;
 # All arguments optional
 my ( $diameter, $hours, $minutes, $seconds ) = @ARGV;
 
+my $show_hours = 0; # Show the perimeter hour markings?
+
 # Set the maximum polar diameter and radius
 $diameter ||= 200;
 my $radius = $diameter / 2;
@@ -34,9 +36,11 @@ $clock->transparent($trans);
 $clock->arc( $radius, $radius, $diameter, $diameter, 0, 360, $black );
 
 # Indicate the hours
-for my $hour (1 .. 12) {
-    my ( undef, undef, $h ) = time_point( $radius, 0, 0, $hour );
-    $clock->arc( @$h, 6, 6, 0, 360, $black );
+if ($show_hours) {
+    for my $hour (1 .. 12) {
+        my ( undef, undef, $h ) = time_point( $radius, 0, 0, $hour );
+        $clock->arc( @$h, 6, 6, 0, 360, $black );
+    }
 }
 
 # Get coordinate of the given or current time for the hands
