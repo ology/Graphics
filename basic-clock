@@ -31,7 +31,7 @@ my $grey  = $clock->colorAllocate( 100, 100, 100 ); # hour hand
 my $black = $clock->colorAllocate(   0,   0,   0 ); # perimeter
 $clock->transparent($trans);
 
-# Add the circle to the clock
+# Add a perimeter circle to the clock
 $clock->arc( $radius, $radius, $diameter, $diameter, 0, 360, $black );
 
 # Indicate the hours
