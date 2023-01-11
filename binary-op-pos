@@ -8,8 +8,13 @@ use warnings;
 
 use Imager ();
 use Math::Prime::Util qw(is_prime);
+use OEIS qw(oeis);
 
-my $modulo = shift || 3;
+my $oeis = shift || 10;
+
+my @oeis = oeis($oeis);
+
+my $modulo = @oeis; # or literal 3, 5, ...
 
 my ($x, $y) = (1000, 1000);
 
@@ -26,9 +31,10 @@ $img->box(
 
 for my $i (0 .. $x - 1) {
     for my $j (0 .. $y - 1) {
-        my $x = $i ^ $j;
-        #if ($x % $modulo == 0) {
-        if (is_prime($x)) {
+        my $x = ($i ^ $j) % $modulo;
+        if (grep { $_ == $x } @oeis) {
+#        if (is_prime($i ^ $j)) {
+#        if (($i ^ $j) % $modulo == 0) {
             $img->setpixel(x => $i, y => $j, color => 'black');
         }
     }
