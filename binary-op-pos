@@ -1,0 +1,33 @@
+#!/usr/bin/env perl
+
+# If you take the x, y position on the screen, color (x #XOR y) % 3 == 0 red and everything else blue you get ...
+# https://fosstodon.org/@BigEatie/109672649890405481
+
+use strict;
+use warnings;
+
+use Imager;
+
+my ($x, $y) = (50, 50);
+
+my $img = Imager->new(xsize => $x, ysize => $y);
+
+$img->box(
+    xmin   => 0,
+    ymin   => 0,
+    xmax   => $x - 1,
+    ymax   => $y - 1,
+    filled => 1,
+    color  => 'white',
+);
+
+for my $i (0 .. $x - 1) {
+    for my $j (0 .. $y - 1) {
+        if (($i ^ $j) % 3 == 0) {
+            $img->setpixel(x => $i, y => $j, color => 'black');
+        }
+    }
+}
+
+$img->write(type => 'png', file => "$0.png")
+    or die("Can't save $0.png: ", $img->errstr);
