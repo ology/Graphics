@@ -8,7 +8,7 @@ use warnings;
 
 use Imager;
 
-my ($x, $y) = (50, 50);
+my ($x, $y) = (100, 100);
 
 my $img = Imager->new(xsize => $x, ysize => $y);
 
