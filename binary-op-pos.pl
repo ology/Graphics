@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 
-# If you take the x, y position on the screen, color (x #XOR y) % 3 == 0 red and everything else blue you get ...
+# "If you take the x, y position on the screen, color (x #XOR y) % 3 == 0 red and everything else blue you get ..."
 # https://fosstodon.org/@BigEatie/109672649890405481
 
 use strict;
