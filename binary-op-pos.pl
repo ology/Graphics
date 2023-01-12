@@ -36,8 +36,8 @@ for my $i (0 .. $x - 1) {
     for my $j (0 .. $y - 1) {
         my $x = ($i ^ $j) % $modulo;
         if (grep { $_ == $x } @oeis) {   # for OEIS processing
-#        if (is_prime($i ^ $j)) {         # for is_prime processing
-#        if (isfibonacci($i ^ $j)) {         # for is_prime processing
+#        if (is_prime($i ^ $j)) {         # for prime processing
+#        if (isfibonacci($i ^ $j)) {      # for fibonacci processing
 #        if ($x == 0) {  # for simple modulo
             $img->setpixel(x => $i, y => $j, color => 'black');
         }
