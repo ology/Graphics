@@ -14,7 +14,7 @@ use OEIS qw(oeis);
 my $oeis = shift || 10; # https://en.wikipedia.org/wiki/List_of_integer_sequences
 my @oeis = oeis($oeis);
 
-my $modulo = @oeis; # for OEIS processing
+my $modulo = @oeis; # size of our OEIS
 #my $modulo = 3;     # 3, 5, etc for simple modulo
 
 my ($x, $y) = (1000, 1000);
