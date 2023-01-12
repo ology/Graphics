@@ -14,8 +14,8 @@ use OEIS qw(oeis);
 my $oeis = shift || 10; # https://en.wikipedia.org/wiki/List_of_integer_sequences
 my @oeis = oeis($oeis);
 
-#my $modulo = @oeis; # for OEIS processing
-my $modulo = 3;     # 3, 5, etc for simple modulo
+my $modulo = @oeis; # for OEIS processing
+#my $modulo = 3;     # 3, 5, etc for simple modulo
 
 my ($x, $y) = (1000, 1000);
 
@@ -35,9 +35,9 @@ $img->box(
 for my $i (0 .. $x - 1) {
     for my $j (0 .. $y - 1) {
         my $x = ($i ^ $j) % $modulo;
-#        if (grep { $_ == $x } @oeis) {   # for OEIS processing
+        if (grep { $_ == $x } @oeis) {   # for OEIS processing
 #        if (is_prime($i ^ $j)) {         # for is_prime processing
-        if (isfibonacci($i ^ $j)) {         # for is_prime processing
+#        if (isfibonacci($i ^ $j)) {         # for is_prime processing
 #        if ($x == 0) {  # for simple modulo
             $img->setpixel(x => $i, y => $j, color => 'black');
         }
