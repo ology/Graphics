@@ -20,6 +20,7 @@ my ($x, $y) = (1000, 1000);
 
 my $img = Imager->new(xsize => $x, ysize => $y);
 
+# make a white background
 $img->box(
     xmin   => 0,
     ymin   => 0,
@@ -29,10 +30,11 @@ $img->box(
     color  => 'white',
 );
 
+# inspect each image position
 for my $i (0 .. $x - 1) {
     for my $j (0 .. $y - 1) {
         my $x = ($i ^ $j) % $modulo;
-        if (grep { $_ == $x } @oeis) {    # for OEIS processing
+        if (grep { $_ == $x } @oeis) {   # for OEIS processing
 #        if (is_prime($i ^ $j)) {         # for is_prime processing
 #        if (($i ^ $j) % $modulo == 0) {  # for simple modulo
             $img->setpixel(x => $i, y => $j, color => 'black');
