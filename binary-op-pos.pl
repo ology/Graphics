@@ -10,7 +10,7 @@ use Imager ();
 use Math::Prime::Util qw(is_prime);
 use OEIS qw(oeis);
 
-my $oeis = shift || 10;
+my $oeis = shift || 10; # https://en.wikipedia.org/wiki/List_of_integer_sequences
 
 my @oeis = oeis($oeis);
 
