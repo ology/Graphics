@@ -34,12 +34,12 @@ $img->box(
 # inspect each image position
 for my $i (0 .. $x - 1) {
     for my $j (0 .. $y - 1) {
-        my $x = $i ^ $j;
-        my $y = $x % $modulo;
-        if (grep { $_ == $y } @oeis) {  # for OEIS processing
-#        if (is_prime($x)) {             # for prime processing
-#        if (isfibonacci($x)) {          # for fibonacci processing
-#        if ($y == 0) {                  # for simple modulo
+        my $xor = $i ^ $j;
+        my $mod = $x % $modulo;
+        if (grep { $_ == $mod } @oeis) {  # for OEIS processing
+#        if (is_prime($xor)) {             # for prime processing
+#        if (isfibonacci($xor)) {          # for fibonacci processing
+#        if ($mod == 0) {                  # for simple modulo
             $img->setpixel(x => $i, y => $j, color => 'black');
         }
     }
