@@ -35,7 +35,7 @@ $img->box(
 for my $i (0 .. $x - 1) {
     for my $j (0 .. $y - 1) {
         my $z = ($i ^ $j) % $modulo;
-#        if ($z == 0) { # for simple modulo
+#        if ($z == 0) {                  # for simple modulo
 #        if (is_prime($i ^ $j)) {        # for prime processing
 #        if (isfibonacci($i ^ $j)) {     # for fibonacci processing
         if (grep { $_ == $z } @oeis) {  # for OEIS processing
