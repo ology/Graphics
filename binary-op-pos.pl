@@ -14,7 +14,7 @@ my $oeis = shift || 10;
 
 my @oeis = oeis($oeis);
 
-my $modulo = @oeis; # or literal 3, 5, ...
+my $modulo = @oeis; # or literal 3, 5, etc for simple modulo
 
 my ($x, $y) = (1000, 1000);
 
@@ -32,9 +32,9 @@ $img->box(
 for my $i (0 .. $x - 1) {
     for my $j (0 .. $y - 1) {
         my $x = ($i ^ $j) % $modulo;
-        if (grep { $_ == $x } @oeis) {
-#        if (is_prime($i ^ $j)) {
-#        if (($i ^ $j) % $modulo == 0) {
+        if (grep { $_ == $x } @oeis) {    # for OEIS processing
+#        if (is_prime($i ^ $j)) {         # for is_prime processing
+#        if (($i ^ $j) % $modulo == 0) {  # for simple modulo
             $img->setpixel(x => $i, y => $j, color => 'black');
         }
     }
