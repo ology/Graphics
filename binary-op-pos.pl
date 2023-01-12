@@ -34,10 +34,11 @@ $img->box(
 # inspect each image position
 for my $i (0 .. $x - 1) {
     for my $j (0 .. $y - 1) {
+        my $v = $i ^ $j;
         my $z = ($i ^ $j) % $modulo;
 #        if ($z == 0) {                  # for simple modulo
-#        if (is_prime($i ^ $j)) {        # for prime processing
-#        if (isfibonacci($i ^ $j)) {     # for fibonacci processing
+#        if (is_prime($v)) {             # for prime processing
+#        if (isfibonacci($v)) {          # for fibonacci processing
         if (grep { $_ == $z } @oeis) {  # for OEIS processing
             $img->setpixel(x => $i, y => $j, color => 'black');
         }
