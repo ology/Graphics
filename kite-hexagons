@@ -45,7 +45,6 @@ my $turtle = Data::Turtle->new(
 $turtle->pen_down;
 
 my @line = $turtle->forward(SHORT);
-if (@line) {
     $style->line(
         id => "line-1",
         x1 => $line[0],
@@ -53,12 +52,10 @@ if (@line) {
         x2 => $line[2],
         y2 => $line[3],
     );
-}
 
 $turtle->right(90);
 
 @line = $turtle->forward(LONG);
-if (@line) {
     $style->line(
         id => "line-2",
         x1 => $line[0],
@@ -66,12 +63,10 @@ if (@line) {
         x2 => $line[2],
         y2 => $line[3],
     );
-}
 
 $turtle->right(120);
 
 @line = $turtle->forward(LONG);
-if (@line) {
     $style->line(
         id => "line-3",
         x1 => $line[0],
@@ -79,12 +74,10 @@ if (@line) {
         x2 => $line[2],
         y2 => $line[3],
     );
-}
 
 $turtle->right(90);
 
 @line = $turtle->forward(SHORT);
-if (@line) {
     $style->line(
         id => "line-4",
         x1 => $line[0],
@@ -92,6 +85,5 @@ if (@line) {
         x2 => $line[2],
         y2 => $line[3],
     );
-}
 
 print $svg->xmlify;
