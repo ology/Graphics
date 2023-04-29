@@ -31,8 +31,9 @@ $style->rectangle(
 );
 
 my $turtle = Data::Turtle->new(
-    width  => $width,
-    height => $height,
+    width   => $width,
+    height  => $height,
+    heading => 0,
 );
 $turtle->pen_down;
 for my $i (1 .. 6) {
