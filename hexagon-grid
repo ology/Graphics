@@ -40,7 +40,7 @@ my $turtle = Data::Turtle->new(
     heading => 0,
 );
 
-for my $col (1 .. 3) {
+for my $col (1 .. 2) {
     for my $row (1 .. 2) {
         $turtle->pen_down;
         for my $i (1 .. 6) {
@@ -57,9 +57,9 @@ for my $col (1 .. 3) {
             $turtle->right(60);
         }
         $turtle->pen_up;
-        $turtle->forward(SIDE * 2);
+        $turtle->forward(SIDE * 3);
     }
-    $turtle->backward(SIDE * 4);
+    $turtle->backward(SIDE * 6);
     $turtle->right(90);
     $turtle->forward(SIDE * sqrt(3));
     $turtle->left(90);
