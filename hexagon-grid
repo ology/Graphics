@@ -62,7 +62,6 @@ sub hex_kite_grid {
         $turtle->goto($x, $y);
     }
 
-    $turtle->pen_down;
     for my $i (1 .. 6) {
         my @line = $turtle->forward(SIDE);
         if (@line) {
