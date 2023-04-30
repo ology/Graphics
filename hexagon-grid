@@ -45,7 +45,8 @@ my $turtle = Data::Turtle->new(
 my $cols = 3;
 my $rows = 3;
 for my $col (1 .. $cols) {
-    for my $row (1 .. $rows) {
+    my $extra = $col % 2 ? 0 : 1;
+    for my $row (1 .. $rows + $extra) {
         hex_kite_grid($style, $turtle, $row, $col);
         # move to the next lower starting point
         $turtle->right(90);
