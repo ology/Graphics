@@ -6,7 +6,9 @@ use lib map { "$ENV{HOME}/sandbox/$_/lib" } qw(Data-Turtle);
 use Data::Turtle ();
 use SVG qw(title);
 
-use constant SIDE => 90;
+use constant SIDE  => 60;
+use constant SHORT => SIDE / 2;
+use constant LONG  => SIDE * sqrt(3);
 
 my ($width, $height) = (500, 500);
 my $stroke = 'black';
@@ -56,6 +58,46 @@ for my $col (1 .. 2) {
             }
             $turtle->right(60);
         }
+
+             $turtle->forward(SHORT);
+             $turtle->right(90);
+             my @line = $turtle->forward(LONG);
+             $style->line(
+                 id => "line-$col.$row.spoke-$row",
+                 x1 => $line[0],
+                 y1 => $line[1], 
+                 x2 => $line[2],
+                 y2 => $line[3],
+             );
+
+             $turtle->right(90);
+             $turtle->forward(SHORT);
+             $turtle->right(60);
+             $turtle->forward(SHORT);
+             $turtle->right(90);
+             @line = $turtle->forward(LONG);
+             $style->line(
+                 id => "line-$col.$row.spoke-$row-2",
+                 x1 => $line[0],
+                 y1 => $line[1], 
+                 x2 => $line[2],
+                 y2 => $line[3],
+             );
+
+             $turtle->right(90);
+             $turtle->forward(SHORT);
+             $turtle->right(60);
+             $turtle->forward(SHORT);
+             $turtle->right(90);
+             @line = $turtle->forward(LONG);
+             $style->line(
+                 id => "line-$col.$row.spoke-$row-3",
+                 x1 => $line[0],
+                 y1 => $line[1], 
+                 x2 => $line[2],
+                 y2 => $line[3],
+             );
+
         $turtle->pen_up;
         $turtle->forward(SIDE * 3);
     }
