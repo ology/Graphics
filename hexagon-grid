@@ -49,8 +49,10 @@ my $count = time();
 
 for my $col (1 .. $cols) {
     my $extra = $col % 2 ? 0 : 1;
+
     for my $row (1 .. $rows + $extra) {
         $count = hex_kite_grid($style, $turtle, $count);
+
         # move to the next lower starting point
         $turtle->right(90);
         $turtle->forward($long);
