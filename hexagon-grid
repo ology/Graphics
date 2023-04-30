@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 
-# Draw a hexagonal graph paper with asterisk "spokes" defining "kites."
+# Draw hexagonal graph paper with asterisk "spokes" defining "kites."
 # Ex:
 # perl hexagon-grid --r=16 --c=22 --side=20 --stroke=lightblue > hex.svg
 
