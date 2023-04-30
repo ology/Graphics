@@ -42,15 +42,18 @@ my $turtle = Data::Turtle->new(
     heading => 0,
 );
 
-for my $col (1 .. 4) {
+my $cols = 4;
+for my $col (1 .. $cols) {
     hex_kite_grid($style, $turtle, $col, 1);
+    # move to the next lower starting point
     $turtle->right(90);
-    $turtle->forward(SIDE * sqrt(3));
+    $turtle->forward(LONG);
     $turtle->left(90);
 }
 
 print $svg->xmlify;
 
+# clockwise from top-left
 sub hex_kite_grid {
     my ($style, $turtle, $col, $row, $x, $y) = @_;
 
