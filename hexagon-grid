@@ -14,7 +14,7 @@ my $short = $side / 2;
 my $long  = $side * sqrt(3);
 
 my ($width, $height) = (700, 600);
-my $stroke = 'black';
+my $stroke = 'gray';
 my $fill = 'white';
 
 my $svg = SVG->new(
