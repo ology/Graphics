@@ -10,7 +10,7 @@ use constant SIDE  => 60;
 use constant SHORT => SIDE / 2;
 use constant LONG  => SIDE * sqrt(3);
 
-my ($width, $height) = (500, 500);
+my ($width, $height) = (700, 500);
 my $stroke = 'black';
 my $fill = 'white';
 
@@ -55,8 +55,32 @@ $turtle->left(90);
 $turtle->forward(LONG * $rows + (LONG / 2));
 $turtle->right(90);
 $turtle->forward(SIDE + SHORT);
-for my $row (1 .. $rows) {
+for my $row (1 .. $rows + 1) {
     hex_kite_grid($style, $turtle, $row, 2);
+    # move to the next lower starting point
+    $turtle->right(90);
+    $turtle->forward(LONG);
+    $turtle->left(90);
+}
+
+$turtle->left(90);
+$turtle->forward(LONG * $rows + (LONG / 2));
+$turtle->right(90);
+$turtle->forward(SIDE + SHORT);
+for my $row (1 .. $rows) {
+    hex_kite_grid($style, $turtle, $row, 3);
+    # move to the next lower starting point
+    $turtle->right(90);
+    $turtle->forward(LONG);
+    $turtle->left(90);
+}
+
+$turtle->left(90);
+$turtle->forward(LONG * $rows + (LONG / 2));
+$turtle->right(90);
+$turtle->forward(SIDE + SHORT);
+for my $row (1 .. $rows + 1) {
+    hex_kite_grid($style, $turtle, $row, 4);
     # move to the next lower starting point
     $turtle->right(90);
     $turtle->forward(LONG);
