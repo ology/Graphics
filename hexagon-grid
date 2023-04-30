@@ -1,6 +1,7 @@
 #!/usr/bin/env perl
 
 # Draw hexagonal graph paper with asterisk "spokes" defining "kites."
+# Write-up: https://ology.github.io/2023/04/30/of-hexagons-kites-and-tiles/
 # Ex:
 # perl hexagon-grid --r=16 --c=22 --side=20 --stroke=lightblue > hex.svg
 
