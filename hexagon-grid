@@ -51,6 +51,18 @@ for my $row (1 .. $rows) {
     $turtle->left(90);
 }
 
+$turtle->left(90);
+$turtle->forward(LONG * $rows + (LONG / 2));
+$turtle->right(90);
+$turtle->forward(SIDE + SHORT);
+for my $row (1 .. $rows) {
+    hex_kite_grid($style, $turtle, $row, 2);
+    # move to the next lower starting point
+    $turtle->right(90);
+    $turtle->forward(LONG);
+    $turtle->left(90);
+}
+
 print $svg->xmlify;
 
 # clockwise from top-left
