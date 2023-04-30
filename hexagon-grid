@@ -42,69 +42,58 @@ my $turtle = Data::Turtle->new(
     heading => 0,
 );
 
-for my $col (1 .. 2) {
-    for my $row (1 .. 2) {
-        $turtle->pen_down;
-        for my $i (1 .. 6) {
-            my @line = $turtle->forward(SIDE);
-            if (@line) {
-                $style->line(
-                    id => "line-$col.$row.$i",
-                    x1 => $line[0],
-                    y1 => $line[1],
-                    x2 => $line[2],
-                    y2 => $line[3],
-                );
-            }
-            $turtle->right(60);
-        }
-
-             $turtle->forward(SHORT);
-             $turtle->right(90);
-             my @line = $turtle->forward(LONG);
-             $style->line(
-                 id => "line-$col.$row.spoke-$row",
-                 x1 => $line[0],
-                 y1 => $line[1], 
-                 x2 => $line[2],
-                 y2 => $line[3],
-             );
-
-             $turtle->right(90);
-             $turtle->forward(SHORT);
-             $turtle->right(60);
-             $turtle->forward(SHORT);
-             $turtle->right(90);
-             @line = $turtle->forward(LONG);
-             $style->line(
-                 id => "line-$col.$row.spoke-$row-2",
-                 x1 => $line[0],
-                 y1 => $line[1], 
-                 x2 => $line[2],
-                 y2 => $line[3],
-             );
-
-             $turtle->right(90);
-             $turtle->forward(SHORT);
-             $turtle->right(60);
-             $turtle->forward(SHORT);
-             $turtle->right(90);
-             @line = $turtle->forward(LONG);
-             $style->line(
-                 id => "line-$col.$row.spoke-$row-3",
-                 x1 => $line[0],
-                 y1 => $line[1], 
-                 x2 => $line[2],
-                 y2 => $line[3],
-             );
-
-        $turtle->pen_up;
-        $turtle->forward(SIDE * 3);
+for my $col (1 .. 1) {
+    for my $row (1 .. 1) {
+hex_kite_grid($style, $turtle, $col, $row, 200, 200);
+#        $turtle->pen_up;
+#        $turtle->forward(SIDE * 3);
     }
-    $turtle->backward(SIDE * 6);
-    $turtle->right(90);
-    $turtle->forward(SIDE * sqrt(3));
-    $turtle->left(90);
+#    $turtle->backward(SIDE * 6);
+#    $turtle->right(90);
+#    $turtle->forward(SIDE * sqrt(3));
+#    $turtle->left(90);
 }
 
 print $svg->xmlify;
+
+sub hex_kite_grid {
+    my ($style, $turtle, $col, $row, $x, $y) = @_;
+
+    if ($x && $y) {
+        $turtle->goto($x, $y);
+    }
+
+    $turtle->pen_down;
+    for my $i (1 .. 6) {
+        my @line = $turtle->forward(SIDE);
+        if (@line) {
+            $style->line(
+                id => "line-$col.$row.$i",
+                x1 => $line[0],
+                y1 => $line[1],
+                x2 => $line[2],
+                y2 => $line[3],
+            );
+        }
+        $turtle->right(60);
+    }
+
+    for my $spoke (1 .. 3) {
+        $turtle->forward(SHORT);
+        $turtle->right(90);
+        my @line = $turtle->forward(LONG);
+        $style->line(
+            id => "line-$col.$row.spoke-$spoke",
+            x1 => $line[0],
+            y1 => $line[1], 
+            x2 => $line[2],
+            y2 => $line[3],
+        );
+
+        unless ($spoke == 3) {
+            $turtle->right(90);
+            $turtle->forward(SHORT);
+            $turtle->right(60) unless $spoke == 3;
+        }
+    }
+}
