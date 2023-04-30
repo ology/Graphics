@@ -6,11 +6,14 @@ use lib map { "$ENV{HOME}/sandbox/$_/lib" } qw(Data-Turtle);
 use Data::Turtle ();
 use SVG qw(title);
 
-use constant SIDE  => 60;
-use constant SHORT => SIDE / 2;
-use constant LONG  => SIDE * sqrt(3);
+my $rows = 4;
+my $cols = 5;
 
-my ($width, $height) = (700, 500);
+my $side = shift || 60;
+my $short = $side / 2;
+my $long  = $side * sqrt(3);
+
+my ($width, $height) = (640, 600);
 my $stroke = 'black';
 my $fill = 'white';
 
@@ -37,42 +40,36 @@ $style->rectangle(
 my $turtle = Data::Turtle->new(
     width   => $width,
     height  => $height,
-    x       => LONG,
-    y       => LONG,
+    x       => $long,
+    y       => $long,
     heading => 0,
 );
 
-my $cols = 3;
-my $rows = 3;
 for my $col (1 .. $cols) {
     my $extra = $col % 2 ? 0 : 1;
     for my $row (1 .. $rows + $extra) {
         hex_kite_grid($style, $turtle, $row, $col);
         # move to the next lower starting point
         $turtle->right(90);
-        $turtle->forward(LONG);
+        $turtle->forward($long);
         $turtle->left(90);
     }
 
     # move to the next upper starting point
     $turtle->left(90);
-    $turtle->forward(LONG * $rows + (LONG / 2));
+    $turtle->forward($long * $rows + ($long / 2));
     $turtle->right(90);
-    $turtle->forward(SIDE + SHORT);
+    $turtle->forward($side + $short);
 }
 
 print $svg->xmlify;
 
 # clockwise from top-left
 sub hex_kite_grid {
-    my ($style, $turtle, $col, $row, $x, $y) = @_;
-
-    if ($x && $y) {
-        $turtle->goto($x, $y);
-    }
+    my ($style, $turtle, $col, $row) = @_;
 
     for my $i (1 .. 6) {
-        my @line = $turtle->forward(SIDE);
+        my @line = $turtle->forward($side);
         $style->line(
             id => "line-$col.$row.$i",
             x1 => $line[0],
@@ -84,9 +81,9 @@ sub hex_kite_grid {
     }
 
     for my $spoke (1 .. 3) {
-        $turtle->forward(SHORT);
+        $turtle->forward($short);
         $turtle->right(90);
-        my @line = $turtle->forward(LONG);
+        my @line = $turtle->forward($long);
         $style->line(
             id => "line-$col.$row.spoke-$spoke",
             x1 => $line[0],
@@ -96,7 +93,7 @@ sub hex_kite_grid {
         );
 
         $turtle->right(90);
-        $turtle->forward(SHORT);
+        $turtle->forward($short);
         $turtle->right(60);
     }
 }
