@@ -6,8 +6,8 @@ use lib map { "$ENV{HOME}/sandbox/$_/lib" } qw(Data-Turtle);
 use Data::Turtle ();
 use SVG qw(title);
 
-my $rows = 4;
-my $cols = 5;
+my $rows = shift || 4;
+my $cols = shift || 5;
 
 my $side = shift || 60;
 my $short = $side / 2;
