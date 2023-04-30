@@ -40,7 +40,7 @@ $style->rectangle(
 my $turtle = Data::Turtle->new(
     width   => $width,
     height  => $height,
-    x       => $short + 6,
+    x       => $short + $short / 2,
     y       => $side,
     heading => 0,
 );
