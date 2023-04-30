@@ -37,14 +37,14 @@ $style->rectangle(
 my $turtle = Data::Turtle->new(
     width   => $width,
     height  => $height,
-    x       => SIDE,
-    y       => SIDE,
+    x       => LONG,
+    y       => LONG,
     heading => 0,
 );
 
-my $cols = 4;
-for my $col (1 .. $cols) {
-    hex_kite_grid($style, $turtle, $col, 1);
+my $rows = 3;
+for my $row (1 .. $rows) {
+    hex_kite_grid($style, $turtle, $row, 1);
     # move to the next lower starting point
     $turtle->right(90);
     $turtle->forward(LONG);
