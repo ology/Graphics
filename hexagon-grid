@@ -55,10 +55,10 @@ $style->rectangle(
 );
 
 my $turtle = Data::Turtle->new(
-    width   => $opts{width},
-    height  => $opts{height},
     x       => $short + $short / 2,
     y       => $opts{side},
+    width   => $opts{width},
+    height  => $opts{height},
     heading => 0,
 );
 
