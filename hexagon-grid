@@ -43,10 +43,9 @@ my $turtle = Data::Turtle->new(
 );
 
 for my $col (1 .. 1) {
-    for my $row (1 .. 1) {
-hex_kite_grid($style, $turtle, $col, $row, 200, 200);
-#        $turtle->pen_up;
-#        $turtle->forward(SIDE * 3);
+    for my $row (1 .. 2) {
+        hex_kite_grid($style, $turtle, $col, $row);
+        $turtle->forward(SIDE * 3);
     }
 #    $turtle->backward(SIDE * 6);
 #    $turtle->right(90);
@@ -90,10 +89,8 @@ sub hex_kite_grid {
             y2 => $line[3],
         );
 
-        unless ($spoke == 3) {
-            $turtle->right(90);
-            $turtle->forward(SHORT);
-            $turtle->right(60) unless $spoke == 3;
-        }
+        $turtle->right(90);
+        $turtle->forward(SHORT);
+        $turtle->right(60);
     }
 }
