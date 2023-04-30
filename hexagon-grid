@@ -21,7 +21,7 @@ my $svg = SVG->new(
     width  => $width,
     height => $height,
 );
-$svg->title()->cdata('Hexagonal Kites');
+$svg->title()->cdata('Hexagonal Kite Grid');
 my $style = $svg->group(
     id    => 'style-group',
     style => {
