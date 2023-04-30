@@ -7,13 +7,13 @@ use Data::Turtle ();
 use SVG qw(title);
 
 my $rows = shift || 4;
-my $cols = shift || 5;
+my $cols = shift || 7;
 
 my $side = shift || 60;
 my $short = $side / 2;
 my $long  = $side * sqrt(3);
 
-my ($width, $height) = (600, 600);
+my ($width, $height) = (700, 600);
 my $stroke = 'black';
 my $fill = 'white';
 
