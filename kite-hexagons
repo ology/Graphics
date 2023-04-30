@@ -42,48 +42,66 @@ my $turtle = Data::Turtle->new(
     heading => 0,
 );
 
-$turtle->pen_down;
+for my $n (1 .. 6) {
+    draw_kite($turtle, $n);
+}
 
-my @line = $turtle->forward(SHORT);
-$style->line(
-    id => "line-1",
-    x1 => $line[0],
-    y1 => $line[1],
-    x2 => $line[2],
-    y2 => $line[3],
-);
+sub draw_kite {
+    my ($turtle, $n, $x, $y) = @_;
 
-$turtle->right(90);
+    if (defined $x && defined $y) {
+        $turtle->pen_up;
+        $turtle->goto($x, $y);
+    }
 
-@line = $turtle->forward(LONG);
-$style->line(
-    id => "line-2",
-    x1 => $line[0],
-    y1 => $line[1],
-    x2 => $line[2],
-    y2 => $line[3],
-);
+    $turtle->pen_down;
 
-$turtle->right(120);
+    my @line = $turtle->forward(SHORT);
+    $style->line(
+        id => "line-$n.1",
+        x1 => $line[0],
+        y1 => $line[1],
+        x2 => $line[2],
+        y2 => $line[3],
+    );
 
-@line = $turtle->forward(LONG);
-$style->line(
-    id => "line-3",
-    x1 => $line[0],
-    y1 => $line[1],
-    x2 => $line[2],
-    y2 => $line[3],
-);
+    $turtle->right(90);
 
-$turtle->right(90);
+    @line = $turtle->forward(LONG);
+    $style->line(
+        id => "line-$n.2",
+        x1 => $line[0],
+        y1 => $line[1],
+        x2 => $line[2],
+        y2 => $line[3],
+    );
 
-@line = $turtle->forward(SHORT);
-$style->line(
-    id => "line-4",
-    x1 => $line[0],
-    y1 => $line[1],
-    x2 => $line[2],
-    y2 => $line[3],
-);
+    $turtle->right(120);
+
+    @line = $turtle->forward(LONG);
+    $style->line(
+        id => "line-$n.3",
+        x1 => $line[0],
+        y1 => $line[1],
+        x2 => $line[2],
+        y2 => $line[3],
+    );
+
+    $turtle->right(90);
+
+    @line = $turtle->forward(SHORT);
+    $style->line(
+        id => "line-$n.4",
+        x1 => $line[0],
+        y1 => $line[1],
+        x2 => $line[2],
+        y2 => $line[3],
+    );
+
+    $turtle->pen_up;
+    $turtle->right(60);
+    $turtle->forward(SHORT * 2);
+    $turtle->right(60);
+}
 
 print $svg->xmlify;
