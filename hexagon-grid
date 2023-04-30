@@ -45,10 +45,12 @@ my $turtle = Data::Turtle->new(
     heading => 0,
 );
 
+my $count = time();
+
 for my $col (1 .. $cols) {
     my $extra = $col % 2 ? 0 : 1;
     for my $row (1 .. $rows + $extra) {
-        hex_kite_grid($style, $turtle, $col, $row);
+        $count = hex_kite_grid($style, $turtle, $count);
         # move to the next lower starting point
         $turtle->right(90);
         $turtle->forward($long);
@@ -66,17 +68,19 @@ print $svg->xmlify;
 
 # clockwise from top-left
 sub hex_kite_grid {
-    my ($style, $turtle, $col, $row) = @_;
+    my ($style, $turtle, $count) = @_;
 
     for my $i (1 .. 6) {
         my @line = $turtle->forward($side);
         $style->line(
-            id => "line-$col.$row.$i",
+            id => "line-$count",
             x1 => $line[0],
             y1 => $line[1],
             x2 => $line[2],
             y2 => $line[3],
         );
+        $count++;
+
         $turtle->right(60);
     }
 
@@ -85,15 +89,18 @@ sub hex_kite_grid {
         $turtle->right(90);
         my @line = $turtle->forward($long);
         $style->line(
-            id => "line-$col.$row.spoke-$spoke",
+            id => "line-$count",
             x1 => $line[0],
             y1 => $line[1], 
             x2 => $line[2],
             y2 => $line[3],
         );
+        $count++;
 
         $turtle->right(90);
         $turtle->forward($short);
         $turtle->right(60);
     }
+
+    return $count;
 }
