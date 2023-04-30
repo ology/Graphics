@@ -4,53 +4,65 @@ use warnings;
 
 use lib map { "$ENV{HOME}/sandbox/$_/lib" } qw(Data-Turtle);
 use Data::Turtle ();
+use Getopt::Long qw(GetOptions);
 use SVG qw(title);
 
-my $rows = shift || 4;
-my $cols = shift || 7;
+my %opts = (
+    rows   => 4,
+    cols   => 7,
+    side   => 60,
+    width  => 700,
+    height => 600,
+    stroke => 'gray',
+    fill   => 'white',
+);
+GetOptions( \%opts,
+    'rows=i',
+    'cols=i',
+    'side=i',
+    'width=i',
+    'height=i',
+    'stroke=s',
+    'fill=s',
+) or die 'Problem getting command options';
 
-my $side = shift || 60;
-my $short = $side / 2;
-my $long  = $side * sqrt(3);
-
-my ($width, $height) = (700, 600);
-my $stroke = 'gray';
-my $fill = 'white';
+my $short = $opts{side} / 2;
+my $long  = $opts{side} * sqrt(3);
 
 my $svg = SVG->new(
-    width  => $width,
-    height => $height,
+    width  => $opts{width},
+    height => $opts{height},
 );
 $svg->title()->cdata('Hexagonal Kite Grid');
 my $style = $svg->group(
     id    => 'style-group',
     style => {
-        stroke => $stroke,
-        fill   => $fill,
+        stroke => $opts{stroke},
+        fill   => $opts{fill},
     },
 );
 $style->rectangle(
     id     => 'rectangle-frame',
     x      => 0,
     y      => 0,
-    width  => $width,
-    height => $height,
+    width  => $opts{width},
+    height => $opts{height},
 );
 
 my $turtle = Data::Turtle->new(
-    width   => $width,
-    height  => $height,
+    width   => $opts{width},
+    height  => $opts{height},
     x       => $short + $short / 2,
-    y       => $side,
+    y       => $opts{side},
     heading => 0,
 );
 
 my $count = time();
 
-for my $col (1 .. $cols) {
+for my $col (1 .. $opts{cols}) {
     my $extra = $col % 2 ? 0 : 1;
 
-    for my $row (1 .. $rows + $extra) {
+    for my $row (1 .. $opts{rows} + $extra) {
         $count = hex_kite_grid($style, $turtle, $count);
 
         # move to the next lower starting point
@@ -61,9 +73,9 @@ for my $col (1 .. $cols) {
 
     # move to the next upper starting point
     $turtle->left(90);
-    $turtle->forward($long * $rows + ($long / 2));
+    $turtle->forward($long * $opts{rows} + ($long / 2));
     $turtle->right(90);
-    $turtle->forward($side + $short);
+    $turtle->forward($opts{side} + $short);
 }
 
 print $svg->xmlify;
@@ -73,7 +85,7 @@ sub hex_kite_grid {
     my ($style, $turtle, $count) = @_;
 
     for my $i (1 .. 6) {
-        my @line = $turtle->forward($side);
+        my @line = $turtle->forward($opts{side});
         $style->line(
             id => "line-$count",
             x1 => $line[0],
