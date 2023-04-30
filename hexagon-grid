@@ -7,7 +7,7 @@
 use strict;
 use warnings;
 
-use lib map { "$ENV{HOME}/sandbox/$_/lib" } qw(Data-Turtle);
+use lib map { "$ENV{HOME}/sandbox/$_/lib" } qw(Data-Turtle); # local author lib
 use Data::Turtle ();
 use Getopt::Long qw(GetOptions);
 use SVG qw(title);
